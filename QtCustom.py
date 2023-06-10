@@ -129,10 +129,12 @@ class QtImportDialog(object):
 
 class QtProgressDialog(object):
 
-    def __init__(self, progress_bar : QtWidgets.QProgressBar):
-        self.progressBar = progress_bar
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
+
+        Dialog.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        Dialog.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        
         Dialog.resize(500, 120)
         Dialog.setStyleSheet("#MainWidget{\n"
 "   background-color: rgb(34, 34, 47);\n"
@@ -182,6 +184,7 @@ class QtProgressDialog(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContentWidget)
         self.horizontalLayout.setContentsMargins(10, 0, 10, 10)
         self.horizontalLayout.setObjectName("horizontalLayout")
+
         self.progressBar = QtWidgets.QProgressBar(self.ContentWidget)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(253, 251, 253))
@@ -194,7 +197,6 @@ class QtProgressDialog(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
         self.progressBar.setPalette(palette)
-        self.progressBar.setProperty("value", 24)
         self.progressBar.setObjectName("progressBar")
         self.horizontalLayout.addWidget(self.progressBar)
         self.verticalLayout.addWidget(self.ContentWidget)

@@ -699,11 +699,11 @@ class Ui_MainWindow(object):
         self.gridLayout_15.setSpacing(0)
         self.gridLayout_15.setObjectName("gridLayout_15")
 
-        self.ModelView = QtQuick.QQuickView()
-        self.ModelView.setResizeMode(QtQuick.QQuickView.SizeRootObjectToView)
-        self.ModelView.setSource(QtCore.QUrl.fromLocalFile('Renderer.qml'))
+        #self.ModelView = QtQuick.QQuickView()
+        #self.ModelView.setResizeMode(QtQuick.QQuickView.SizeRootObjectToView)
+        #self.ModelView.setSource(QtCore.QUrl.fromLocalFile('Renderer.qml'))
 
-        self.ModelViewPort = QtWidgets.QWidget(self.ModelViewer)
+        '''self.ModelViewPort = QtWidgets.QWidget(self.ModelViewer)
         self.ModelViewPort = QtWidgets.QWidget.createWindowContainer(self.ModelView)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -711,7 +711,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.ModelViewPort.sizePolicy().hasHeightForWidth())
         self.ModelViewPort.setSizePolicy(sizePolicy)
         self.ModelViewPort.setObjectName("ModelViewPort")
-        self.gridLayout_15.addWidget(self.ModelViewPort, 0, 0, 1, 1)
+        self.gridLayout_15.addWidget(self.ModelViewPort, 0, 0, 1, 1)'''
 
         self.verticalLayout_7.addWidget(self.ModelViewer)
         self.widget_17 = QtWidgets.QWidget(self.ModelWidget)
@@ -761,7 +761,6 @@ class Ui_MainWindow(object):
         self.gridLayout_19.setObjectName("gridLayout_19")
 
         self.ImportModelBtn = QtWidgets.QPushButton(self.frame_3)
-        self.ImportModelBtn.clicked.connect(self.open_model_dir)
         self.ImportModelBtn.setStyleSheet("QPushButton{\n"
 "   border: 1px solid gray;\n"
 "   border-radius: 10px;\n"
@@ -862,16 +861,6 @@ class Ui_MainWindow(object):
             self.Imported = True
             self.Importui.lineEdit.setText(str(path))
 
-    def open_model_dir(self):
-        filename, ok = QtWidgets.QFileDialog.getOpenFileName(
-            self.ModelViewPort,
-            "Select a 3D File",
-            "",
-            "Videos (*.fbx *.obj)"
-        )
-        if filename:
-            pass
-
     def export_model(self):
         import shutil
         file_dialog = QtWidgets.QFileDialog()
@@ -912,20 +901,23 @@ class Ui_MainWindow(object):
 
         self.ImportDialog.close()
 
-        #
-
         self.ImportingDialog = QtWidgets.QDialog()
-        self.imp_progress = QtWidgets.QProgressBar()
-        #self.Importingui = QtProgressDialog(self.imp_progress)
-        #self.Importingui.setupUi(self.ImportingDialog)
+        
+        self.Importingui = QtProgressDialog()#self.imp_progress)
+        self.Importingui.setupUi(self.ImportingDialog)
+        #self.Importingui.progressBar = QtWidgets.QProgressBar(self.Importingui.ContentWidget)
         #self.Importbar = self.Importingui.progressBar
 
-        self.imp_progress.show()
+        self.ImportingDialog.show()
+        self.ImportingDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.ImportDialog.setEnabled(False)
+
+        #self.imp_progress.show()
 
 
-        self.VideoList.append(Video(vid_type, vid_path, self.imp_progress))
+        self.VideoList.append(Video(vid_type, vid_path, self.Importingui.progressBar))
 
-        self.imp_progress.setMaximum(self.VideoList[-1].total_frames)
+        self.Importingui.progressBar.setMaximum(self.VideoList[-1].total_frames)
 
         vid_data = vid_type + '   :     ' + vid_path
         self.listView.addItem(vid_data)
