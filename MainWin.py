@@ -1,9 +1,78 @@
 import sys
 import os
 import platform
-from PyQt5 import QtCore, QtGui, QtWidgets
+#from PyQt5 import QtCore, QtGui, QtWidgets
 from CoreUI import *
 import QtModelView
+from QtCustom import QtImportDialog, QtProgressDialog
+from pathlib import Path
+import cv2
+import numpy as np
+from Media import Video  
+
+
+playing = True
+played = False
+currentframe_pos = 0
+CurrentVideo = Video("None", "", "", "")
+preview_pose = False
+
+# Thread class for running video in VideoPlayer
+class VideoThread(QtCore.QObject):
+    #ending_signal = QtCore.pyqtSignal(int)
+    frame_signal = QtCore.pyqtSignal(np.ndarray)
+    played_signal = QtCore.pyqtSignal()
+    global playing
+    global CurrentVideo
+
+    def __init__(self):
+        super().__init__()
+        self.cap = cv2.VideoCapture(CurrentVideo.filename) 
+
+    def run(self):
+        #self.frame_rate = int(self.cap.get(cv2.CAP_PROP_FPS))
+        print(CurrentVideo.frame_rate)
+        #self.ending_signal.emit(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+        global currentframe_pos
+        global played
+        global preview_pose
+        delay_time = int(1000 / CurrentVideo.frame_rate)
+        while True:
+            if playing:
+                ret, frame = self.cap.read()
+
+                if not ret:
+                    played = True
+                    self.played_signal.emit()
+                else:
+                    Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    currentframe_pos = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+
+                    if preview_pose:
+                        CurrentVideo.draw_tracked_points(Image, int(currentframe_pos) -1)
+
+                    self.frame_signal.emit(Image)
+                    cv2.waitKey(delay_time)
+
+            else:  
+                if not played:    
+                    ret, frame = self.cap.read()
+                    if not ret:
+                        played = True
+                        self.played_signal.emit()
+                    else:
+                        self.cap.set(cv2.CAP_PROP_POS_FRAMES, currentframe_pos)
+                        Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+                        if preview_pose:
+                            CurrentVideo.draw_tracked_points(Image, int(currentframe_pos) - 1)
+
+                        self.frame_signal.emit(Image)
+                else:
+                    self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+
+        self.cap.release()
 
 WINDOW_SIZE = 0 
 
@@ -11,15 +80,46 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
 
-        # Set up the user interface from Qt Designer
+
+# Setting up the user interface from Qt Designer
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # Remove the default title bar
+# Removing the default title bar
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         #self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        # Creating custom widgets
+
+# Creating custom widgets
+
+# Video Player
+        self.thread = QtCore.QThread()
+        self.thread_started = False
+
+        self.VideoPlayer = QtWidgets.QLabel(self.ui.widget_4)
+        self.VideoPlayer.setText("Video Here")
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.VideoPlayer.sizePolicy().hasHeightForWidth())
+        self.VideoPlayer.setSizePolicy(sizePolicy)
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(150, 150, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(150, 150, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        self.VideoPlayer.setPalette(palette)
+        self.VideoPlayer.setScaledContents(True)
+        self.VideoPlayer.setAlignment(QtCore.Qt.AlignCenter)
+        self.VideoPlayer.setObjectName("VideoPlayer")
+        self.ui.gridLayout_10.addWidget(self.VideoPlayer, 0, 0, 1, 1)
+
+# ModelViewPort
         self.ModelViewPort = QtModelView.QtModelViewPort(self.ui.ModelViewer)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -29,29 +129,54 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ModelViewPort.setObjectName("ModelViewPort")
         self.ui.gridLayout_15.addWidget(self.ModelViewPort, 0, 0, 1, 1)
 
-        # Bind the button events
+
+# Binding the button events
         self.ui.MinimizeButton.clicked.connect(self.showMinimized)
         self.ui.MaximizeButton.clicked.connect(self.maximize_window)
         self.ui.CloseButton.clicked.connect(self.close)
 
+        self.ui.ImportVidbtn.clicked.connect(self.ImportVideo)
+        self.VidImported = False
+
+        self.ui.PlaynPause.clicked.connect(self.TogglePlay)
+        self.playicon = QtGui.QIcon()
+        self.playicon.addPixmap(QtGui.QPixmap("UI/Icons/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pauseicon = QtGui.QIcon()
+        self.pauseicon.addPixmap(QtGui.QPixmap("UI/Icons/pause.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.ui.PlaynPause.setIcon(self.playicon)
+        self.ui.PreviousFrame.clicked.connect(self.GoBackward)
+        self.ui.NextFrame.clicked.connect(self.GoForward)
+
+        self.ui.horizontalSlider.valueChanged.connect(self.slider_value_change)
+        self.ui.horizontalSlider.sliderPressed.connect(self.slider_press)
+        self.ui.horizontalSlider.sliderReleased.connect(self.slider_released)
+        self.slider_pressed = False
+
+        self.ui.PreviewBtn.clicked.connect(self.Preview_points)
+        
+        self.VideoList = []
+        self.ui.listView.currentRowChanged.connect(self.OnItemClicked)
+
         self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
+        self.ui.ExportModelBtn.clicked.connect(self.export_model)
 
         self.isMaximized = False
 
-        def moveWindow(e):
+
+    # Functions which the buttons are binded with
+
+        def moveWindow(event):
             if(self.isMaximized == False):
-                if(e.buttons() == QtCore.Qt.LeftButton):
-                    self.move(self.pos() + e.globalPos() - self.clickPosition)
-                    self.clickPosition = e.globalPos()
-                    e.accept()
+                if(event.buttons() == QtCore.Qt.LeftButton):
+                    self.move(self.pos() + event.globalPos() - self.clickPosition)
+                    self.clickPosition = event.globalPos()
+                    event.accept()
 
         self.ui.TitleBar.mouseMoveEvent = moveWindow
         self.show()
 
-
     def mousePressEvent(self,event):
         self.clickPosition = event.globalPos()
-
 
     def maximize_window(self):
         global WINDOW_SIZE
@@ -68,7 +193,157 @@ class MainWindow(QtWidgets.QMainWindow):
             self.isMaximized = False
             self.ui.MaximizeButton.setIcon(self.ui.maximizeicon)
 
+# Import Video Functions
+    def ImportVideo(self):
+        self.ImportDialog = QtWidgets.QDialog()
+        self.Importui = QtImportDialog()
+        self.Importui.setupUi(self.ImportDialog)
 
+        self.Importui.BrowseBtn.clicked.connect(self.open_vid_dir)
+        self.Importui.buttonBox.accepted.connect(self.OnImport)
+        self.Importui.buttonBox.rejected.connect(self.ImportDialog.close)
+
+        self.ImportDialog.exec_()
+
+    def open_vid_dir(self):
+        filename, ok = QtWidgets.QFileDialog.getOpenFileName(
+            self.ImportDialog,
+            "Select a Video File",
+            "",
+            "Videos (*.mp4 *.mkv)"
+        )
+        if filename:
+            path = Path(filename)
+            self.VidImported = True
+            self.Importui.lineEdit.setText(str(path))
+
+    def OnImport(self):
+        vid_type = self.Importui.comboBox.currentText()
+        vid_path = self.Importui.lineEdit.text()
+
+        self.ImportDialog.close()
+
+        self.ImportingDialog = QtWidgets.QDialog()
+        
+        self.Importingui = QtProgressDialog()#self.imp_progress)
+        self.Importingui.setupUi(self.ImportingDialog)
+        #self.Importingui.progressBar = QtWidgets.QProgressBar(self.Importingui.ContentWidget)
+        #self.Importbar = self.Importingui.progressBar
+
+        self.ImportingDialog.show()
+        self.ImportingDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.ImportDialog.setEnabled(True)
+
+        #self.imp_progress.show()
+
+        self.VideoList.append(Video(vid_type, vid_path, self.Importingui.progressBar, self.ImportingDialog))
+
+        self.Importingui.progressBar.setMaximum(self.VideoList[-1].total_frames)
+
+        vid_data = vid_type + '   :     ' + vid_path
+        self.ui.listView.addItem(vid_data)
+
+
+
+    def OnItemClicked(self, current_row):
+
+        global CurrentVideo
+        CurrentVideo = self.VideoList[int(current_row)]
+
+        if not self.thread_started:
+            self.worker = VideoThread()
+            self.setRange(CurrentVideo.total_frames)
+            #self.worker.ending_signal.connect(self.setRange)
+            self.worker.frame_signal.connect(self.UpdateVideoPlayer)
+            self.worker.played_signal.connect(self.PauseVideo)
+
+            self.worker.moveToThread(self.thread)
+            self.thread.started.connect(self.worker.run)
+            self.ui.PlaynPause.setIcon(self.pauseicon)
+
+            self.thread.start()
+            self.thread_started = True
+
+        else:
+            self.thread.terminate()
+            self.worker.cap = cv2.VideoCapture(CurrentVideo.filename)
+            self.setRange(CurrentVideo.total_frames)
+            self.thread.start()
+
+# Slider Functions
+    def slider_press(self):
+        self.slider_pressed = True
+
+    def slider_released(self):
+        global sliderpaused
+        self.slider_pressed = False
+        sliderpaused = False
+
+    def slider_value_change(self, value):
+        if(self.slider_pressed):
+            self.SetTimeLine(value)
+
+    def setRange(self, count):
+        self.ui.horizontalSlider.setRange(0, count)
+
+# Video Player Functions
+    def UpdateVideoPlayer(self, frame):
+        global currentframe_pos
+        h, w, c = frame.shape
+        bytes_per_line = w * c
+        q_image = QtGui.QImage(frame.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+        pixmap = QtGui.QPixmap.fromImage(q_image)
+        video_width, video_height = self.VideoPlayer.size().width(), self.VideoPlayer.size().height()
+        scaled_pixmap = pixmap.scaled(video_width, video_height, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        self.VideoPlayer.setPixmap(scaled_pixmap)
+        self.ui.horizontalSlider.setValue(currentframe_pos)
+
+    def PauseVideo(self):
+        global playing
+        playing = False
+        self.ui.PlaynPause.setIcon(self.playicon)
+
+    def SetTimeLine(self, frame_pos):
+        self.PauseVideo()
+        global currentframe_pos
+        if frame_pos == -1:
+            currentframe_pos = currentframe_pos - 1 
+        elif frame_pos == -2:
+            currentframe_pos = currentframe_pos + 1
+        else:
+            currentframe_pos = frame_pos
+
+    def GoBackward(self):
+        self.SetTimeLine(-1)
+
+    def GoForward(self):
+        self.SetTimeLine(-2)  
+
+    def TogglePlay(self):
+        global playing
+        global played
+        if(self.VidImported):
+
+            if(played):
+                playing = True
+                played = False
+                self.ui.PlaynPause.setIcon(self.pauseicon)
+            else:
+                if(playing):
+                    playing = False
+                    self.ui.PlaynPause.setIcon(self.playicon)
+                else:
+                    playing = True
+                    self.ui.PlaynPause.setIcon(self.pauseicon)
+
+    def Preview_points(self):
+        global preview_pose
+        if preview_pose:
+            preview_pose = False
+        else:
+            preview_pose = True
+
+# Import model functions
     def open_model_dir(self):
         filename, ok = QtWidgets.QFileDialog.getOpenFileName(
             self.ModelViewPort,
@@ -78,9 +353,42 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         if filename:
             self.ModelViewPort.changeFile(filename)
-            print(filename)
-            
 
+# Export model function
+    def export_model(self):
+        import shutil
+        file_dialog = QtWidgets.QFileDialog()
+        file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
+        file_dialog.setNameFilter("fbx (*.fbx);;3ds (*.3ds)")
+        file_dialog.selectFile("Test.fbx")
+
+        if file_dialog.exec_() == QtWidgets.QFileDialog.Accepted:
+            self.file_path = file_dialog.selectedFiles()[0]
+
+        if self.file_path:
+            temp_bar = QtWidgets.QProgressBar()
+            temp_bar.show()
+            temp_bar.setMaximum(100)
+            source_file_path = "Tests/Fraud/FirstTest_Adult_Male.fbx"
+            # source_filename = source_file_path.split("/")[-1]
+            # directory_path = os.path.dirname(self.file_path)
+            target_file_path = self.file_path  # directory_path + "/" + source_filename
+            shutil.copy2(source_file_path, target_file_path)
+            i = 1
+            while True:
+                temp_bar.setValue(i)
+                i = i + 1
+                if(int(temp_bar.value()) >= 100):
+                    temp_bar.close()
+                    break
+                cv2.waitKey(20)
+
+            #temp_bar.close()
+            '''with open(source_file_path, 'r') as source_file:
+                content = source_file.read()
+            with open(self.file_path, 'w') as file:
+                file.write(content)'''
+            
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()

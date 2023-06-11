@@ -137,7 +137,8 @@ class QtProgressDialog(object):
         
         Dialog.resize(500, 120)
         Dialog.setStyleSheet("#MainWidget{\n"
-"   background-color: rgb(34, 34, 47);\n"
+"   background-color: #2e2d2f;\n"
+"   border: 1px solid gray;\n"
 "}\n"
 "\n"
 "#Title{\n"

@@ -52,12 +52,13 @@ class PoseTrackingThread(QtCore.QThread):
 
 
 class Video:
-    def __init__(self, type : str, filename : str, progressbar : QtWidgets.QProgressBar):
+    def __init__(self, type : str, filename : str, progressbar, window):
         self.frames = []
         self.type = type
         self.filename = filename
         self.currentframe_pos = 0
         self.bar = progressbar
+        self.importing_window = window
 
         if self.filename:
             self.track_poses()
@@ -141,7 +142,7 @@ class Video:
         self.currentframe_pos = current_frame_pos
         self.bar.setValue(self.currentframe_pos)
         if self.currentframe_pos == self.total_frames:
-            self.bar.close()
+            self.importing_window.close()
 
     def update_frames(self, frames):
         self.frames = frames
