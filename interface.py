@@ -35,6 +35,9 @@ class Model():
             for j in range(self.scene.contents.meshes[i].numofnormals):
                 normals.append((self.scene.contents.meshes[i].normals[j].x, self.scene.contents.meshes[i].normals[j].y, self.scene.contents.meshes[i].normals[j].z))
             self.meshes.append([vertices, indices, normals])
+            #print(self.scene.contents.meshes[i].numofnormals)
+            #print(self.scene.contents.meshes[i].numofvertices)
+            #print(self.scene.contents.meshes[i].numofindices)
         '''
         bones = []
         for i in range(scene.contents.numofbones):
