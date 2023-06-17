@@ -38,12 +38,12 @@ class Model():
             #print(self.scene.contents.meshes[i].numofnormals)
             #print(self.scene.contents.meshes[i].numofvertices)
             #print(self.scene.contents.meshes[i].numofindices)
-        '''
+    
         bones = []
-        for i in range(scene.contents.numofbones):
-            bones.append((scene.contents.bones[i].id, scene.contents.bones[i].name))
+        for i in range(self.scene.contents.numofbones):
+            bones.append((self.scene.contents.bones[i].id, self.scene.contents.bones[i].name))
 
-        lib.updatescene.argtypes = [c_double]'''
+        lib.updatescene.argtypes = [c_double]
         #lib.exportscene(b"sample.obj")
 
 

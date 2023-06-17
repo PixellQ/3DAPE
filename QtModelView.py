@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets, QtGui, QtOpenGL, QtCore
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
-from interface import *
+from ctest import Model
 
 class QtModelViewPort(QtOpenGL.QGLWidget):
     def __init__(self, parent=None):
@@ -13,7 +13,7 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
         self.rotationX = -20.0
         self.rotationY = -20.0
         self.zoom = -100.0
-        self.model = Model("F:/Major Project/3DAPE/3D models/Test.fbx")
+        self.model = Model("F:/Major Project/3DAPE/3D models/Hex.fbx")
 
     def initializeGL(self):
         glClearColor(0.2, 0.2, 0.2, 1.0)
@@ -62,12 +62,39 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)# gonna convert this to a variable to view different render models.
         
-        for i in range(self.model.scene.contents.numofmeshes):
-            vertices = self.model.meshes[i][0]
-            indices = self.model.meshes[i][1]
-            normals = self.model.meshes[i][2]
-            j = 0
-            if self.model.scene.contents.meshes[i].typeofpolygon == 2:
+        for meNo in range(self.model.scene.contents.meshCount):
+            polygons = self.model.meshes[meNo][0]
+            vertices = self.model.meshes[meNo][1]
+            indices = self.model.meshes[meNo][2]
+            normals = self.model.meshes[meNo][3]
+
+            #print(self.model.scene.contents.meshes[meNo].indexCount)
+            #print(self.model.scene.contents.meshes[meNo].normalCount)
+
+            for poNo in range(self.model.scene.contents.meshes[meNo].polygonCount):
+
+                polygon = polygons[poNo]
+                polygonSize = polygon[0]
+                startIndex = polygon[1]
+
+                if polygonSize == 2: drawing_mode = GL_LINES
+                elif polygonSize == 3: drawing_mode = GL_TRIANGLES
+                elif polygonSize == 4: drawing_mode = GL_QUADS
+                elif polygonSize >= 5: drawing_mode = GL_POLYGON
+
+                glBegin(drawing_mode)
+                for vertIndex in range(startIndex, startIndex + polygonSize):
+                    index = indices[vertIndex]
+
+                    vertex = vertices[index]
+                    glVertex3f(vertex[0], vertex[1], vertex[2])
+
+                    normal = normals[vertIndex]
+                    glNormal3f(normal[0], normal[1], normal[2])
+                glEnd()
+
+            '''j = 0
+            if self.model.scene.contents.meshes[meNo].typeofpolygon == 2:
                 glBegin(GL_LINES)
                 for vertexIndex in indices:
                     vertex = vertices[vertexIndex]
@@ -77,7 +104,7 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
                     j = j + 1
                 glEnd()
 
-            elif self.model.scene.contents.meshes[i].typeofpolygon == 3:
+            if self.model.scene.contents.meshes[meNo].typeofpolygon == 3:
                 glBegin(GL_TRIANGLES)
                 for vertexIndex in indices:
                     vertex = vertices[vertexIndex]
@@ -87,7 +114,7 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
                     j = j + 1
                 glEnd()
 
-            elif self.model.scene.contents.meshes[i].typeofpolygon == 4:
+            elif self.model.scene.contents.meshes[meNo].typeofpolygon == 4:
                 glBegin(GL_QUADS)
                 for vertexIndex in indices:
                     vertex = vertices[vertexIndex]
@@ -97,7 +124,7 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
                     j = j + 1
                 glEnd()
 
-            elif self.model.scene.contents.meshes[i].typeofpolygon >= 5:
+            elif self.model.scene.contents.meshes[meNo].typeofpolygon >= 5:
                 glBegin(GL_POLYGON)
                 for vertexIndex in indices:
                     vertex = vertices[vertexIndex]
@@ -105,9 +132,9 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
                     normal = normals[j]
                     glNormal3f(normal[0], normal[1], normal[2])
                     j = j + 1
-                glEnd()
+                glEnd()'''
 
-            glDisable(GL_LIGHTING)  # Disable lighting
+            glDisable(GL_LIGHTING)
 
         glFlush()
 
@@ -126,7 +153,6 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
         elif event.buttons() & QtCore.Qt.RightButton:
             self.panX += dx *0.05
             self.panY -= dy *0.05
-            #print(self.panY)
             self.update()
 
         self.lastPos = QtGui.QVector2D(event.pos())

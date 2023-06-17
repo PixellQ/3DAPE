@@ -1,55 +1,40 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  vertind.cpp
-F:\Major Project\3DAPE\vertind.cpp(78,42): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
+  model.cpp
+F:\Major Project\3DAPE\model.cpp(104,42): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=fbxsdk::FbxDouble
           ]
-F:\Major Project\3DAPE\vertind.cpp(79,42): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
+F:\Major Project\3DAPE\model.cpp(105,42): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=fbxsdk::FbxDouble
           ]
-F:\Major Project\3DAPE\vertind.cpp(80,42): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
+F:\Major Project\3DAPE\model.cpp(106,42): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=fbxsdk::FbxDouble
           ]
-F:\Major Project\3DAPE\vertind.cpp(95,41): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
+F:\Major Project\3DAPE\model.cpp(124,41): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=fbxsdk::FbxDouble
           ]
-F:\Major Project\3DAPE\vertind.cpp(96,41): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
+F:\Major Project\3DAPE\model.cpp(125,41): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=fbxsdk::FbxDouble
           ]
-F:\Major Project\3DAPE\vertind.cpp(97,41): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
+F:\Major Project\3DAPE\model.cpp(126,41): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=fbxsdk::FbxDouble
           ]
-F:\Major Project\3DAPE\vertind.cpp(111,44): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-F:\Major Project\3DAPE\vertind.cpp(112,42): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-F:\Major Project\3DAPE\vertind.cpp(209,69): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=fbxsdk::FbxDouble
-          ]
-F:\Major Project\3DAPE\vertind.cpp(210,69): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=fbxsdk::FbxDouble
-          ]
-F:\Major Project\3DAPE\vertind.cpp(211,69): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=fbxsdk::FbxDouble
-          ]
+F:\Major Project\3DAPE\model.cpp(138,41): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+F:\Major Project\3DAPE\model.cpp(140,40): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
      Creating library ..\M0dl.lib and object ..\M0dl.exp
   Generating code
-  1 of 157 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+  0 of 154 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

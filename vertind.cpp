@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <vector>
 #include <fbxsdk.h>
 #include <stdlib.h>
@@ -124,11 +124,6 @@ DLLEXPORT Scene *openfile(char* filename) {
 	collectmeshes(scene->GetRootNode());
 	cscene = getscene();
 
-	/*if (scene)
-	{
-		scene->Clear();
-	}*/
-
 	return cscene;
 }
 
@@ -220,4 +215,4 @@ DLLEXPORT void updatescene(double time_) {
 	for(int i=0; i<meshes.size(); i++) {
 		transformControlPoints(meshes[i], time, i);
 	}
-}
+}*/
