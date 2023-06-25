@@ -1,7 +1,7 @@
 import sys
 import os
 import platform
-#from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 from CoreUI import *
 import QtModelView
 from QtCustom import QtImportDialog, QtProgressDialog
@@ -80,57 +80,54 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
 
-
-# Setting up the user interface from Qt Designer
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-# Removing the default title bar
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        #self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        
 
 # Creating custom widgets
+
+        BackgroundShadow = QtWidgets.QGraphicsDropShadowEffect()
+        BackgroundShadow.setBlurRadius(20)
+        BackgroundShadow.setColor(QtGui.QColor(0, 0, 0, 200))
+        BackgroundShadow.setOffset(0, 0)
+        self.ui.BackgroundFrame.setGraphicsEffect(BackgroundShadow)
+
+        VidShadow = QtWidgets.QGraphicsDropShadowEffect()
+        VidShadow.setBlurRadius(10)
+        VidShadow.setColor(QtGui.QColor(0, 0, 0, 150))
+        VidShadow.setOffset(0, 0)
+        self.ui.VideoFrame.setGraphicsEffect(VidShadow)
+
+        ModShadow = QtWidgets.QGraphicsDropShadowEffect()
+        ModShadow.setBlurRadius(10)
+        ModShadow.setColor(QtGui.QColor(0, 0, 0, 150))
+        ModShadow.setOffset(0, 0)
+        self.ui.VideoOptions.setGraphicsEffect(ModShadow)
 
 # Video Player
         self.thread = QtCore.QThread()
         self.thread_started = False
 
-        self.VideoPlayer = QtWidgets.QLabel(self.ui.widget_4)
-        self.VideoPlayer.setText("Video Here")
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.VideoPlayer.sizePolicy().hasHeightForWidth())
-        self.VideoPlayer.setSizePolicy(sizePolicy)
-        palette = QtGui.QPalette()
-        brush = QtGui.QBrush(QtGui.QColor(150, 150, 150))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(150, 150, 150))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
-        self.VideoPlayer.setPalette(palette)
-        self.VideoPlayer.setScaledContents(True)
-        self.VideoPlayer.setAlignment(QtCore.Qt.AlignCenter)
-        self.VideoPlayer.setObjectName("VideoPlayer")
-        self.ui.gridLayout_10.addWidget(self.VideoPlayer, 0, 0, 1, 1)
-
 # ModelViewPort
-        self.ModelViewPort = QtModelView.QtModelViewPort(self.ui.ModelViewer)
+        '''self.ModelViewPort = QtModelView.QtModelViewPort(self.ui.ModelViewer)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.ModelViewPort.sizePolicy().hasHeightForWidth())
         self.ModelViewPort.setSizePolicy(sizePolicy)
         self.ModelViewPort.setObjectName("ModelViewPort")
-        self.ui.gridLayout_15.addWidget(self.ModelViewPort, 0, 0, 1, 1)
+        self.ui.gridLayout_15.addWidget(self.ModelViewPort, 0, 0, 1, 1)'''
 
+        self.minimizeicon = QtGui.QIcon()
+        self.minimizeicon.addPixmap(QtGui.QPixmap("UI/Icons/minimizeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.maximizeicon = QtGui.QIcon()
+        self.maximizeicon.addPixmap(QtGui.QPixmap("UI/Icons/maximizeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 
 # Binding the button events
+
         self.ui.MinimizeButton.clicked.connect(self.showMinimized)
         self.ui.MaximizeButton.clicked.connect(self.maximize_window)
         self.ui.CloseButton.clicked.connect(self.close)
@@ -140,9 +137,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.PlaynPause.clicked.connect(self.TogglePlay)
         self.playicon = QtGui.QIcon()
-        self.playicon.addPixmap(QtGui.QPixmap("UI/Icons/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.playicon.addPixmap(QtGui.QPixmap("UI/Icons/playBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pauseicon = QtGui.QIcon()
-        self.pauseicon.addPixmap(QtGui.QPixmap("UI/Icons/pause.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pauseicon.addPixmap(QtGui.QPixmap("UI/Icons/pauseBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.ui.PlaynPause.setIcon(self.playicon)
         self.ui.PreviousFrame.clicked.connect(self.GoBackward)
         self.ui.NextFrame.clicked.connect(self.GoForward)
@@ -157,8 +154,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.VideoList = []
         self.ui.listView.currentRowChanged.connect(self.OnItemClicked)
 
-        self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
-        self.ui.ExportModelBtn.clicked.connect(self.export_model)
+        '''self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
+        self.ui.ExportModelBtn.clicked.connect(self.export_model)'''
+
+        self.resizeConstraint = None
+        self.resizeHandle = True
+        self.timer = QtCore.QTimer(self)
+        self.timer.timeout.connect(self.trackMousePosition)
+        self.timer.start(50)
 
         self.isMaximized = False
 
@@ -167,7 +170,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         def moveWindow(event):
             if(self.isMaximized == False):
-                if(event.buttons() == QtCore.Qt.LeftButton):
+                if (event.buttons() == QtCore.Qt.LeftButton):
                     self.move(self.pos() + event.globalPos() - self.clickPosition)
                     self.clickPosition = event.globalPos()
                     event.accept()
@@ -175,8 +178,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.TitleBar.mouseMoveEvent = moveWindow
         self.show()
 
+
     def mousePressEvent(self,event):
         self.clickPosition = event.globalPos()
+
 
     def maximize_window(self):
         global WINDOW_SIZE
@@ -186,12 +191,106 @@ class MainWindow(QtWidgets.QMainWindow):
             WINDOW_SIZE = 1
             self.showMaximized()
             self.isMaximized = True
-            self.ui.MaximizeButton.setIcon(self.ui.minimizeicon)
+            self.ui.MaximizeButton.setIcon(self.minimizeicon)
         else:
             WINDOW_SIZE = 0
             self.showNormal()
             self.isMaximized = False
-            self.ui.MaximizeButton.setIcon(self.ui.maximizeicon)
+            self.ui.MaximizeButton.setIcon(self.maximizeicon)
+
+
+    def trackMousePosition(self):
+        mouse_pos = QtGui.QCursor.pos()
+        top_left = self.frameGeometry().topLeft()
+        bottom_right = self.frameGeometry().bottomRight()
+        border_size = 2
+        corner_size = 4
+        global WINDOW_SIZE
+
+        if self.resizeHandle and WINDOW_SIZE == 0:
+
+            if ((mouse_pos.x() <= (top_left.x() + corner_size)) and (mouse_pos.x() >= (top_left.x() - corner_size)) and (mouse_pos.y() <= (top_left.y() + corner_size)) and (mouse_pos.y() >= (top_left.y() - corner_size))):
+                self.setCursor(QtCore.Qt.SizeFDiagCursor)
+                self.resizeConstraint = 1
+            elif ((mouse_pos.x() <= (bottom_right.x() + corner_size)) and (mouse_pos.x() >= (bottom_right.x() - corner_size)) and (mouse_pos.y() <= (bottom_right.y() + corner_size)) and (mouse_pos.y() >= (bottom_right.y() - corner_size))):
+                self.setCursor(QtCore.Qt.SizeFDiagCursor)
+                self.resizeConstraint = 2 
+            elif ((mouse_pos.x() <= (top_left.x() + corner_size)) and (mouse_pos.x() >= (top_left.x() - corner_size)) and (mouse_pos.y() <= (bottom_right.y() + corner_size)) and (mouse_pos.y() >= (bottom_right.y() - corner_size))):
+                self.setCursor(QtCore.Qt.SizeBDiagCursor)
+                self.resizeConstraint = 3
+            elif ((mouse_pos.x() <= (top_left.x() + border_size)) and (mouse_pos.x() >= (top_left.x() - border_size))):
+                self.setCursor(QtCore.Qt.SizeHorCursor)
+                self.resizeConstraint = 4
+            elif ((mouse_pos.x() >= (bottom_right.x() - border_size)) and (mouse_pos.y() > (top_left.y() + self.ui.CloseButton.height()))):
+                self.setCursor(QtCore.Qt.SizeHorCursor)
+                self.resizeConstraint = 5 
+            elif ((mouse_pos.y() <= (top_left.y() + border_size)) and (mouse_pos.y() >= (top_left.y() - border_size)) and (mouse_pos.x() < (self.frameGeometry().topRight().x() - (self.ui.MinimizeButton.width() + self.ui.MaximizeButton.width() + self.ui.CloseButton.width())))):
+                self.setCursor(QtCore.Qt.SizeVerCursor)
+                self.resizeConstraint = 6
+            elif ((mouse_pos.y() <= (bottom_right.y() + border_size)) and (mouse_pos.y() >= (bottom_right.y() - border_size))):
+                self.setCursor(QtCore.Qt.SizeVerCursor)
+                self.resizeConstraint = 7
+            else:
+                self.setCursor(QtCore.Qt.ArrowCursor)
+                self.resizeConstraint = None
+
+
+    def mouseReleaseEvent(self, event):
+        self.resizeHandle = True
+        event.accept()
+    
+
+    def mouseMoveEvent(self, event):
+        if (event.buttons() == QtCore.Qt.LeftButton) and (self.resizeConstraint != None):
+            self.resizeHandle = False
+
+            if self.resizeConstraint == 1:
+                size = self.frameGeometry().bottomRight() - event.globalPos()
+                width = size.x()
+                height = size.y()
+                self.resize(width, height)
+
+            elif self.resizeConstraint == 2:
+                size = event.globalPos() - self.frameGeometry().topLeft()
+                width = size.x()
+                height = size.y()
+                self.resize(width, height)
+
+            elif self.resizeConstraint == 3:
+                size = event.globalPos() - self.frameGeometry().topRight()
+                width = self.frameGeometry().right() - event.globalPos().x()
+                height = event.globalPos().y() - self.frameGeometry().top()
+                #self.resize(width, height)
+                self.setGeometry(event.globalPos().x(), self.frameGeometry().topLeft().y(), width, height)
+
+            elif self.resizeConstraint == 4:
+                size = event.globalPos() - self.frameGeometry().topRight()
+                width = event.globalPos().x() - self.frameGeometry().width()
+                height = self.frameGeometry().height()
+                #self.resize(width, height)
+                self.setGeometry(event.globalPos().x(), self.frameGeometry().topLeft().y(), width, height)
+
+            elif self.resizeConstraint == 5:
+                width = event.globalPos().x() - self.frameGeometry().left()
+                height = self.frameGeometry().height()
+                self.resize(width, height)
+
+            elif self.resizeConstraint == 6:
+                width = event.globalPos().x() - self.frameGeometry().left()
+                height = self.frameGeometry().height()
+                self.resize(width, height)
+
+            elif self.resizeConstraint == 7:
+                width = self.frameGeometry().width()
+                height = event.globalPos().y() - self.frameGeometry().top()
+                self.resize(width, height)
+
+            event.accept()
+
+
+    def minimumSizeHint(self):
+        return QtCore.QSize(200, 200)
+
 
 # Import Video Functions
     def ImportVideo(self):
@@ -242,6 +341,20 @@ class MainWindow(QtWidgets.QMainWindow):
 
         vid_data = vid_type + '   :     ' + vid_path
         self.ui.listView.addItem(vid_data)
+
+        self.ui.ImportVidbtn.destroy()
+
+        self.VideoPlayer = QtWidgets.QLabel(self.ui.VideoContainer)
+        #self.VideoPlayer.setText("Video Here")
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.VideoPlayer.sizePolicy().hasHeightForWidth())
+        self.VideoPlayer.setSizePolicy(sizePolicy)
+        self.VideoPlayer.setScaledContents(True)
+        self.VideoPlayer.setAlignment(QtCore.Qt.AlignCenter)
+        self.VideoPlayer.setObjectName("VideoPlayer")
+        self.ui.gridLayout_9.addWidget(self.VideoPlayer, 0, 0, 1, 1)
 
 
 
@@ -344,7 +457,7 @@ class MainWindow(QtWidgets.QMainWindow):
             preview_pose = True
 
 # Import model functions
-    def open_model_dir(self):
+    '''def open_model_dir(self):
         filename, ok = QtWidgets.QFileDialog.getOpenFileName(
             self.ModelViewPort,
             "Select a 3D File",
@@ -381,13 +494,8 @@ class MainWindow(QtWidgets.QMainWindow):
                 if(int(temp_bar.value()) >= 100):
                     temp_bar.close()
                     break
-                cv2.waitKey(20)
+                cv2.waitKey(20)'''
 
-            #temp_bar.close()
-            '''with open(source_file_path, 'r') as source_file:
-                content = source_file.read()
-            with open(self.file_path, 'w') as file:
-                file.write(content)'''
             
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

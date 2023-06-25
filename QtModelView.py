@@ -13,9 +13,10 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
         self.rotationX = -20.0
         self.rotationY = -20.0
         self.zoom = -100.0
-        self.model = Model("F:/Major Project/3DAPE/3D models/Hex.fbx")
+        self.model = Model("F:/Major Project/3DAPE/3D models/Mannequin.fbx")
 
     def initializeGL(self):
+        #glShadeModel(GL_SMOOTH)
         glClearColor(0.2, 0.2, 0.2, 1.0)
         glEnable(GL_DEPTH_TEST)
 
@@ -23,7 +24,7 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
         glViewport(0, 0, width, height)
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        gluPerspective(45, width / float(height), 0.1, 100.0)
+        gluPerspective(45, width / float(height), 0.1, 250.0)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
@@ -73,9 +74,8 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
 
             for poNo in range(self.model.scene.contents.meshes[meNo].polygonCount):
 
-                polygon = polygons[poNo]
-                polygonSize = polygon[0]
-                startIndex = polygon[1]
+                polygonSize = polygons[poNo][0]
+                startIndex = polygons[poNo][1]
 
                 if polygonSize == 2: drawing_mode = GL_LINES
                 elif polygonSize == 3: drawing_mode = GL_TRIANGLES
@@ -92,47 +92,6 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
                     normal = normals[vertIndex]
                     glNormal3f(normal[0], normal[1], normal[2])
                 glEnd()
-
-            '''j = 0
-            if self.model.scene.contents.meshes[meNo].typeofpolygon == 2:
-                glBegin(GL_LINES)
-                for vertexIndex in indices:
-                    vertex = vertices[vertexIndex]
-                    glVertex3f(vertex[0], vertex[1], vertex[2])
-                    normal = normals[j]
-                    glNormal3f(normal[0], normal[1], normal[2])
-                    j = j + 1
-                glEnd()
-
-            if self.model.scene.contents.meshes[meNo].typeofpolygon == 3:
-                glBegin(GL_TRIANGLES)
-                for vertexIndex in indices:
-                    vertex = vertices[vertexIndex]
-                    glVertex3f(vertex[0], vertex[1], vertex[2])
-                    normal = normals[j]
-                    glNormal3f(normal[0], normal[1], normal[2])
-                    j = j + 1
-                glEnd()
-
-            elif self.model.scene.contents.meshes[meNo].typeofpolygon == 4:
-                glBegin(GL_QUADS)
-                for vertexIndex in indices:
-                    vertex = vertices[vertexIndex]
-                    glVertex3f(vertex[0], vertex[1], vertex[2])
-                    normal = normals[j]
-                    glNormal3f(normal[0], normal[1], normal[2])
-                    j = j + 1
-                glEnd()
-
-            elif self.model.scene.contents.meshes[meNo].typeofpolygon >= 5:
-                glBegin(GL_POLYGON)
-                for vertexIndex in indices:
-                    vertex = vertices[vertexIndex]
-                    glVertex3f(vertex[0], vertex[1], vertex[2])
-                    normal = normals[j]
-                    glNormal3f(normal[0], normal[1], normal[2])
-                    j = j + 1
-                glEnd()'''
 
             glDisable(GL_LIGHTING)
 
@@ -165,9 +124,10 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
     def changeFile(self, filename: str):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         self.model = Model(filename)
-        self.paintGL()
+        self.initializeGL()
+        self.update()
 
-app = QtWidgets.QApplication([])
+'''app = QtWidgets.QApplication([])
 widget = QtModelViewPort()
 widget.show()
-app.exec()
+app.exec()'''

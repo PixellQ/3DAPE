@@ -18,22 +18,28 @@ class QtImportDialog(object):
         Dialog.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         Dialog.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        Dialog.resize(800, 200)
+        Dialog.resize(600, 150)
         Dialog.setStyleSheet("#MainWidget{\n"
-"   background-color: #2e2d2f;\n"
-"   border:1px solid gray;\n"
+"   background-color: #ffffff;\n"
+"   border:1px solid black;\n"
+"   border-radius: 5px;\n"
 "}\n"
 "\n"
+"#TitleWidget{\n"
+"   background-color: #0078d7;\n"
+"   border-top-left-radius: 5px;\n"
+"   border-top-right-radius: 5px;\n"
+"}\n"
 "#Title{\n"
 "   color: #fbfdfb;\n"
 "}\n"
 "\n"
 "#TypeLabel{\n"
-"   color: rgb(175, 175, 175);\n"
+"   color: #000000;\n"
 "}\n"
 "\n"
 "#FileLabel{\n"
-"   color: rgb(175, 175, 175);\n"
+"   color: #000000;\n"
 "}\n")
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -42,6 +48,7 @@ class QtImportDialog(object):
         self.MainWidget = QtWidgets.QWidget(Dialog)
         self.MainWidget.setObjectName("MainWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.MainWidget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.TitleWidget = QtWidgets.QWidget(self.MainWidget)
         self.TitleWidget.setObjectName("TitleWidget")
@@ -65,7 +72,7 @@ class QtImportDialog(object):
         self.ContentWidget.setSizePolicy(sizePolicy)
         self.ContentWidget.setObjectName("ContentWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContentWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        #self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.TypeWidget = QtWidgets.QWidget(self.ContentWidget)
         self.TypeWidget.setObjectName("TypeWidget")
@@ -95,7 +102,7 @@ class QtImportDialog(object):
         self.BrowseBtn = QtWidgets.QPushButton(self.FileWidget)
         self.BrowseBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("UI/Icons/folder.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("UI/Icons/folderBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.BrowseBtn.setIcon(icon)
         self.BrowseBtn.setIconSize(QtCore.QSize(18, 18))
         self.BrowseBtn.setFlat(True)
@@ -137,12 +144,13 @@ class QtProgressDialog(object):
         
         Dialog.resize(500, 120)
         Dialog.setStyleSheet("#MainWidget{\n"
-"   background-color: #2e2d2f;\n"
+"   background-color: #ffffff;\n"
 "   border: 1px solid gray;\n"
+"   border-radius: 5px;\n"
 "}\n"
 "\n"
 "#Title{\n"
-"   color: #fdfbfd;\n"
+"   color: #000000;\n"
 "}\n"
 "\n"
 "#TypeLabel{\n"
@@ -151,6 +159,9 @@ class QtProgressDialog(object):
 "\n"
 "#FileLabel{\n"
 "   color: rgb(175, 175, 175);\n"
+"}\n"
+"#progressBar::chunk{\n"
+"   background-color: #0078d7;\n"
 "}\n"
 "\n")
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
@@ -187,6 +198,7 @@ class QtProgressDialog(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
 
         self.progressBar = QtWidgets.QProgressBar(self.ContentWidget)
+        self.progressBar.setAlignment(QtCore.Qt.AlignCenter)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(253, 251, 253))
         brush.setStyle(QtCore.Qt.SolidPattern)
