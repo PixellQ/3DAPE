@@ -36,15 +36,29 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.MenuBar = QtWidgets.QWidget(self.BackgroundFrame)
         self.MenuBar.setStyleSheet("#MenuBar{\n"
-"   background-color: rgb(0, 120, 215);\n"
+"   background-color: #ffffff;\n"
+"   /*border: none;\n"
+"   border-right: 1px solid white; */\n"
 "   border-top-left-radius: 5px;\n"
 "   border-bottom-left-radius: 5px;\n"
+"}\n"
+"\n"
+"QFrame{\n"
+"   background-color: rgb(0, 120, 215);\n"
+"}\n"
+"\n"
+"QWidget{\n"
+"    background-color: rgb(0, 120, 215);\n"
 "}")
         self.MenuBar.setObjectName("MenuBar")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.MenuBar)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.TitleSection = QtWidgets.QWidget(self.MenuBar)
+        self.TitleSection.setStyleSheet("QWidget{\n"
+"    border-top-left-radius: 5px;\n"
+"}")
         self.TitleSection.setObjectName("TitleSection")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.TitleSection)
         self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
@@ -58,7 +72,8 @@ class Ui_MainWindow(object):
         self.gridLayout_6.setObjectName("gridLayout_6")
         self.TitleButton = QtWidgets.QPushButton(self.TitleContainer)
         self.TitleButton.setStyleSheet("#TitleButton{\n"
-"   border-radius: 1px;\n"
+"   background-color: none;\n"
+"   border-radius: none;\n"
 "   padding: 0px;\n"
 "   margin: 4px;\n"
 "   margin-top: 8px;\n"
@@ -79,23 +94,43 @@ class Ui_MainWindow(object):
         self.ContentSection.setSizePolicy(sizePolicy)
         self.ContentSection.setStyleSheet("QPushButton{\n"
 "    border-radius: none;\n"
+"    background-color: none;\n"
+"}\n"
+"\n"
+"QPushButton::hover{\n"
+"    background-color: rgb(0, 108, 190);\n"
+"}\n"
+"\n"
+"#ContentSection{\n"
+"    border-radius: none;\n"
+"    background-color: none;\n"
 "}")
         self.ContentSection.setObjectName("ContentSection")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.ContentSection)
-        self.verticalLayout_4.setContentsMargins(0, 20, 0, 20)
-        self.verticalLayout_4.setSpacing(20)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        spacerItem = QtWidgets.QSpacerItem(20, 200, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem)
+        self.TopSpaceFrame = QtWidgets.QFrame(self.ContentSection)
+        self.TopSpaceFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.TopSpaceFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.TopSpaceFrame.setObjectName("TopSpaceFrame")
+        self.gridLayout_18 = QtWidgets.QGridLayout(self.TopSpaceFrame)
+        self.gridLayout_18.setContentsMargins(0, 20, 0, 10)
+        self.gridLayout_18.setSpacing(0)
+        self.gridLayout_18.setObjectName("gridLayout_18")
+        spacerItem = QtWidgets.QSpacerItem(20, 175, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_18.addItem(spacerItem, 0, 0, 1, 1)
+        self.verticalLayout_4.addWidget(self.TopSpaceFrame)
         self.VideoPageFrame = QtWidgets.QFrame(self.ContentSection)
         self.VideoPageFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.VideoPageFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.VideoPageFrame.setObjectName("VideoPageFrame")
         self.gridLayout_14 = QtWidgets.QGridLayout(self.VideoPageFrame)
-        self.gridLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_14.setContentsMargins(0, 10, 0, 10)
         self.gridLayout_14.setSpacing(0)
         self.gridLayout_14.setObjectName("gridLayout_14")
         self.VideoPageBtn = QtWidgets.QPushButton(self.VideoPageFrame)
+        self.VideoPageBtn.setStyleSheet("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("UI/Icons/Video.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.VideoPageBtn.setIcon(icon1)
@@ -104,11 +139,14 @@ class Ui_MainWindow(object):
         self.gridLayout_14.addWidget(self.VideoPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.VideoPageFrame)
         self.ModelPageFrame = QtWidgets.QFrame(self.ContentSection)
+        self.ModelPageFrame.setStyleSheet("QFrame{\n"
+"    border-bottom-right-radius: 5px;\n"
+"}")
         self.ModelPageFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.ModelPageFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.ModelPageFrame.setObjectName("ModelPageFrame")
         self.gridLayout_15 = QtWidgets.QGridLayout(self.ModelPageFrame)
-        self.gridLayout_15.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_15.setContentsMargins(0, 10, 0, 10)
         self.gridLayout_15.setSpacing(0)
         self.gridLayout_15.setObjectName("gridLayout_15")
         self.ModelPageBtn = QtWidgets.QPushButton(self.ModelPageFrame)
@@ -120,14 +158,18 @@ class Ui_MainWindow(object):
         self.gridLayout_15.addWidget(self.ModelPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.ModelPageFrame)
         self.FinalPageFrame = QtWidgets.QFrame(self.ContentSection)
+        self.FinalPageFrame.setStyleSheet("QFrame{\n"
+"    background-color: #ffffff;\n"
+"}")
         self.FinalPageFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.FinalPageFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.FinalPageFrame.setObjectName("FinalPageFrame")
         self.gridLayout_16 = QtWidgets.QGridLayout(self.FinalPageFrame)
-        self.gridLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_16.setContentsMargins(0, 10, 0, 10)
         self.gridLayout_16.setSpacing(0)
         self.gridLayout_16.setObjectName("gridLayout_16")
         self.FinalPageBtn = QtWidgets.QPushButton(self.FinalPageFrame)
+        self.FinalPageBtn.setStyleSheet("")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap("UI/Icons/Final.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.FinalPageBtn.setIcon(icon3)
@@ -135,11 +177,45 @@ class Ui_MainWindow(object):
         self.FinalPageBtn.setObjectName("FinalPageBtn")
         self.gridLayout_16.addWidget(self.FinalPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.FinalPageFrame)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 178, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem1)
+        self.BottomSpaceFrame = QtWidgets.QFrame(self.ContentSection)
+        self.BottomSpaceFrame.setStyleSheet("QFrame{\n"
+"    border-top-right-radius: 5px; \n"
+"}")
+        self.BottomSpaceFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.BottomSpaceFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.BottomSpaceFrame.setObjectName("BottomSpaceFrame")
+        self.gridLayout_19 = QtWidgets.QGridLayout(self.BottomSpaceFrame)
+        self.gridLayout_19.setContentsMargins(0, 10, 0, 20)
+        self.gridLayout_19.setSpacing(0)
+        self.gridLayout_19.setObjectName("gridLayout_19")
+        spacerItem1 = QtWidgets.QSpacerItem(20, 200, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_19.addItem(spacerItem1, 0, 0, 1, 1)
+        self.verticalLayout_4.addWidget(self.BottomSpaceFrame)
         self.verticalLayout_2.addWidget(self.ContentSection)
         self.BottomSection = QtWidgets.QWidget(self.MenuBar)
+        self.BottomSection.setStyleSheet("#BottomSection{\n"
+"    border-bottom-left-radius: 5px;\n"
+"}")
         self.BottomSection.setObjectName("BottomSection")
+        self.gridLayout_17 = QtWidgets.QGridLayout(self.BottomSection)
+        self.gridLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_17.setSpacing(0)
+        self.gridLayout_17.setObjectName("gridLayout_17")
+        self.SettingsBtn = QtWidgets.QPushButton(self.BottomSection)
+        self.SettingsBtn.setStyleSheet("#SettingsBtn{\n"
+"    background-color: none;\n"
+"    border-radius: none;\n"
+"    padding: 0px;\n"
+"    margin: 4px;\n"
+"    margin-top: 8px;\n"
+"    margin-bottom: 8px;\n"
+"}")
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("UI/Icons/settingH.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.SettingsBtn.setIcon(icon4)
+        self.SettingsBtn.setIconSize(QtCore.QSize(24, 24))
+        self.SettingsBtn.setObjectName("SettingsBtn")
+        self.gridLayout_17.addWidget(self.SettingsBtn, 0, 0, 1, 1)
         self.verticalLayout_2.addWidget(self.BottomSection)
         self.horizontalLayout.addWidget(self.MenuBar, 0, QtCore.Qt.AlignLeft)
         self.MainWidget = QtWidgets.QWidget(self.BackgroundFrame)
@@ -196,9 +272,9 @@ class Ui_MainWindow(object):
         self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.MinimizeButton = QtWidgets.QPushButton(self.MinContainer)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("UI/Icons/minusB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MinimizeButton.setIcon(icon4)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("UI/Icons/minusB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MinimizeButton.setIcon(icon5)
         self.MinimizeButton.setIconSize(QtCore.QSize(41, 27))
         self.MinimizeButton.setObjectName("MinimizeButton")
         self.gridLayout_2.addWidget(self.MinimizeButton, 0, 0, 1, 1)
@@ -210,9 +286,9 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setSpacing(0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.MaximizeButton = QtWidgets.QPushButton(self.MaxContainer)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("UI/Icons/maximizeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MaximizeButton.setIcon(icon5)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("UI/Icons/maximizeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MaximizeButton.setIcon(icon6)
         self.MaximizeButton.setIconSize(QtCore.QSize(41, 28))
         self.MaximizeButton.setObjectName("MaximizeButton")
         self.gridLayout_3.addWidget(self.MaximizeButton, 0, 0, 1, 1)
@@ -224,9 +300,9 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setSpacing(0)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.CloseButton = QtWidgets.QPushButton(self.CloseContainer)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("UI/Icons/closeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.CloseButton.setIcon(icon6)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("UI/Icons/closeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.CloseButton.setIcon(icon7)
         self.CloseButton.setIconSize(QtCore.QSize(41, 28))
         self.CloseButton.setObjectName("CloseButton")
         self.gridLayout_4.addWidget(self.CloseButton, 0, 0, 1, 1)
@@ -331,9 +407,9 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.PreviousFrame.sizePolicy().hasHeightForWidth())
         self.PreviousFrame.setSizePolicy(sizePolicy)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("UI/Icons/previousBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.PreviousFrame.setIcon(icon7)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("UI/Icons/previousBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.PreviousFrame.setIcon(icon8)
         self.PreviousFrame.setObjectName("PreviousFrame")
         self.horizontalLayout_5.addWidget(self.PreviousFrame)
         self.PlaynPause = QtWidgets.QPushButton(self.ToolsContainer)
@@ -350,9 +426,9 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.NextFrame.sizePolicy().hasHeightForWidth())
         self.NextFrame.setSizePolicy(sizePolicy)
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("UI/Icons/nextBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.NextFrame.setIcon(icon8)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("UI/Icons/nextBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.NextFrame.setIcon(icon9)
         self.NextFrame.setObjectName("NextFrame")
         self.horizontalLayout_5.addWidget(self.NextFrame)
         self.horizontalSlider = QtWidgets.QSlider(self.ToolsContainer)
@@ -403,12 +479,12 @@ class Ui_MainWindow(object):
 "    padding-right: 15px;\n"
 "}\n"
 "\n"
-"#PreviewBtn:hover{\n"
+"#PreviewBtn::hover{\n"
 "    background-color:rgb(0, 108, 190);\n"
 "    border-color:  rgb(0, 120, 215);\n"
 "}\n"
 "\n"
-"QPushButton:selected{\n"
+"#PreviewBtn::selected{\n"
 "    color: rgb(0, 0, 0);\n"
 "    background-color: rgb(255, 255, 255);\n"
 "}")

@@ -67,12 +67,25 @@
         <widget class="QWidget" name="MenuBar" native="true">
          <property name="styleSheet">
           <string notr="true">#MenuBar{
-   background-color: rgb(0, 120, 215);
+   background-color: #ffffff;
+   /*border: none;
+   border-right: 1px solid white; */
    border-top-left-radius: 5px;
    border-bottom-left-radius: 5px;
+}
+
+QFrame{
+   background-color: rgb(0, 120, 215);
+}
+
+QWidget{
+    background-color: rgb(0, 120, 215);
 }</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -87,6 +100,11 @@
           </property>
           <item alignment="Qt::AlignTop">
            <widget class="QWidget" name="TitleSection" native="true">
+            <property name="styleSheet">
+             <string notr="true">QWidget{
+	border-top-left-radius: 5px;
+}</string>
+            </property>
             <layout class="QGridLayout" name="gridLayout_5">
              <property name="leftMargin">
               <number>0</number>
@@ -125,7 +143,8 @@
                  <widget class="QPushButton" name="TitleButton">
                   <property name="styleSheet">
                    <string notr="true">#TitleButton{
-   border-radius: 1px;
+   background-color: none;
+   border-radius: none;
    padding: 0px;
    margin: 4px;
    margin-top: 8px;
@@ -160,36 +179,73 @@
             <property name="styleSheet">
              <string notr="true">QPushButton{
 	border-radius: none;
+	background-color: none;
+}
+
+QPushButton::hover{
+	background-color: rgb(0, 108, 190);
+}
+
+#ContentSection{
+	border-radius: none;
+	background-color: none;
 }</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
-              <number>20</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>20</number>
+              <number>0</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>20</number>
+              <number>0</number>
              </property>
              <item>
-              <spacer name="verticalSpacer">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
+              <widget class="QFrame" name="TopSpaceFrame">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>200</height>
-                </size>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
                </property>
-              </spacer>
+               <layout class="QGridLayout" name="gridLayout_18">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>20</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <spacer name="TopSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>175</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
              </item>
              <item>
               <widget class="QFrame" name="VideoPageFrame">
@@ -204,13 +260,13 @@
                  <number>0</number>
                 </property>
                 <property name="topMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="rightMargin">
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="spacing">
                  <number>0</number>
@@ -237,6 +293,9 @@
              </item>
              <item>
               <widget class="QFrame" name="ModelPageFrame">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -248,13 +307,13 @@
                  <number>0</number>
                 </property>
                 <property name="topMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="rightMargin">
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="spacing">
                  <number>0</number>
@@ -278,6 +337,9 @@
              </item>
              <item>
               <widget class="QFrame" name="FinalPageFrame">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -289,19 +351,22 @@
                  <number>0</number>
                 </property>
                 <property name="topMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="rightMargin">
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="spacing">
                  <number>0</number>
                 </property>
                 <item row="0" column="0">
                  <widget class="QPushButton" name="FinalPageBtn">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
                   <property name="icon">
                    <iconset>
                     <normaloff>UI/Icons/Final.png</normaloff>UI/Icons/Final.png</iconset>
@@ -318,23 +383,100 @@
               </widget>
              </item>
              <item>
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
+              <widget class="QFrame" name="BottomSpaceFrame">
+               <property name="styleSheet">
+                <string notr="true"/>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>178</height>
-                </size>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
                </property>
-              </spacer>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_19">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>20</number>
+                </property>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <spacer name="BottomSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>200</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
              </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="BottomSection" native="true"/>
+           <widget class="QWidget" name="BottomSection" native="true">
+            <property name="styleSheet">
+             <string notr="true">#BottomSection{
+	border-bottom-left-radius: 5px;
+}</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_17">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="SettingsBtn">
+               <property name="styleSheet">
+                <string notr="true">#SettingsBtn{
+	background-color: none;
+	border-radius: none;
+    padding: 0px;
+    margin: 4px;
+    margin-top: 8px;
+	margin-bottom: 8px;
+}</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>UI/Icons/settingH.png</normaloff>UI/Icons/settingH.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -818,12 +960,12 @@ QSlider::handle{
 	padding-right: 15px;
 }
 
-#PreviewBtn:hover{
+#PreviewBtn::hover{
     background-color:rgb(0, 108, 190);
     border-color:  rgb(0, 120, 215);
 }
 
-QPushButton:selected{
+#PreviewBtn::selected{
 	color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
 }</string>
