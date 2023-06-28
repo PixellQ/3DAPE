@@ -48,7 +48,7 @@ class QtImportDialog(object):
         self.MainWidget = QtWidgets.QWidget(Dialog)
         self.MainWidget.setObjectName("MainWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.MainWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 9)
         self.verticalLayout.setObjectName("verticalLayout")
         self.TitleWidget = QtWidgets.QWidget(self.MainWidget)
         self.TitleWidget.setObjectName("TitleWidget")

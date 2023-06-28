@@ -89,11 +89,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
 # Creating custom widgets
 
-        BackgroundShadow = QtWidgets.QGraphicsDropShadowEffect()
+        '''BackgroundShadow = QtWidgets.QGraphicsDropShadowEffect()
         BackgroundShadow.setBlurRadius(20)
         BackgroundShadow.setColor(QtGui.QColor(0, 0, 0, 200))
         BackgroundShadow.setOffset(0, 0)
-        self.ui.BackgroundFrame.setGraphicsEffect(BackgroundShadow)
+        self.ui.BackgroundFrame.setGraphicsEffect(BackgroundShadow)'''
 
         VidShadow = QtWidgets.QGraphicsDropShadowEffect()
         VidShadow.setBlurRadius(10)
@@ -101,11 +101,23 @@ class MainWindow(QtWidgets.QMainWindow):
         VidShadow.setOffset(0, 0)
         self.ui.VideoFrame.setGraphicsEffect(VidShadow)
 
-        ModShadow = QtWidgets.QGraphicsDropShadowEffect()
-        ModShadow.setBlurRadius(10)
-        ModShadow.setColor(QtGui.QColor(0, 0, 0, 150))
-        ModShadow.setOffset(0, 0)
-        self.ui.VideoOptions.setGraphicsEffect(ModShadow)
+        ModOpShadow = QtWidgets.QGraphicsDropShadowEffect()
+        ModOpShadow.setBlurRadius(10)
+        ModOpShadow.setColor(QtGui.QColor(0, 0, 0, 150))
+        ModOpShadow.setOffset(0, 0)
+        self.ui.ModelFrame.setGraphicsEffect(ModOpShadow)
+
+        VidOpShadow = QtWidgets.QGraphicsDropShadowEffect()
+        VidOpShadow.setBlurRadius(10)
+        VidOpShadow.setColor(QtGui.QColor(0, 0, 0, 150))
+        VidOpShadow.setOffset(0, 0)
+        self.ui.VideoOptions.setGraphicsEffect(VidOpShadow)
+
+        ModOpShadow = QtWidgets.QGraphicsDropShadowEffect()
+        ModOpShadow.setBlurRadius(10)
+        ModOpShadow.setColor(QtGui.QColor(0, 0, 0, 150))
+        ModOpShadow.setOffset(0, 0)
+        self.ui.ModelOptions.setGraphicsEffect(ModOpShadow)
 
 # Video Player
         self.thread = QtCore.QThread()
@@ -154,8 +166,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.VideoList = []
         self.ui.listView.currentRowChanged.connect(self.OnItemClicked)
 
-        '''self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
-        self.ui.ExportModelBtn.clicked.connect(self.export_model)'''
+        self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
+        #self.ui.ExportModelBtn.clicked.connect(self.export_model)
 
         self.resizeConstraint = None
         self.resizeHandle = True
@@ -457,18 +469,30 @@ class MainWindow(QtWidgets.QMainWindow):
             preview_pose = True
 
 # Import model functions
-    '''def open_model_dir(self):
+    def open_model_dir(self):
         filename, ok = QtWidgets.QFileDialog.getOpenFileName(
-            self.ModelViewPort,
+            self.ui.ModelContainer,
             "Select a 3D File",
             "",
             "Videos (*.fbx *.obj)"
         )
         if filename:
+
+            self.ui.ImportModelBtn.destroy()
+
+            self.ModelViewPort = QtModelView.QtModelViewPort(self.ui.ModelContainer)
+            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            sizePolicy.setHeightForWidth(self.ModelViewPort.sizePolicy().hasHeightForWidth())
+            self.ModelViewPort.setSizePolicy(sizePolicy)
+            self.ModelViewPort.setObjectName("ModelViewPort")
+            self.ui.gridLayout_25.addWidget(self.ModelViewPort, 0, 0, 1, 1)
+
             self.ModelViewPort.changeFile(filename)
 
 # Export model function
-    def export_model(self):
+    '''def export_model(self):
         import shutil
         file_dialog = QtWidgets.QFileDialog()
         file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)

@@ -24,8 +24,11 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName("gridLayout")
         self.BackgroundFrame = QtWidgets.QFrame(self.centralwidget)
         self.BackgroundFrame.setStyleSheet("#BackgroundFrame{\n"
-"   /*border: 1px solid black; */\n"
+"   border-top: 1px solid black; \n"
+"   border-bottom: 1px solid black; \n"
+"   border-right: 1px solid black; \n"
 "   border-radius: 5px;\n"
+"   border-color: rgb(0, 120, 215);\n"
 "}")
         self.BackgroundFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.BackgroundFrame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -139,9 +142,7 @@ class Ui_MainWindow(object):
         self.gridLayout_14.addWidget(self.VideoPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.VideoPageFrame)
         self.ModelPageFrame = QtWidgets.QFrame(self.ContentSection)
-        self.ModelPageFrame.setStyleSheet("QFrame{\n"
-"    border-bottom-right-radius: 5px;\n"
-"}")
+        self.ModelPageFrame.setStyleSheet("")
         self.ModelPageFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.ModelPageFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.ModelPageFrame.setObjectName("ModelPageFrame")
@@ -158,9 +159,7 @@ class Ui_MainWindow(object):
         self.gridLayout_15.addWidget(self.ModelPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.ModelPageFrame)
         self.FinalPageFrame = QtWidgets.QFrame(self.ContentSection)
-        self.FinalPageFrame.setStyleSheet("QFrame{\n"
-"    background-color: #ffffff;\n"
-"}")
+        self.FinalPageFrame.setStyleSheet("")
         self.FinalPageFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.FinalPageFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.FinalPageFrame.setObjectName("FinalPageFrame")
@@ -178,9 +177,7 @@ class Ui_MainWindow(object):
         self.gridLayout_16.addWidget(self.FinalPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.FinalPageFrame)
         self.BottomSpaceFrame = QtWidgets.QFrame(self.ContentSection)
-        self.BottomSpaceFrame.setStyleSheet("QFrame{\n"
-"    border-top-right-radius: 5px; \n"
-"}")
+        self.BottomSpaceFrame.setStyleSheet("")
         self.BottomSpaceFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.BottomSpaceFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.BottomSpaceFrame.setObjectName("BottomSpaceFrame")
@@ -317,7 +314,7 @@ class Ui_MainWindow(object):
         self.Content.setSizePolicy(sizePolicy)
         self.Content.setStyleSheet("#Content{\n"
 "   border-bottom-right-radius: 5px;\n"
-"   background-color: rgb(255, 255, 255);\n"
+"   background-color: #ffffff;\n"
 "}")
         self.Content.setObjectName("Content")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.Content)
@@ -336,16 +333,26 @@ class Ui_MainWindow(object):
         self.VidPageBackground = QtWidgets.QWidget(self.VideoPage)
         self.VidPageBackground.setStyleSheet("")
         self.VidPageBackground.setObjectName("VidPageBackground")
-        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.VidPageBackground)
-        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_4.setSpacing(2)
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.VideoBox = QtWidgets.QWidget(self.VidPageBackground)
+        self.gridLayout_10 = QtWidgets.QGridLayout(self.VidPageBackground)
+        self.gridLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_10.setSpacing(0)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.VideoSplitter = QtWidgets.QSplitter(self.VidPageBackground)
+        self.VideoSplitter.setOrientation(QtCore.Qt.Horizontal)
+        self.VideoSplitter.setHandleWidth(0)
+        self.VideoSplitter.setObjectName("VideoSplitter")
+        self.VideoBox = QtWidgets.QFrame(self.VideoSplitter)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.VideoBox.sizePolicy().hasHeightForWidth())
+        self.VideoBox.setSizePolicy(sizePolicy)
         self.VideoBox.setMinimumSize(QtCore.QSize(640, 0))
         self.VideoBox.setSizeIncrement(QtCore.QSize(1, 0))
         self.VideoBox.setObjectName("VideoBox")
-        self.gridLayout_10 = QtWidgets.QGridLayout(self.VideoBox)
-        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.gridLayout_11 = QtWidgets.QGridLayout(self.VideoBox)
+        self.gridLayout_11.setContentsMargins(-1, -1, 6, -1)
+        self.gridLayout_11.setObjectName("gridLayout_11")
         self.VideoFrame = QtWidgets.QFrame(self.VideoBox)
         self.VideoFrame.setStyleSheet("#VideoFrame{\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -492,35 +499,138 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addWidget(self.PreviewBtn)
         self.gridLayout_12.addWidget(self.ToolsContainer, 0, 0, 1, 1)
         self.verticalLayout_3.addWidget(self.VideoTools)
-        self.gridLayout_10.addWidget(self.VideoFrame, 0, 0, 1, 1)
-        self.horizontalLayout_4.addWidget(self.VideoBox)
-        self.VideoOptions = QtWidgets.QFrame(self.VidPageBackground)
+        self.gridLayout_11.addWidget(self.VideoFrame, 0, 0, 1, 1)
+        self.VidToolBox = QtWidgets.QFrame(self.VideoSplitter)
+        self.VidToolBox.setStyleSheet("")
+        self.VidToolBox.setObjectName("VidToolBox")
+        self.gridLayout_24 = QtWidgets.QGridLayout(self.VidToolBox)
+        self.gridLayout_24.setContentsMargins(5, 0, 0, 0)
+        self.gridLayout_24.setSpacing(0)
+        self.gridLayout_24.setObjectName("gridLayout_24")
+        self.VideoOptions = QtWidgets.QWidget(self.VidToolBox)
         self.VideoOptions.setStyleSheet("#VideoOptions{\n"
 "    background-color: rgb(255, 255, 255);\n"
 "    border-bottom-right-radius: 5px;\n"
 "}")
         self.VideoOptions.setObjectName("VideoOptions")
-        self.gridLayout_11 = QtWidgets.QGridLayout(self.VideoOptions)
-        self.gridLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_11.setSpacing(0)
-        self.gridLayout_11.setObjectName("gridLayout_11")
-        self.widget = QtWidgets.QWidget(self.VideoOptions)
-        self.widget.setObjectName("widget")
-        self.gridLayout_13 = QtWidgets.QGridLayout(self.widget)
+        self.gridLayout_13 = QtWidgets.QGridLayout(self.VideoOptions)
         self.gridLayout_13.setObjectName("gridLayout_13")
-        self.listView = QtWidgets.QListWidget(self.widget)
+        self.listView = QtWidgets.QListWidget(self.VideoOptions)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.listView.sizePolicy().hasHeightForWidth())
+        self.listView.setSizePolicy(sizePolicy)
         self.listView.setStyleSheet("#listView{\n"
 "   background-color: rgb(255, 255, 255);\n"
 "}")
         self.listView.setObjectName("listView")
         self.gridLayout_13.addWidget(self.listView, 0, 0, 1, 1)
-        self.gridLayout_11.addWidget(self.widget, 0, 0, 1, 1)
-        self.horizontalLayout_4.addWidget(self.VideoOptions)
+        self.gridLayout_24.addWidget(self.VideoOptions, 0, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.VideoSplitter, 0, 0, 1, 1)
         self.gridLayout_8.addWidget(self.VidPageBackground, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.VideoPage)
-        self.page_2 = QtWidgets.QWidget()
-        self.page_2.setObjectName("page_2")
-        self.stackedWidget.addWidget(self.page_2)
+        self.ModelPage = QtWidgets.QWidget()
+        self.ModelPage.setStyleSheet("QWidget{\n"
+"    background-color: none;\n"
+"    border-radius: none;\n"
+"}\n"
+"\n"
+"QFrame{\n"
+"    background-color: none;\n"
+"    border-radius: none;\n"
+"}\n"
+"\n"
+"QSplitter{\n"
+"    background-color: none;\n"
+"    border-radius: none;\n"
+"}")
+        self.ModelPage.setObjectName("ModelPage")
+        self.gridLayout_21 = QtWidgets.QGridLayout(self.ModelPage)
+        self.gridLayout_21.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_21.setSpacing(0)
+        self.gridLayout_21.setObjectName("gridLayout_21")
+        self.ModelPageBackground = QtWidgets.QWidget(self.ModelPage)
+        self.ModelPageBackground.setObjectName("ModelPageBackground")
+        self.gridLayout_20 = QtWidgets.QGridLayout(self.ModelPageBackground)
+        self.gridLayout_20.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_20.setSpacing(0)
+        self.gridLayout_20.setObjectName("gridLayout_20")
+        self.ModelSplitter = QtWidgets.QSplitter(self.ModelPageBackground)
+        self.ModelSplitter.setStyleSheet("*{\n"
+"    background-color: none;\n"
+"}\n"
+"\n"
+"QSplitter{\n"
+"    margin: -5px;\n"
+"}")
+        self.ModelSplitter.setOrientation(QtCore.Qt.Horizontal)
+        self.ModelSplitter.setHandleWidth(0)
+        self.ModelSplitter.setObjectName("ModelSplitter")
+        self.ModelBox = QtWidgets.QFrame(self.ModelSplitter)
+        self.ModelBox.setStyleSheet("")
+        self.ModelBox.setObjectName("ModelBox")
+        self.gridLayout_22 = QtWidgets.QGridLayout(self.ModelBox)
+        self.gridLayout_22.setContentsMargins(-1, -1, 6, -1)
+        self.gridLayout_22.setObjectName("gridLayout_22")
+        self.ModelFrame = QtWidgets.QFrame(self.ModelBox)
+        self.ModelFrame.setStyleSheet("QFrame{\n"
+"    border-radius: 5px;\n"
+"    background-color: #ffffff;\n"
+"}")
+        self.ModelFrame.setObjectName("ModelFrame")
+        self.gridLayout_26 = QtWidgets.QGridLayout(self.ModelFrame)
+        self.gridLayout_26.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_26.setSpacing(0)
+        self.gridLayout_26.setObjectName("gridLayout_26")
+        self.ModelContainer = QtWidgets.QWidget(self.ModelFrame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ModelContainer.sizePolicy().hasHeightForWidth())
+        self.ModelContainer.setSizePolicy(sizePolicy)
+        self.ModelContainer.setObjectName("ModelContainer")
+        self.gridLayout_25 = QtWidgets.QGridLayout(self.ModelContainer)
+        self.gridLayout_25.setObjectName("gridLayout_25")
+        self.ImportModelBtn = QtWidgets.QPushButton(self.ModelContainer)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ImportModelBtn.sizePolicy().hasHeightForWidth())
+        self.ImportModelBtn.setSizePolicy(sizePolicy)
+        self.ImportModelBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.ImportModelBtn.setStyleSheet("#ImportModelBtn{\n"
+"    border-radius: 5px;\n"
+"    border-color: #0078d7;\n"
+"    border: 1px solid gray;\n"
+"    margin: 20px;\n"
+"}")
+        self.ImportModelBtn.setObjectName("ImportModelBtn")
+        self.gridLayout_25.addWidget(self.ImportModelBtn, 0, 0, 1, 1)
+        self.gridLayout_26.addWidget(self.ModelContainer, 0, 0, 1, 1)
+        self.gridLayout_22.addWidget(self.ModelFrame, 0, 0, 1, 1)
+        self.ModToolBox = QtWidgets.QFrame(self.ModelSplitter)
+        self.ModToolBox.setStyleSheet("")
+        self.ModToolBox.setObjectName("ModToolBox")
+        self.gridLayout_23 = QtWidgets.QGridLayout(self.ModToolBox)
+        self.gridLayout_23.setContentsMargins(5, 0, 0, 0)
+        self.gridLayout_23.setSpacing(0)
+        self.gridLayout_23.setObjectName("gridLayout_23")
+        self.ModelOptions = QtWidgets.QWidget(self.ModToolBox)
+        self.ModelOptions.setStyleSheet("#ModelOptions{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 0px;\n"
+"    border-bottom-right-radius: 5px;\n"
+"}")
+        self.ModelOptions.setObjectName("ModelOptions")
+        self.gridLayout_23.addWidget(self.ModelOptions, 0, 0, 1, 1)
+        self.gridLayout_20.addWidget(self.ModelSplitter, 0, 0, 1, 1)
+        self.ModelSplitter.raise_()
+        self.gridLayout_21.addWidget(self.ModelPageBackground, 0, 0, 1, 1)
+        self.stackedWidget.addWidget(self.ModelPage)
+        self.FinalPage = QtWidgets.QWidget()
+        self.FinalPage.setObjectName("FinalPage")
+        self.stackedWidget.addWidget(self.FinalPage)
         self.gridLayout_7.addWidget(self.stackedWidget, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.Content)
         self.horizontalLayout.addWidget(self.MainWidget)
@@ -528,7 +638,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -536,6 +646,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.ImportVidbtn.setText(_translate("MainWindow", "Import Video"))
         self.PreviewBtn.setText(_translate("MainWindow", "Preview"))
+        self.ImportModelBtn.setText(_translate("MainWindow", "Import Model"))
 
 
 if __name__ == "__main__":

@@ -37,8 +37,11 @@
      <widget class="QFrame" name="BackgroundFrame">
       <property name="styleSheet">
        <string notr="true">#BackgroundFrame{
-   /*border: 1px solid black; */
+   border-top: 1px solid black; 
+   border-bottom: 1px solid black; 
+   border-right: 1px solid black; 
    border-radius: 5px;
+   border-color: rgb(0, 120, 215);
 }</string>
       </property>
       <property name="frameShape">
@@ -693,7 +696,7 @@ QPushButton:hover{
             <property name="styleSheet">
              <string notr="true">#Content{
    border-bottom-right-radius: 5px;
-   background-color: rgb(255, 255, 255);
+   background-color: #ffffff;
 }</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_7">
@@ -715,7 +718,7 @@ QPushButton:hover{
              <item row="0" column="0">
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="VideoPage">
                 <property name="styleSheet">
@@ -742,10 +745,7 @@ QPushButton:hover{
                    <property name="styleSheet">
                     <string notr="true"/>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_4">
-                    <property name="spacing">
-                     <number>2</number>
-                    </property>
+                   <layout class="QGridLayout" name="gridLayout_10">
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -758,161 +758,180 @@ QPushButton:hover{
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <item>
-                     <widget class="QWidget" name="VideoBox" native="true">
-                      <property name="minimumSize">
-                       <size>
-                        <width>640</width>
-                        <height>0</height>
-                       </size>
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="0">
+                     <widget class="QSplitter" name="VideoSplitter">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
                       </property>
-                      <property name="sizeIncrement">
-                       <size>
-                        <width>1</width>
-                        <height>0</height>
-                       </size>
+                      <property name="handleWidth">
+                       <number>0</number>
                       </property>
-                      <layout class="QGridLayout" name="gridLayout_10">
-                       <item row="0" column="0">
-                        <widget class="QFrame" name="VideoFrame">
-                         <property name="styleSheet">
-                          <string notr="true">#VideoFrame{
+                      <widget class="QFrame" name="VideoBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>640</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="sizeIncrement">
+                        <size>
+                         <width>1</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_11">
+                        <property name="rightMargin">
+                         <number>6</number>
+                        </property>
+                        <item row="0" column="0">
+                         <widget class="QFrame" name="VideoFrame">
+                          <property name="styleSheet">
+                           <string notr="true">#VideoFrame{
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
 }</string>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_3">
-                          <property name="spacing">
-                           <number>0</number>
                           </property>
-                          <property name="leftMargin">
-                           <number>0</number>
+                          <property name="frameShape">
+                           <enum>QFrame::StyledPanel</enum>
                           </property>
-                          <property name="topMargin">
-                           <number>0</number>
+                          <property name="frameShadow">
+                           <enum>QFrame::Raised</enum>
                           </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                          <item>
-                           <widget class="QWidget" name="VideoContainer" native="true">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <layout class="QGridLayout" name="gridLayout_9">
-                             <property name="bottomMargin">
-                              <number>0</number>
+                          <layout class="QVBoxLayout" name="verticalLayout_3">
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <property name="leftMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>0</number>
+                           </property>
+                           <item>
+                            <widget class="QWidget" name="VideoContainer" native="true">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
                              </property>
-                             <property name="spacing">
-                              <number>0</number>
-                             </property>
-                             <item row="0" column="0">
-                              <widget class="QPushButton" name="ImportVidbtn">
-                               <property name="sizePolicy">
-                                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                                 <horstretch>0</horstretch>
-                                 <verstretch>0</verstretch>
-                                </sizepolicy>
-                               </property>
-                               <property name="cursor">
-                                <cursorShape>PointingHandCursor</cursorShape>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">#ImportVidbtn{
+                             <layout class="QGridLayout" name="gridLayout_9">
+                              <property name="bottomMargin">
+                               <number>0</number>
+                              </property>
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
+                              <item row="0" column="0">
+                               <widget class="QPushButton" name="ImportVidbtn">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="cursor">
+                                 <cursorShape>PointingHandCursor</cursorShape>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">#ImportVidbtn{
 	border-radius: 5px;
 	border-color: #0078d7;
 	border: 1px solid gray;
 	margin: 20px;
 }</string>
-                               </property>
-                               <property name="text">
-                                <string>Import Video</string>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QWidget" name="VideoTools" native="true">
-                            <property name="styleSheet">
-                             <string notr="true">QPushButton{
+                                </property>
+                                <property name="text">
+                                 <string>Import Video</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QWidget" name="VideoTools" native="true">
+                             <property name="styleSheet">
+                              <string notr="true">QPushButton{
 	border-radius: none;
 }</string>
-                            </property>
-                            <layout class="QGridLayout" name="gridLayout_12">
-                             <item row="0" column="0">
-                              <widget class="QFrame" name="ToolsContainer">
-                               <property name="styleSheet">
-                                <string notr="true">#ToolsContainer{
+                             </property>
+                             <layout class="QGridLayout" name="gridLayout_12">
+                              <item row="0" column="0">
+                               <widget class="QFrame" name="ToolsContainer">
+                                <property name="styleSheet">
+                                 <string notr="true">#ToolsContainer{
 	background-color: rgb(240, 240, 240);
 	border-radius: 5px;
 }</string>
-                               </property>
-                               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                                <property name="spacing">
-                                 <number>3</number>
                                 </property>
-                                <item>
-                                 <widget class="QPushButton" name="PreviousFrame">
-                                  <property name="sizePolicy">
-                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                   </sizepolicy>
-                                  </property>
-                                  <property name="icon">
-                                   <iconset>
-                                    <normaloff>UI/Icons/previousBu.png</normaloff>UI/Icons/previousBu.png</iconset>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QPushButton" name="PlaynPause">
-                                  <property name="sizePolicy">
-                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                   </sizepolicy>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QPushButton" name="NextFrame">
-                                  <property name="sizePolicy">
-                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                   </sizepolicy>
-                                  </property>
-                                  <property name="icon">
-                                   <iconset>
-                                    <normaloff>UI/Icons/nextBu.png</normaloff>UI/Icons/nextBu.png</iconset>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QSlider" name="horizontalSlider">
-                                  <property name="sizePolicy">
-                                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                   </sizepolicy>
-                                  </property>
-                                  <property name="styleSheet">
-                                   <string notr="true">QSlider{
+                                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                                 <property name="spacing">
+                                  <number>3</number>
+                                 </property>
+                                 <item>
+                                  <widget class="QPushButton" name="PreviousFrame">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="icon">
+                                    <iconset>
+                                     <normaloff>UI/Icons/previousBu.png</normaloff>UI/Icons/previousBu.png</iconset>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="PlaynPause">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="NextFrame">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="icon">
+                                    <iconset>
+                                     <normaloff>UI/Icons/nextBu.png</normaloff>UI/Icons/nextBu.png</iconset>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QSlider" name="horizontalSlider">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="styleSheet">
+                                    <string notr="true">QSlider{
 	margin-top: 0px;
 	margin-bottom: 0px;
 	margin-right: 5px;
@@ -934,22 +953,22 @@ QSlider::handle{
    border-radius: 5px;
    background-color: rgb(0, 120, 215);
 }</string>
-                                  </property>
-                                  <property name="orientation">
-                                   <enum>Qt::Horizontal</enum>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QPushButton" name="PreviewBtn">
-                                  <property name="sizePolicy">
-                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                   </sizepolicy>
-                                  </property>
-                                  <property name="styleSheet">
-                                   <string notr="true">#PreviewBtn{
+                                   </property>
+                                   <property name="orientation">
+                                    <enum>Qt::Horizontal</enum>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QPushButton" name="PreviewBtn">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="styleSheet">
+                                    <string notr="true">#PreviewBtn{
 	border: 1px solid gray;
 	border-radius: 10px;
 	border-color: rgb(0, 120, 215);
@@ -969,64 +988,72 @@ QSlider::handle{
 	color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
 }</string>
-                                  </property>
-                                  <property name="text">
-                                   <string>Preview</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                               </layout>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QFrame" name="VideoOptions">
-                      <property name="styleSheet">
-                       <string notr="true">#VideoOptions{
+                                   </property>
+                                   <property name="text">
+                                    <string>Preview</string>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                      <widget class="QFrame" name="VidToolBox">
+                       <property name="styleSheet">
+                        <string notr="true"/>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_24">
+                        <property name="leftMargin">
+                         <number>5</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <item row="0" column="0">
+                         <widget class="QWidget" name="VideoOptions" native="true">
+                          <property name="styleSheet">
+                           <string notr="true">#VideoOptions{
 	background-color: rgb(255, 255, 255);
 	border-bottom-right-radius: 5px;
 }</string>
-                      </property>
-                      <layout class="QGridLayout" name="gridLayout_11">
-                       <property name="leftMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="rightMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="spacing">
-                        <number>0</number>
-                       </property>
-                       <item row="0" column="0">
-                        <widget class="QWidget" name="widget" native="true">
-                         <layout class="QGridLayout" name="gridLayout_13">
-                          <item row="0" column="0">
-                           <widget class="QListWidget" name="listView">
-                            <property name="styleSheet">
-                             <string notr="true">#listView{
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_13">
+                           <item row="0" column="0">
+                            <widget class="QListWidget" name="listView">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="styleSheet">
+                              <string notr="true">#listView{
    background-color: rgb(255, 255, 255);
 }</string>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                      </layout>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
                      </widget>
                     </item>
                    </layout>
@@ -1034,7 +1061,191 @@ QSlider::handle{
                  </item>
                 </layout>
                </widget>
-               <widget class="QWidget" name="page_2"/>
+               <widget class="QWidget" name="ModelPage">
+                <property name="styleSheet">
+                 <string notr="true">QWidget{
+	background-color: none;
+	border-radius: none;
+}
+
+QFrame{
+	background-color: none;
+	border-radius: none;
+}
+
+QSplitter{
+	background-color: none;
+	border-radius: none;
+}</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_21">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QWidget" name="ModelPageBackground" native="true">
+                   <layout class="QGridLayout" name="gridLayout_20">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="0">
+                     <widget class="QSplitter" name="ModelSplitter">
+                      <property name="styleSheet">
+                       <string notr="true">*{
+	background-color: none;
+}
+
+QSplitter{
+	margin: -5px;
+}</string>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="handleWidth">
+                       <number>0</number>
+                      </property>
+                      <widget class="QFrame" name="ModelBox">
+                       <property name="styleSheet">
+                        <string notr="true"/>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_22">
+                        <property name="rightMargin">
+                         <number>6</number>
+                        </property>
+                        <item row="0" column="0">
+                         <widget class="QFrame" name="ModelFrame">
+                          <property name="styleSheet">
+                           <string notr="true">QFrame{
+	border-radius: 5px;
+	background-color: #ffffff;
+}</string>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_26">
+                           <property name="leftMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <item row="0" column="0">
+                            <widget class="QWidget" name="ModelContainer" native="true">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <layout class="QGridLayout" name="gridLayout_25">
+                              <item row="0" column="0">
+                               <widget class="QPushButton" name="ImportModelBtn">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="cursor">
+                                 <cursorShape>PointingHandCursor</cursorShape>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">#ImportModelBtn{
+	border-radius: 5px;
+	border-color: #0078d7;
+	border: 1px solid gray;
+	margin: 20px;
+}</string>
+                                </property>
+                                <property name="text">
+                                 <string>Import Model</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                      <widget class="QFrame" name="ModToolBox">
+                       <property name="styleSheet">
+                        <string notr="true"/>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_23">
+                        <property name="leftMargin">
+                         <number>5</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <item row="0" column="0">
+                         <widget class="QWidget" name="ModelOptions" native="true">
+                          <property name="styleSheet">
+                           <string notr="true">#ModelOptions{
+	background-color: rgb(255, 255, 255);
+	border-radius: 0px;
+	border-bottom-right-radius: 5px;
+}</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </widget>
+                    </item>
+                   </layout>
+                   <zorder>widget_3</zorder>
+                   <zorder>widget_4</zorder>
+                   <zorder>ModelSplitter</zorder>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="FinalPage"/>
               </widget>
              </item>
             </layout>

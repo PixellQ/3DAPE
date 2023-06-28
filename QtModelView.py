@@ -13,7 +13,8 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
         self.rotationX = -20.0
         self.rotationY = -20.0
         self.zoom = -100.0
-        self.model = Model("F:/Major Project/3DAPE/3D models/Mannequin.fbx")
+        self.model = Model("")
+        self.setAttribute(QtCore.Qt.WA_AlwaysStackOnTop)
 
     def initializeGL(self):
         #glShadeModel(GL_SMOOTH)
@@ -122,9 +123,9 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
         self.update()
 
     def changeFile(self, filename: str):
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        #glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         self.model = Model(filename)
-        self.initializeGL()
+        #self.initializeGL()
         self.update()
 
 '''app = QtWidgets.QApplication([])
