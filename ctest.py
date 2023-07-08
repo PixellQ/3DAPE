@@ -33,8 +33,9 @@ class Model():
         #fbxLayer.PrintCount()
 
         self.meshes = []
+        self.bones = []
 
-        for i in range(self.scene.contents.meshCount): 
+        for i in range(self.scene.contents.meshCount):
             polygons = []
             vertices = []
             indices = []
@@ -49,4 +50,7 @@ class Model():
                 normals.append((self.scene.contents.meshes[i].normals[j].x, self.scene.contents.meshes[i].normals[j].y, self.scene.contents.meshes[i].normals[j].z))
             self.meshes.append([polygons, vertices, indices, normals])
 
-
+        for i in range(self.scene.contents.boneCount):
+            bone_id = self.scene.contents.bones[i].boneId
+            bone_name = self.scene.contents.bones[i].boneName.contents.value.decode('utf-8')
+            self.bones.append((bone_id, bone_name))
