@@ -42,7 +42,7 @@ struct Mesh
 struct Bone
 {
     int boneId;
-    const char* boneName;
+    char* boneName;
 };
 
 struct Scene
@@ -132,7 +132,18 @@ DLLEXPORT Scene* GetSceneDetails()
 	for (int i = 0; i < bones.size(); i++)
 	{
 		tmp_bone[i].boneId = i;
-		tmp_bone[i].boneName = bones[i]->GetName();
+		FbxNode* node = bones[i]->GetNode();
+		if (node != nullptr)
+		{
+			const char* boneName = node->GetName();
+			int nameLength = strlen(boneName);
+			tmp_bone[i].boneName = (char*)malloc(sizeof(char) * (nameLength + 1));
+			strcpy_s(tmp_bone[i].boneName, nameLength + 1, boneName);
+		}
+		else
+		{
+			tmp_bone[i].boneName = nullptr;
+		}
 		//memcpy(bone[i].name, bones[i]->GetName(), sizeof(bones[i]->GetName())/sizeof(char));
 	}
 	sceneDetails->meshCount = meshes.size();
@@ -169,14 +180,20 @@ DLLEXPORT void PrintCount()
 {
 	std::cout << "meshes : " << test_scene->meshCount << std::endl;
 
-	for (int i = 0; i < test_scene->meshCount; i++)
-	{
-		std::cout << "polygons : " << test_scene->meshes[i].polygonCount << std::endl;
+    for (int i = 0; i < test_scene->meshCount; i++)
+    {
+        std::cout << "polygons : " << test_scene->meshes[i].polygonCount << std::endl;
 
-		for (int j = 0; j < test_scene->meshes[i].polygonCount; j++)
-		{
-			std::cout << "polygonSize : " << test_scene->meshes[i].polygons[j].polygonSize;
-			std::cout << ", startIndex : " << test_scene->meshes[i].polygons[j].index << std::endl;
-		}
-	}
+        for (int j = 0; j < test_scene->meshes[i].polygonCount; j++)
+        {
+            std::cout << "polygonSize : " << test_scene->meshes[i].polygons[j].polygonSize;
+            std::cout << ", startIndex : " << test_scene->meshes[i].polygons[j].index << std::endl;
+        }
+    }
+
+    for (int i = 0; i < test_scene->boneCount; i++)
+    {
+        std::cout << "Bone ID: " << test_scene->bones[i].boneId;
+        std::cout << ", Bone Name: " << test_scene->bones[i].boneName << std::endl;
+    }
 }
