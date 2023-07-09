@@ -21,36 +21,45 @@ class Scene(Structure):
 
 class Model():
     def __init__(self, filename):
-        rootPath = os.getcwd()
-        fbxLayer = CDLL(os.path.join(rootPath, "M0dl.dll"))
 
-        encoded_file = filename.encode('utf-8')
-        print(fbxLayer.OpenFile(encoded_file))
+        if filename:
 
-        fbxLayer.GetSceneDetails.restype = POINTER(Scene)
-        self.scene = fbxLayer.GetSceneDetails()
+            rootPath = os.getcwd()
+            fbxLayer = CDLL(os.path.join(rootPath, "M0dl.dll"))
 
-        #fbxLayer.PrintCount()
+            encoded_file = filename.encode('utf-8')
+            openingCase = fbxLayer.OpenFile(encoded_file)
 
-        self.meshes = []
-        self.bones = []
+            if openingCase == 0 : pass
+            elif openingCase == 1 : print("No Skeleton Present !")
 
-        for i in range(self.scene.contents.meshCount):
-            polygons = []
-            vertices = []
-            indices = []
-            normals = []
-            for j in range(self.scene.contents.meshes[i].polygonCount):
-                polygons.append((self.scene.contents.meshes[i].polygons[j].polygonSize, self.scene.contents.meshes[i].polygons[j].index))
-            for j in range(self.scene.contents.meshes[i].vertexCount):
-                vertices.append((self.scene.contents.meshes[i].vertices[j].x, self.scene.contents.meshes[i].vertices[j].y, self.scene.contents.meshes[i].vertices[j].z))
-            for j in range(self.scene.contents.meshes[i].indexCount):
-                indices.append(self.scene.contents.meshes[i].indices[j])
-            for j in range(self.scene.contents.meshes[i].normalCount):
-                normals.append((self.scene.contents.meshes[i].normals[j].x, self.scene.contents.meshes[i].normals[j].y, self.scene.contents.meshes[i].normals[j].z))
-            self.meshes.append([polygons, vertices, indices, normals])
+            fbxLayer.GetSceneDetails.restype = POINTER(Scene)
+            self.scene = fbxLayer.GetSceneDetails()
 
-        for i in range(self.scene.contents.boneCount):
-            bone_id = self.scene.contents.bones[i].boneId
-            bone_name = self.scene.contents.bones[i].boneName.contents.value.decode('utf-8')
+            fbxLayer.PrintCount()
+
+            self.meshes = []
+            
+
+            for i in range(self.scene.contents.boneCount):
+                print(self.scene.contents.bones[i].boneId)
+                print(string_at(self.scene.contents.bones[i].boneName).decode())
+
+            for i in range(self.scene.contents.meshCount): 
+                polygons = []
+                vertices = []
+                indices = []
+                normals = []
+                for j in range(self.scene.contents.meshes[i].polygonCount):
+                    polygons.append((self.scene.contents.meshes[i].polygons[j].polygonSize, self.scene.contents.meshes[i].polygons[j].index))
+                for j in range(self.scene.contents.meshes[i].vertexCount):
+                    vertices.append((self.scene.contents.meshes[i].vertices[j].x, self.scene.contents.meshes[i].vertices[j].y, self.scene.contents.meshes[i].vertices[j].z))
+                for j in range(self.scene.contents.meshes[i].indexCount):
+                    indices.append(self.scene.contents.meshes[i].indices[j])
+                for j in range(self.scene.contents.meshes[i].normalCount):
+                    normals.append((self.scene.contents.meshes[i].normals[j].x, self.scene.contents.meshes[i].normals[j].y, self.scene.contents.meshes[i].normals[j].z))
+                self.meshes.append([polygons, vertices, indices, normals])
+
+
+
             self.bones.append((bone_id, bone_name))
