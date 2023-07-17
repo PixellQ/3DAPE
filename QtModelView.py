@@ -7,6 +7,12 @@ from ctest import Model
 class QtModelViewPort(QtOpenGL.QGLWidget):
     def __init__(self, parent=None):
         super(QtModelViewPort, self).__init__(parent)
+
+        self.setAutoFillBackground(True)
+        palette = self.palette()
+        palette.setColor(self.backgroundRole(), QtGui.QColor(255, 255, 255, 255))
+        self.setPalette(palette)
+
         self.lastPos = QtGui.QVector2D()
         self.panX = 0.0
         self.panY = 0.0

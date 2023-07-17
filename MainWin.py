@@ -84,7 +84,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        #self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         
 
 # Creating custom widgets
@@ -143,6 +143,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.MinimizeButton.clicked.connect(self.showMinimized)
         self.ui.MaximizeButton.clicked.connect(self.maximize_window)
         self.ui.CloseButton.clicked.connect(self.close)
+
+        self.ui.VideoPageBtn.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
+        self.ui.ModelPageBtn.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(1))
+        self.ui.FinalPageBtn.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(2))
 
         self.ui.ImportVidbtn.clicked.connect(self.ImportVideo)
         self.VidImported = False
@@ -421,7 +425,7 @@ class MainWindow(QtWidgets.QMainWindow):
         video_width, video_height = self.VideoPlayer.size().width(), self.VideoPlayer.size().height()
         scaled_pixmap = pixmap.scaled(video_width, video_height, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
         self.VideoPlayer.setPixmap(scaled_pixmap)
-        self.ui.horizontalSlider.setValue(currentframe_pos)
+        self.ui.horizontalSlider.setValue(int(currentframe_pos))
 
     def PauseVideo(self):
         global playing
