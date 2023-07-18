@@ -36,14 +36,14 @@ class Model():
             fbxLayer.GetSceneDetails.restype = POINTER(Scene)
             self.scene = fbxLayer.GetSceneDetails()
 
-            fbxLayer.PrintCount()
+            #fbxLayer.PrintBone()
 
             self.meshes = []
             
 
             for i in range(self.scene.contents.boneCount):
-                print(self.scene.contents.bones[i].boneId)
-                print(string_at(self.scene.contents.bones[i].boneName).decode())
+                #print(self.scene.contents.bones[i].boneId)
+                print(string_at(self.scene.contents.bones[i].boneName).decode("utf-8"))
 
             for i in range(self.scene.contents.meshCount): 
                 polygons = []

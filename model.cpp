@@ -176,21 +176,25 @@ DLLEXPORT int OpenFile(char* filename)
 }
 
 
-DLLEXPORT void PrintCount()
+DLLEXPORT void PrintMesh()
 {
 	std::cout << "meshes : " << test_scene->meshCount << std::endl;
 
-    for (int i = 0; i < test_scene->meshCount; i++)
-    {
-        std::cout << "polygons : " << test_scene->meshes[i].polygonCount << std::endl;
+	for (int i = 0; i < test_scene->meshCount; i++)
+	{
+		std::cout << "polygons : " << test_scene->meshes[i].polygonCount << std::endl;
 
-        for (int j = 0; j < test_scene->meshes[i].polygonCount; j++)
-        {
-            std::cout << "polygonSize : " << test_scene->meshes[i].polygons[j].polygonSize;
-            std::cout << ", startIndex : " << test_scene->meshes[i].polygons[j].index << std::endl;
-        }
-    }
+		for (int j = 0; j < test_scene->meshes[i].polygonCount; j++)
+		{
+			std::cout << "polygonSize : " << test_scene->meshes[i].polygons[j].polygonSize;
+			std::cout << ", startIndex : " << test_scene->meshes[i].polygons[j].index << std::endl;
+		}
+	}
+}
 
+
+DLLEXPORT void PrintBone()
+{
     for (int i = 0; i < test_scene->boneCount; i++)
     {
         std::cout << "Bone ID: " << test_scene->bones[i].boneId;
