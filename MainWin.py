@@ -4,12 +4,15 @@ import platform
 from PyQt5 import QtCore, QtGui, QtWidgets
 from CoreUI import *
 import QtModelView
-from QtCustom import QtImportDialog, QtProgressDialog
+from QtCustom import QtImportDialog, QtVideoDetailWidget
 from pathlib import Path
 import cv2
 import numpy as np
-from Media import Video  
+from Media import Video
+import warnings
 
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="PyQt5.QtCore")
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="PyQt5.QtWidgets")
 
 playing = True
 played = False
@@ -83,6 +86,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.stackWidgets = ["Video-Preview :", "Model-Preview :", "Final-Preview :"]
+
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         #self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         
@@ -144,9 +149,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.MaximizeButton.clicked.connect(self.maximize_window)
         self.ui.CloseButton.clicked.connect(self.close)
 
-        self.ui.VideoPageBtn.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
-        self.ui.ModelPageBtn.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(1))
-        self.ui.FinalPageBtn.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(2))
+        self.ui.PathTitle.mousePressEvent = self.onTitleClicked
+
+        self.ui.VideoPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(0))
+        self.ui.ModelPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(1))
+        self.ui.FinalPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(2))
 
         self.ui.ImportVidbtn.clicked.connect(self.ImportVideo)
         self.VidImported = False
@@ -168,7 +175,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.PreviewBtn.clicked.connect(self.Preview_points)
         
         self.VideoList = []
-        self.ui.listView.currentRowChanged.connect(self.OnItemClicked)
+        #self.ui.listView.currentRowChanged.connect(self.OnItemClicked)
+        #self.ui.VideoScrollArea.
 
         self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
         #self.ui.ExportModelBtn.clicked.connect(self.export_model)
@@ -197,6 +205,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def mousePressEvent(self,event):
         self.clickPosition = event.globalPos()
+        self.ui.TitleNameContainer.setStyleSheet("")
 
 
     def maximize_window(self):
@@ -213,6 +222,21 @@ class MainWindow(QtWidgets.QMainWindow):
             self.showNormal()
             self.isMaximized = False
             self.ui.MaximizeButton.setIcon(self.maximizeicon)
+    
+
+    def onTitleClicked(self, event):
+        if event.button() == 1:
+            self.ui.TitleNameContainer.setStyleSheet("#TitleNameContainer{\n"
+            "    border: 1px solid gray;\n"
+            "    border-radius: 2px;\n"
+            "    margin: 2px;\n}")
+        else:
+            self.ui.TitleNameContainer.setStyleSheet("")
+
+
+    def changeStackedWidgetIndex(self, index : int):
+        self.ui.stackedWidget.setCurrentIndex(index)
+        self.ui.PathTitle.setText(self.stackWidgets[index])
 
 
     def trackMousePosition(self):
@@ -306,7 +330,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def minimumSizeHint(self):
         return QtCore.QSize(200, 200)
-
+    
 
 # Import Video Functions
     def ImportVideo(self):
@@ -338,16 +362,22 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ImportDialog.close()
 
-        self.ImportingDialog = QtWidgets.QDialog()
+        self.ImportingDialog = QtWidgets.QWidget()
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHeightForWidth(self.ImportingDialog.sizePolicy().hasHeightForWidth())
+        self.ImportingDialog.setSizePolicy(sizePolicy)
+        self.ImportingDialog.setMinimumSize(QtCore.QSize(0, 150))
+        self.ImportingDialog.setObjectName("VideoDetailWidget")
+        #self.ui.verticalLayout_6.addWidget(self.ImportDialog)
         
-        self.Importingui = QtProgressDialog()#self.imp_progress)
+        self.Importingui = QtVideoDetailWidget()
         self.Importingui.setupUi(self.ImportingDialog)
         #self.Importingui.progressBar = QtWidgets.QProgressBar(self.Importingui.ContentWidget)
         #self.Importbar = self.Importingui.progressBar
 
         self.ImportingDialog.show()
-        self.ImportingDialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        self.ImportDialog.setEnabled(True)
+        #self.ImportingDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        #self.ImportDialog.setEnabled(True)
 
         #self.imp_progress.show()
 
@@ -355,8 +385,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.Importingui.progressBar.setMaximum(self.VideoList[-1].total_frames)
 
-        vid_data = vid_type + '   :     ' + vid_path
-        self.ui.listView.addItem(vid_data)
+        vid_data = vid_type + '   :     ' + os.path.basename(vid_path)
+        #self.ui.listView.addItem(vid_data)
+
+
+        self.Importingui.Title.setText(vid_data)
 
         self.ui.ImportVidbtn.destroy()
 

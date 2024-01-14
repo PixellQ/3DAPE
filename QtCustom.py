@@ -134,13 +134,15 @@ class QtImportDialog(object):
 
 
 
-class QtProgressDialog(object):
+class QtVideoDetailWidget(object):
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
 
         Dialog.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         Dialog.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+
+        self.index = 0
         
         Dialog.resize(500, 120)
         Dialog.setStyleSheet("#MainWidget{\n"

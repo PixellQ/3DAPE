@@ -11,10 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true"/>
+   <string>3DAPE</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -538,8 +535,93 @@ QPushButton::hover{
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
-              <widget class="QWidget" name="TitleNameContainer" native="true"/>
+             <item alignment="Qt::AlignLeft">
+              <widget class="QWidget" name="TitleNameContainer" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>350</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">#TitleNameContainer
+{}
+/*	border: 1px solid gray;
+	border-radius: 2px;
+	margin: 1px;
+}*/</string>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="DAPE_3">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>11</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#DAPE_3{
+	color: rgb(100, 100, 100);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>3DAPE \</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="PathTitle">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>11</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#PathTitle{
+	color: rgb(100, 100, 100);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>Video-Preview :</string>
+                  </property>
+                  <property name="maxLength">
+                   <number>30</number>
+                  </property>
+                  <property name="frame">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
              </item>
              <item alignment="Qt::AlignRight">
               <widget class="QWidget" name="ButtonContainer" native="true">
@@ -718,7 +800,7 @@ QPushButton:hover{
              <item row="0" column="0">
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="VideoPage">
                 <property name="styleSheet">
@@ -851,7 +933,6 @@ QPushButton:hover{
                                 <property name="styleSheet">
                                  <string notr="true">#ImportVidbtn{
 	border-radius: 5px;
-	border-color: #0078d7;
 	border: 1px solid gray;
 	margin: 20px;
 }</string>
@@ -1030,23 +1111,205 @@ QSlider::handle{
                           <property name="styleSheet">
                            <string notr="true">#VideoOptions{
 	background-color: rgb(255, 255, 255);
+	border-left: 1px solid gray;
+	border-color: rgb(217, 217, 217);
 	border-bottom-right-radius: 5px;
 }</string>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_13">
+                           <property name="leftMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
                            <item row="0" column="0">
-                            <widget class="QListWidget" name="listView">
-                             <property name="sizePolicy">
-                              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                               <horstretch>0</horstretch>
-                               <verstretch>0</verstretch>
-                              </sizepolicy>
+                            <widget class="QTabWidget" name="VideoOptionTab">
+                             <property name="currentIndex">
+                              <number>0</number>
                              </property>
-                             <property name="styleSheet">
-                              <string notr="true">#listView{
-   background-color: rgb(255, 255, 255);
+                             <property name="documentMode">
+                              <bool>true</bool>
+                             </property>
+                             <property name="movable">
+                              <bool>true</bool>
+                             </property>
+                             <widget class="QWidget" name="VideoFilesTab">
+                              <attribute name="title">
+                               <string>Videos</string>
+                              </attribute>
+                              <layout class="QGridLayout" name="gridLayout_27">
+                               <item row="0" column="0">
+                                <widget class="QScrollArea" name="VideoScrollArea">
+                                 <property name="frameShape">
+                                  <enum>QFrame::NoFrame</enum>
+                                 </property>
+                                 <property name="widgetResizable">
+                                  <bool>true</bool>
+                                 </property>
+                                 <widget class="QWidget" name="VideoScrollContent">
+                                  <property name="geometry">
+                                   <rect>
+                                    <x>0</x>
+                                    <y>0</y>
+                                    <width>254</width>
+                                    <height>531</height>
+                                   </rect>
+                                  </property>
+                                  <property name="styleSheet">
+                                   <string notr="true">#VideoScrollContent
+{
+	background-color: #ffffff;
 }</string>
-                             </property>
+                                  </property>
+                                  <layout class="QVBoxLayout" name="verticalLayout_5">
+                                   <property name="spacing">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="leftMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="topMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="rightMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="bottomMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <item alignment="Qt::AlignTop">
+                                    <widget class="QWidget" name="VideoDetailWidget" native="true">
+                                     <property name="sizePolicy">
+                                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                       <horstretch>0</horstretch>
+                                       <verstretch>0</verstretch>
+                                      </sizepolicy>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true">#VideoDetailWidget{
+	background-color: #fffff;
+	border: 1px solid gray;
+	border-radius: 5px;}</string>
+                                     </property>
+                                     <layout class="QGridLayout" name="gridLayout_28">
+                                      <property name="leftMargin">
+                                       <number>0</number>
+                                      </property>
+                                      <property name="topMargin">
+                                       <number>0</number>
+                                      </property>
+                                      <property name="rightMargin">
+                                       <number>0</number>
+                                      </property>
+                                      <property name="bottomMargin">
+                                       <number>0</number>
+                                      </property>
+                                      <property name="spacing">
+                                       <number>0</number>
+                                      </property>
+                                      <item row="0" column="0">
+                                       <widget class="QPushButton" name="VideoDetailButton">
+                                        <property name="sizePolicy">
+                                         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                          <horstretch>0</horstretch>
+                                          <verstretch>0</verstretch>
+                                         </sizepolicy>
+                                        </property>
+                                        <property name="minimumSize">
+                                         <size>
+                                          <width>0</width>
+                                          <height>100</height>
+                                         </size>
+                                        </property>
+                                        <property name="styleSheet">
+                                         <string notr="true">#VideoDetailButton
+{
+	background-position: center;
+	background-repeat: no-repeat;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+	padding: -20px;
+}</string>
+                                        </property>
+                                        <property name="text">
+                                         <string>Finger : Armbamd.mp4
+Type   : .mp4
+Frames: 123 frames
+codec  : mvaro</string>
+                                        </property>
+                                        <property name="icon">
+                                         <iconset>
+                                          <normaloff>Tests/fc10e406-8445-4868-a2d4-526497fcd9bc_Untitled.png</normaloff>Tests/fc10e406-8445-4868-a2d4-526497fcd9bc_Untitled.png</iconset>
+                                        </property>
+                                        <property name="iconSize">
+                                         <size>
+                                          <width>120</width>
+                                          <height>120</height>
+                                         </size>
+                                        </property>
+                                       </widget>
+                                      </item>
+                                      <item row="1" column="0">
+                                       <widget class="QProgressBar" name="VideoDetailBar">
+                                        <property name="sizePolicy">
+                                         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                                          <horstretch>0</horstretch>
+                                          <verstretch>0</verstretch>
+                                         </sizepolicy>
+                                        </property>
+                                        <property name="styleSheet">
+                                         <string notr="true">#VideoDetailBar{
+	margin: 10px;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	padding-bottom: -10px;
+	border: 1px solid gray;
+	border-radius: 2px;}
+
+#VideoDetailBar::chunk{
+	background-color: rgb(0, 120, 215);
+	margin-top: 0px;
+	margin-bottom: 10px;
+	padding-bottom: -10px;
+	border: 1px solid gray;
+	border-color: rgb(0, 120, 215);
+	border-radius: 1px;}</string>
+                                        </property>
+                                        <property name="value">
+                                         <number>76</number>
+                                        </property>
+                                        <property name="alignment">
+                                         <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                                        </property>
+                                       </widget>
+                                      </item>
+                                     </layout>
+                                     <zorder>VideoDetailBar</zorder>
+                                     <zorder>VideoDetailButton</zorder>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                             <widget class="QWidget" name="VideoEditTab">
+                              <attribute name="title">
+                               <string>Tab 2</string>
+                              </attribute>
+                             </widget>
                             </widget>
                            </item>
                           </layout>
@@ -1238,9 +1501,6 @@ QSplitter{
                      </widget>
                     </item>
                    </layout>
-                   <zorder>widget_3</zorder>
-                   <zorder>widget_4</zorder>
-                   <zorder>ModelSplitter</zorder>
                   </widget>
                  </item>
                 </layout>

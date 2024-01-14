@@ -15,7 +15,6 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(957, 600)
-        MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -241,8 +240,51 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.TitleNameContainer = QtWidgets.QWidget(self.TitleBar)
+        self.TitleNameContainer.setMinimumSize(QtCore.QSize(350, 0))
+        self.TitleNameContainer.setStyleSheet("#TitleNameContainer\n"
+"{}\n"
+"/*    border: 1px solid gray;\n"
+"    border-radius: 2px;\n"
+"    margin: 1px;\n"
+"}*/")
         self.TitleNameContainer.setObjectName("TitleNameContainer")
-        self.horizontalLayout_2.addWidget(self.TitleNameContainer)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.TitleNameContainer)
+        self.horizontalLayout_4.setContentsMargins(5, 0, 5, 0)
+        self.horizontalLayout_4.setSpacing(0)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.DAPE_3 = QtWidgets.QLabel(self.TitleNameContainer)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.DAPE_3.setFont(font)
+        self.DAPE_3.setStyleSheet("#DAPE_3{\n"
+"    color: rgb(100, 100, 100);\n"
+"}")
+        self.DAPE_3.setObjectName("DAPE_3")
+        self.horizontalLayout_4.addWidget(self.DAPE_3)
+        self.PathTitle = QtWidgets.QLineEdit(self.TitleNameContainer)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.PathTitle.sizePolicy().hasHeightForWidth())
+        self.PathTitle.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.PathTitle.setFont(font)
+        self.PathTitle.setStyleSheet("#PathTitle{\n"
+"    color: rgb(100, 100, 100);\n"
+"}\n"
+"")
+        self.PathTitle.setMaxLength(30)
+        self.PathTitle.setFrame(False)
+        self.PathTitle.setObjectName("PathTitle")
+        self.horizontalLayout_4.addWidget(self.PathTitle)
+        self.horizontalLayout_2.addWidget(self.TitleNameContainer, 0, QtCore.Qt.AlignLeft)
         self.ButtonContainer = QtWidgets.QWidget(self.TitleBar)
         self.ButtonContainer.setStyleSheet("QPushButton{\n"
 "   color: rgb(0, 0, 0);\n"
@@ -385,7 +427,6 @@ class Ui_MainWindow(object):
         self.ImportVidbtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ImportVidbtn.setStyleSheet("#ImportVidbtn{\n"
 "    border-radius: 5px;\n"
-"    border-color: #0078d7;\n"
 "    border: 1px solid gray;\n"
 "    margin: 20px;\n"
 "}")
@@ -510,22 +551,111 @@ class Ui_MainWindow(object):
         self.VideoOptions = QtWidgets.QWidget(self.VidToolBox)
         self.VideoOptions.setStyleSheet("#VideoOptions{\n"
 "    background-color: rgb(255, 255, 255);\n"
+"    border-left: 1px solid gray;\n"
+"    border-color: rgb(217, 217, 217);\n"
 "    border-bottom-right-radius: 5px;\n"
 "}")
         self.VideoOptions.setObjectName("VideoOptions")
         self.gridLayout_13 = QtWidgets.QGridLayout(self.VideoOptions)
+        self.gridLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_13.setSpacing(0)
         self.gridLayout_13.setObjectName("gridLayout_13")
-        self.listView = QtWidgets.QListWidget(self.VideoOptions)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        self.VideoOptionTab = QtWidgets.QTabWidget(self.VideoOptions)
+        self.VideoOptionTab.setDocumentMode(True)
+        self.VideoOptionTab.setMovable(True)
+        self.VideoOptionTab.setObjectName("VideoOptionTab")
+        self.VideoFilesTab = QtWidgets.QWidget()
+        self.VideoFilesTab.setObjectName("VideoFilesTab")
+        self.gridLayout_27 = QtWidgets.QGridLayout(self.VideoFilesTab)
+        self.gridLayout_27.setObjectName("gridLayout_27")
+        self.VideoScrollArea = QtWidgets.QScrollArea(self.VideoFilesTab)
+        self.VideoScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.VideoScrollArea.setWidgetResizable(True)
+        self.VideoScrollArea.setObjectName("VideoScrollArea")
+        self.VideoScrollContent = QtWidgets.QWidget()
+        self.VideoScrollContent.setGeometry(QtCore.QRect(0, 0, 254, 531))
+        self.VideoScrollContent.setStyleSheet("#VideoScrollContent\n"
+"{\n"
+"    background-color: #ffffff;\n"
+"}")
+        self.VideoScrollContent.setObjectName("VideoScrollContent")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.VideoScrollContent)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_5.setSpacing(0)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.VideoDetailWidget = QtWidgets.QWidget(self.VideoScrollContent)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.listView.sizePolicy().hasHeightForWidth())
-        self.listView.setSizePolicy(sizePolicy)
-        self.listView.setStyleSheet("#listView{\n"
-"   background-color: rgb(255, 255, 255);\n"
+        sizePolicy.setHeightForWidth(self.VideoDetailWidget.sizePolicy().hasHeightForWidth())
+        self.VideoDetailWidget.setSizePolicy(sizePolicy)
+        self.VideoDetailWidget.setStyleSheet("#VideoDetailWidget{\n"
+"    background-color: #fffff;\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 5px;}")
+        self.VideoDetailWidget.setObjectName("VideoDetailWidget")
+        self.gridLayout_28 = QtWidgets.QGridLayout(self.VideoDetailWidget)
+        self.gridLayout_28.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_28.setSpacing(0)
+        self.gridLayout_28.setObjectName("gridLayout_28")
+        self.VideoDetailButton = QtWidgets.QPushButton(self.VideoDetailWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.VideoDetailButton.sizePolicy().hasHeightForWidth())
+        self.VideoDetailButton.setSizePolicy(sizePolicy)
+        self.VideoDetailButton.setMinimumSize(QtCore.QSize(0, 100))
+        self.VideoDetailButton.setStyleSheet("#VideoDetailButton\n"
+"{\n"
+"    background-position: center;\n"
+"    background-repeat: no-repeat;\n"
+"    border: none;\n"
+"    border-radius: 5px;\n"
+"    text-align: center;\n"
+"    padding: -20px;\n"
 "}")
-        self.listView.setObjectName("listView")
-        self.gridLayout_13.addWidget(self.listView, 0, 0, 1, 1)
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap("Tests/fc10e406-8445-4868-a2d4-526497fcd9bc_Untitled.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.VideoDetailButton.setIcon(icon10)
+        self.VideoDetailButton.setIconSize(QtCore.QSize(120, 120))
+        self.VideoDetailButton.setObjectName("VideoDetailButton")
+        self.gridLayout_28.addWidget(self.VideoDetailButton, 0, 0, 1, 1)
+        self.VideoDetailBar = QtWidgets.QProgressBar(self.VideoDetailWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.VideoDetailBar.sizePolicy().hasHeightForWidth())
+        self.VideoDetailBar.setSizePolicy(sizePolicy)
+        self.VideoDetailBar.setStyleSheet("#VideoDetailBar{\n"
+"    margin: 10px;\n"
+"    margin-top: 0px;\n"
+"    margin-bottom: 10px;\n"
+"    padding-bottom: -10px;\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 2px;}\n"
+"\n"
+"#VideoDetailBar::chunk{\n"
+"    background-color: rgb(0, 120, 215);\n"
+"    margin-top: 0px;\n"
+"    margin-bottom: 10px;\n"
+"    padding-bottom: -10px;\n"
+"    border: 1px solid gray;\n"
+"    border-color: rgb(0, 120, 215);\n"
+"    border-radius: 1px;}")
+        self.VideoDetailBar.setProperty("value", 76)
+        self.VideoDetailBar.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.VideoDetailBar.setObjectName("VideoDetailBar")
+        self.gridLayout_28.addWidget(self.VideoDetailBar, 1, 0, 1, 1)
+        self.VideoDetailBar.raise_()
+        self.VideoDetailButton.raise_()
+        self.verticalLayout_5.addWidget(self.VideoDetailWidget, 0, QtCore.Qt.AlignTop)
+        self.VideoScrollArea.setWidget(self.VideoScrollContent)
+        self.gridLayout_27.addWidget(self.VideoScrollArea, 0, 0, 1, 1)
+        self.VideoOptionTab.addTab(self.VideoFilesTab, "")
+        self.VideoEditTab = QtWidgets.QWidget()
+        self.VideoEditTab.setObjectName("VideoEditTab")
+        self.VideoOptionTab.addTab(self.VideoEditTab, "")
+        self.gridLayout_13.addWidget(self.VideoOptionTab, 0, 0, 1, 1)
         self.gridLayout_24.addWidget(self.VideoOptions, 0, 0, 1, 1)
         self.gridLayout_10.addWidget(self.VideoSplitter, 0, 0, 1, 1)
         self.gridLayout_8.addWidget(self.VidPageBackground, 0, 0, 1, 1)
@@ -625,7 +755,6 @@ class Ui_MainWindow(object):
         self.ModelOptions.setObjectName("ModelOptions")
         self.gridLayout_23.addWidget(self.ModelOptions, 0, 0, 1, 1)
         self.gridLayout_20.addWidget(self.ModelSplitter, 0, 0, 1, 1)
-        self.ModelSplitter.raise_()
         self.gridLayout_21.addWidget(self.ModelPageBackground, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.ModelPage)
         self.FinalPage = QtWidgets.QWidget()
@@ -638,14 +767,23 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
+        self.VideoOptionTab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "3DAPE"))
+        self.DAPE_3.setText(_translate("MainWindow", "3DAPE \\"))
+        self.PathTitle.setText(_translate("MainWindow", "Video-Preview :"))
         self.ImportVidbtn.setText(_translate("MainWindow", "Import Video"))
         self.PreviewBtn.setText(_translate("MainWindow", "Preview"))
+        self.VideoDetailButton.setText(_translate("MainWindow", "Finger : Armbamd.mp4\n"
+"Type   : .mp4\n"
+"Frames: 123 frames\n"
+"codec  : mvaro"))
+        self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoFilesTab), _translate("MainWindow", "Videos"))
+        self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoEditTab), _translate("MainWindow", "Tab 2"))
         self.ImportModelBtn.setText(_translate("MainWindow", "Import Model"))
 
 

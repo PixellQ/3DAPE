@@ -79,51 +79,6 @@ class Video:
 
 # Tracking poses on Import
     def track_poses(self):
-
-        '''mp_drawing = mp.solutions.drawing_utils
-        mp_pose = mp.solutions.pose
-
-        cap = cv2.VideoCapture(self.filename) 
-
-        self.frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
-        self.total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-
-        self.Importbar = QtWidgets.QProgressBar()
-        #self.Importbar.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.Importbar.show()
-        self.Importbar.setMaximum(self.total_frames)
-
-        while self.tracked == False:
-            ret, frame = cap.read()
-
-            if not ret:
-                self.Importbar.close()
-                self.tracked = True
-                break
-
-            else:
-                with mp_pose.Pose(static_image_mode = False, min_detection_confidence = 0.5, min_tracking_confidence = 0.5) as pose:
-                        
-                    Img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                    self.currentframe_pos = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
-                    self.Importbar.setValue(self.currentframe_pos)
-                    print(self.currentframe_pos)
-
-                    results = pose.process(Img)
-                    if results.pose_landmarks:
-                        t_coords = []
-
-                        temp_results = results.pose_landmarks
-                        for landmark in results.pose_landmarks.landmark:
-                            t_coords.append({"x": landmark.x, "y": landmark.y, "z": landmark.z})
-
-                    else:
-                        for landmark in temp_results.landmark:
-                            t_coords.append({"x": landmark.x, "y": landmark.y, "z": landmark.z})
-                                    
-                    self.frames.append(t_coords)
-
-        cap.release()'''
         cap = cv2.VideoCapture(self.filename)
         self.frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
         self.total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))

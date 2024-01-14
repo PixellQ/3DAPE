@@ -175,6 +175,38 @@ DLLEXPORT int OpenFile(char* filename)
 	return 0;
 }
 
+DLLEXPORT void AnimateRotation(int boneId, float rotationAmount)
+{
+    if (boneId >= 0 && boneId < bones.size())
+    {
+        FbxSkeleton* skeleton = bones[boneId];
+        FbxNode* node = skeleton->GetNode();
+
+        // Create a rotation property and set the rotation amount
+        FbxPropertyT<FbxDouble3> rotationProperty = node->LclRotation.Get();
+        FbxDouble3 currentRotation = rotationProperty.Get();
+        FbxDouble3 newRotation(
+            currentRotation[0] + rotationAmount,
+            currentRotation[1] + rotationAmount,
+            currentRotation[2] + rotationAmount
+        );
+        rotationProperty.Set(newRotation);
+
+        // Update the animation stack
+        FbxAnimStack* animStack = scene->GetCurrentAnimationStack();
+        FbxTime currentTime = FbxTime::GetCurrentTime();
+        FbxAnimEvaluator* evaluator = scene->GetAnimationEvaluator();
+        evaluator->SetNodeLocalTransform(node, currentTime, FbxNode::eSourcePivot);
+
+        // Evaluate the animation and update the scene
+        evaluator->SetContext(animStack);
+        evaluator->SetNodeLocalTransform(node, currentTime, FbxNode::eDestinationPivot);
+        scene->Evaluate();
+
+        // Clear the animation stack context
+        evaluator->SetContext(nullptr);
+    }
+}
 
 DLLEXPORT void PrintMesh()
 {
