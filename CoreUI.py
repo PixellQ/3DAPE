@@ -583,72 +583,43 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.VideoDetailWidget = QtWidgets.QWidget(self.VideoScrollContent)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.VideoDetailWidget.sizePolicy().hasHeightForWidth())
-        self.VideoDetailWidget.setSizePolicy(sizePolicy)
-        self.VideoDetailWidget.setStyleSheet("#VideoDetailWidget{\n"
-"    background-color: #fffff;\n"
+        self.VideoDetailContainer = QtWidgets.QFrame(self.VideoScrollContent)
+        self.VideoDetailContainer.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.VideoDetailContainer.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.VideoDetailContainer.setObjectName("VideoDetailContainer")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.VideoDetailContainer)
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.verticalLayout_5.addWidget(self.VideoDetailContainer, 0, QtCore.Qt.AlignTop)
+        self.VideoImportSection = QtWidgets.QWidget(self.VideoScrollContent)
+        self.VideoImportSection.setObjectName("VideoImportSection")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.VideoImportSection)
+        self.horizontalLayout_6.setContentsMargins(15, 15, 15, 0)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.VideoImportBtn = QtWidgets.QPushButton(self.VideoImportSection)
+        self.VideoImportBtn.setStyleSheet("#VideoImportBtn{\n"
 "    border: 1px solid gray;\n"
-"    border-radius: 5px;}")
-        self.VideoDetailWidget.setObjectName("VideoDetailWidget")
-        self.gridLayout_28 = QtWidgets.QGridLayout(self.VideoDetailWidget)
-        self.gridLayout_28.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_28.setSpacing(0)
-        self.gridLayout_28.setObjectName("gridLayout_28")
-        self.VideoDetailButton = QtWidgets.QPushButton(self.VideoDetailWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.VideoDetailButton.sizePolicy().hasHeightForWidth())
-        self.VideoDetailButton.setSizePolicy(sizePolicy)
-        self.VideoDetailButton.setMinimumSize(QtCore.QSize(0, 100))
-        self.VideoDetailButton.setStyleSheet("#VideoDetailButton\n"
-"{\n"
-"    background-position: center;\n"
-"    background-repeat: no-repeat;\n"
-"    border: none;\n"
-"    border-radius: 5px;\n"
-"    text-align: center;\n"
-"    padding: -20px;\n"
-"}")
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("Tests/fc10e406-8445-4868-a2d4-526497fcd9bc_Untitled.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.VideoDetailButton.setIcon(icon10)
-        self.VideoDetailButton.setIconSize(QtCore.QSize(120, 120))
-        self.VideoDetailButton.setObjectName("VideoDetailButton")
-        self.gridLayout_28.addWidget(self.VideoDetailButton, 0, 0, 1, 1)
-        self.VideoDetailBar = QtWidgets.QProgressBar(self.VideoDetailWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.VideoDetailBar.sizePolicy().hasHeightForWidth())
-        self.VideoDetailBar.setSizePolicy(sizePolicy)
-        self.VideoDetailBar.setStyleSheet("#VideoDetailBar{\n"
-"    margin: 10px;\n"
-"    margin-top: 0px;\n"
-"    margin-bottom: 10px;\n"
-"    padding-bottom: -10px;\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 2px;}\n"
-"\n"
-"#VideoDetailBar::chunk{\n"
-"    background-color: rgb(0, 120, 215);\n"
-"    margin-top: 0px;\n"
-"    margin-bottom: 10px;\n"
-"    padding-bottom: -10px;\n"
-"    border: 1px solid gray;\n"
+"    border-radius: 10px;\n"
 "    border-color: rgb(0, 120, 215);\n"
-"    border-radius: 1px;}")
-        self.VideoDetailBar.setProperty("value", 76)
-        self.VideoDetailBar.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
-        self.VideoDetailBar.setObjectName("VideoDetailBar")
-        self.gridLayout_28.addWidget(self.VideoDetailBar, 1, 0, 1, 1)
-        self.VideoDetailBar.raise_()
-        self.VideoDetailButton.raise_()
-        self.verticalLayout_5.addWidget(self.VideoDetailWidget, 0, QtCore.Qt.AlignTop)
+"    background-color: rgb(0, 120, 215);\n"
+"    color: rgb(255, 255, 255);\n"
+"    padding: 5px;\n"
+"    padding-left: 15px;\n"
+"    padding-right: 15px;\n"
+"}\n"
+"\n"
+"#VideoImportBtn::hover{\n"
+"    background-color:rgb(0, 108, 190);\n"
+"    border-color:  rgb(0, 120, 215);\n"
+"}\n"
+"\n"
+"#VideoImportBtn::selected{\n"
+"    color: rgb(0, 0, 0);\n"
+"    background-color: rgb(255, 255, 255);\n"
+"}")
+        self.VideoImportBtn.setObjectName("VideoImportBtn")
+        self.horizontalLayout_6.addWidget(self.VideoImportBtn)
+        self.verticalLayout_5.addWidget(self.VideoImportSection, 0, QtCore.Qt.AlignBottom)
         self.VideoScrollArea.setWidget(self.VideoScrollContent)
         self.gridLayout_27.addWidget(self.VideoScrollArea, 0, 0, 1, 1)
         self.VideoOptionTab.addTab(self.VideoFilesTab, "")
@@ -778,12 +749,9 @@ class Ui_MainWindow(object):
         self.PathTitle.setText(_translate("MainWindow", "Video-Preview :"))
         self.ImportVidbtn.setText(_translate("MainWindow", "Import Video"))
         self.PreviewBtn.setText(_translate("MainWindow", "Preview"))
-        self.VideoDetailButton.setText(_translate("MainWindow", "Finger : Armbamd.mp4\n"
-"Type   : .mp4\n"
-"Frames: 123 frames\n"
-"codec  : mvaro"))
+        self.VideoImportBtn.setText(_translate("MainWindow", "Import Video"))
         self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoFilesTab), _translate("MainWindow", "Videos"))
-        self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoEditTab), _translate("MainWindow", "Tab 2"))
+        self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoEditTab), _translate("MainWindow", "Edit"))
         self.ImportModelBtn.setText(_translate("MainWindow", "Import Model"))
 
 

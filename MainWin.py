@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning, module="PyQt5.QtW
 playing = True
 played = False
 currentframe_pos = 0
-CurrentVideo = Video("None", "", "", "")
+CurrentVideo = Video("None", "", "")
 preview_pose = False
 
 # Thread class for running video in VideoPlayer
@@ -156,6 +156,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.FinalPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(2))
 
         self.ui.ImportVidbtn.clicked.connect(self.ImportVideo)
+        self.ui.VideoImportBtn.clicked.connect(self.ImportVideo)
         self.VidImported = False
 
         self.ui.PlaynPause.clicked.connect(self.TogglePlay)
@@ -175,7 +176,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.PreviewBtn.clicked.connect(self.Preview_points)
         
         self.VideoList = []
-        #self.ui.listView.currentRowChanged.connect(self.OnItemClicked)
         #self.ui.VideoScrollArea.
 
         self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
@@ -362,34 +362,29 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ImportDialog.close()
 
-        self.ImportingDialog = QtWidgets.QWidget()
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHeightForWidth(self.ImportingDialog.sizePolicy().hasHeightForWidth())
-        self.ImportingDialog.setSizePolicy(sizePolicy)
-        self.ImportingDialog.setMinimumSize(QtCore.QSize(0, 150))
-        self.ImportingDialog.setObjectName("VideoDetailWidget")
-        #self.ui.verticalLayout_6.addWidget(self.ImportDialog)
+        self.VideoDetailWidget = QtWidgets.QWidget(self.ui.VideoDetailContainer)
+        self.ui.verticalLayout_6.addWidget(self.VideoDetailWidget, 0, QtCore.Qt.AlignTop)
         
-        self.Importingui = QtVideoDetailWidget()
-        self.Importingui.setupUi(self.ImportingDialog)
-        #self.Importingui.progressBar = QtWidgets.QProgressBar(self.Importingui.ContentWidget)
-        #self.Importbar = self.Importingui.progressBar
+        self.VideoDetailui = QtVideoDetailWidget()
+        self.VideoDetailui.setupUi(self.VideoDetailWidget, len(self.VideoList), self)
 
-        self.ImportingDialog.show()
-        #self.ImportingDialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        #self.ImportDialog.setEnabled(True)
+        self.VideoDetailWidget.show()
 
-        #self.imp_progress.show()
+        self.VideoList.append(Video(vid_type, vid_path, self.VideoDetailui.VideoDetailBar))
 
-        self.VideoList.append(Video(vid_type, vid_path, self.Importingui.progressBar, self.ImportingDialog))
+        #self.VideoDetailui.VideoDetailButton.clicked.connect(lambda: self.OnItemClicked(self.VideoDetailuiindex))
+        self.VideoDetailui.VideoDetailBar.setMaximum(self.VideoList[-1].total_frames)
+        
+        thumbnail_image = self.VideoList[-1].getThumbnail()
+        if thumbnail_image is not None:
+            height, width, channel = thumbnail_image.shape
+            bytes_per_line = 3 * width
+            q_image = QtGui.QImage(thumbnail_image.data, width, height, bytes_per_line, QtGui.QImage.Format_RGB888)
+            pixmap = QtGui.QPixmap.fromImage(q_image)
+            self.VideoDetailui.VideoDetailButton.setIcon(QtGui.QIcon(pixmap))
 
-        self.Importingui.progressBar.setMaximum(self.VideoList[-1].total_frames)
-
-        vid_data = vid_type + '   :     ' + os.path.basename(vid_path)
-        #self.ui.listView.addItem(vid_data)
-
-
-        self.Importingui.Title.setText(vid_data)
+        vid_data = os.path.basename(vid_path) + ' : \n' + vid_type
+        self.VideoDetailui.VideoDetailButton.setText(vid_data)
 
         self.ui.ImportVidbtn.destroy()
 
@@ -411,6 +406,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         global CurrentVideo
         CurrentVideo = self.VideoList[int(current_row)]
+        print(current_row)
 
         if not self.thread_started:
             self.worker = VideoThread()

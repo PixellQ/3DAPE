@@ -52,13 +52,12 @@ class PoseTrackingThread(QtCore.QThread):
 
 
 class Video:
-    def __init__(self, type : str, filename : str, progressbar, window):
+    def __init__(self, type : str, filename : str, progressbar):
         self.frames = []
         self.type = type
         self.filename = filename
         self.currentframe_pos = 0
         self.bar = progressbar
-        self.importing_window = window
 
         if self.filename:
             self.track_poses()
@@ -84,10 +83,6 @@ class Video:
         self.total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         cap.release()
 
-        #self.Importbar = QtWidgets.QProgressBar()
-        #self.Importbar.show()
-        #self.Importbar.setMaximum(self.total_frames)
-
         self.pose_thread = PoseTrackingThread(self.filename)
         self.pose_thread.progress_updated.connect(self.update_progress)
         self.pose_thread.frames_updated.connect(self.update_frames)
@@ -97,7 +92,7 @@ class Video:
         self.currentframe_pos = current_frame_pos
         self.bar.setValue(self.currentframe_pos)
         if self.currentframe_pos == self.total_frames:
-            self.importing_window.close()
+            self.bar.close()
 
     def update_frames(self, frames):
         self.frames = frames
@@ -109,8 +104,5 @@ class Video:
         self.vidcap.release()
         
         if ret:
-            cv2.imshow("Frame", frame)
-            return frame
-
-        
-
+            image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            return image
