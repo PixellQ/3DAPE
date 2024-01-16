@@ -9,10 +9,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 from Media import Video
-import warnings
 
-warnings.filterwarnings("ignore", category=DeprecationWarning, module="PyQt5.QtCore")
-warnings.filterwarnings("ignore", category=DeprecationWarning, module="PyQt5.QtWidgets")
 
 playing = True
 played = False
@@ -176,7 +173,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.PreviewBtn.clicked.connect(self.Preview_points)
         
         self.VideoList = []
-        #self.ui.VideoScrollArea.
+        self.VideoDetailList = []
 
         self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
         #self.ui.ExportModelBtn.clicked.connect(self.export_model)
@@ -356,7 +353,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.VidImported = True
             self.Importui.lineEdit.setText(str(path))
 
+
     def OnImport(self):
+        from functools import partial
+        
         vid_type = self.Importui.comboBox.currentText()
         vid_path = self.Importui.lineEdit.text()
 
@@ -366,13 +366,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.verticalLayout_6.addWidget(self.VideoDetailWidget, 0, QtCore.Qt.AlignTop)
         
         self.VideoDetailui = QtVideoDetailWidget()
-        self.VideoDetailui.setupUi(self.VideoDetailWidget, len(self.VideoList), self)
+        self.VideoDetailui.setupUi(self.VideoDetailWidget)
+        self.VideoDetailList.append(self.VideoDetailui)
 
         self.VideoDetailWidget.show()
 
         self.VideoList.append(Video(vid_type, vid_path, self.VideoDetailui.VideoDetailBar))
 
-        #self.VideoDetailui.VideoDetailButton.clicked.connect(lambda: self.OnItemClicked(self.VideoDetailuiindex))
+        for index, button in enumerate(self.VideoDetailList):
+            button.VideoDetailButton.clicked.connect(partial(self.OnItemClicked, index))
+
         self.VideoDetailui.VideoDetailBar.setMaximum(self.VideoList[-1].total_frames)
         
         thumbnail_image = self.VideoList[-1].getThumbnail()
@@ -406,7 +409,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         global CurrentVideo
         CurrentVideo = self.VideoList[int(current_row)]
-        print(current_row)
+        for index, detail in enumerate(self.VideoDetailList):
+            if index == current_row:
+                detail.onClickDetails(True)
+            else:
+                detail.onClickDetails(False)
 
         if not self.thread_started:
             self.worker = VideoThread()

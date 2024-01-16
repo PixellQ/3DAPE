@@ -573,7 +573,7 @@ class Ui_MainWindow(object):
         self.VideoScrollArea.setWidgetResizable(True)
         self.VideoScrollArea.setObjectName("VideoScrollArea")
         self.VideoScrollContent = QtWidgets.QWidget()
-        self.VideoScrollContent.setGeometry(QtCore.QRect(0, 0, 254, 531))
+        self.VideoScrollContent.setGeometry(QtCore.QRect(0, 0, 254, 500))
         self.VideoScrollContent.setStyleSheet("#VideoScrollContent\n"
 "{\n"
 "    background-color: #ffffff;\n"
@@ -591,10 +591,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.verticalLayout_5.addWidget(self.VideoDetailContainer, 0, QtCore.Qt.AlignTop)
-        self.VideoImportSection = QtWidgets.QWidget(self.VideoScrollContent)
+        self.VideoScrollArea.setWidget(self.VideoScrollContent)
+        self.gridLayout_27.addWidget(self.VideoScrollArea, 0, 0, 1, 1)
+        self.VideoImportSection = QtWidgets.QWidget(self.VideoFilesTab)
         self.VideoImportSection.setObjectName("VideoImportSection")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.VideoImportSection)
-        self.horizontalLayout_6.setContentsMargins(15, 15, 15, 0)
+        self.horizontalLayout_6.setContentsMargins(15, 0, 15, 0)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.VideoImportBtn = QtWidgets.QPushButton(self.VideoImportSection)
         self.VideoImportBtn.setStyleSheet("#VideoImportBtn{\n"
@@ -619,9 +621,7 @@ class Ui_MainWindow(object):
 "}")
         self.VideoImportBtn.setObjectName("VideoImportBtn")
         self.horizontalLayout_6.addWidget(self.VideoImportBtn)
-        self.verticalLayout_5.addWidget(self.VideoImportSection, 0, QtCore.Qt.AlignBottom)
-        self.VideoScrollArea.setWidget(self.VideoScrollContent)
-        self.gridLayout_27.addWidget(self.VideoScrollArea, 0, 0, 1, 1)
+        self.gridLayout_27.addWidget(self.VideoImportSection, 1, 0, 1, 1)
         self.VideoOptionTab.addTab(self.VideoFilesTab, "")
         self.VideoEditTab = QtWidgets.QWidget()
         self.VideoEditTab.setObjectName("VideoEditTab")

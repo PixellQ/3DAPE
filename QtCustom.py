@@ -135,29 +135,28 @@ class QtImportDialog(object):
 
 
 class QtVideoDetailWidget(object):
-    def __init__(self):
-        self.index = None
-        self.parent = None
-
-    def setupUi(self, VideoDetailWidget, index: int, parent):
-        self.index = index
-        self.parent = parent
-        VideoDetailWidget.setObjectName("VideoDetail")
+    def setupUi(self, VideoDetailWidget):
+        self.VideoDetailWidget = VideoDetailWidget
+        self.VideoDetailWidget.setObjectName("VideoDetail")
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(VideoDetailWidget.sizePolicy().hasHeightForWidth())
-        VideoDetailWidget.setSizePolicy(sizePolicy)
-        VideoDetailWidget.setStyleSheet("#VideoDetailWidget{\n"
+        sizePolicy.setHeightForWidth(self.VideoDetailWidget.sizePolicy().hasHeightForWidth())
+        self.VideoDetailWidget.setSizePolicy(sizePolicy)
+        self.VideoDetailWidget.setStyleSheet("#VideoDetailWidget{\n"
 "    background-color: #ffffff;\n"
 "    border: 1px solid gray;\n"
+"    border-radius: 5px;}\n"
+"#VideoDetailWidget:hover{\n"
+"    background-color: lightgray;\n"
+"    border: 1px solid gray;\n"
 "    border-radius: 5px;}")
-        VideoDetailWidget.setObjectName("VideoDetailWidget")
-        self.gridLayout_28 = QtWidgets.QGridLayout(VideoDetailWidget)
+        self.VideoDetailWidget.setObjectName("VideoDetailWidget")
+        self.gridLayout_28 = QtWidgets.QGridLayout(self.VideoDetailWidget)
         self.gridLayout_28.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_28.setSpacing(0)
         self.gridLayout_28.setObjectName("gridLayout_28")
-        self.VideoDetailButton = QtWidgets.QPushButton(VideoDetailWidget)
+        self.VideoDetailButton = QtWidgets.QPushButton(self.VideoDetailWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -179,8 +178,8 @@ class QtVideoDetailWidget(object):
         self.VideoDetailButton.setIconSize(QtCore.QSize(120, 120))
         self.VideoDetailButton.setObjectName("VideoDetailButton")
         self.gridLayout_28.addWidget(self.VideoDetailButton, 0, 0, 1, 1)
-        self.VideoDetailBar = QtWidgets.QProgressBar(VideoDetailWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        self.VideoDetailBar = QtWidgets.QProgressBar(self.VideoDetailWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.VideoDetailBar.sizePolicy().hasHeightForWidth())
@@ -208,13 +207,25 @@ class QtVideoDetailWidget(object):
         self.VideoDetailBar.raise_()
         self.VideoDetailButton.raise_()
 
-        self.VideoDetailButton.clicked.connect(self.onClickDetails)
+        self.retranslateUi(self.VideoDetailWidget)
+        QtCore.QMetaObject.connectSlotsByName(self.VideoDetailWidget)
 
-        self.retranslateUi(VideoDetailWidget)
-        QtCore.QMetaObject.connectSlotsByName(VideoDetailWidget)
-
-    def onClickDetails(self):
-        self.parent.OnItemClicked(self.index)
+    def onClickDetails(self, clicked: bool):
+        if clicked:
+            self.VideoDetailWidget.setStyleSheet("#VideoDetailWidget{\n"
+                                                "    background-color: #ffffff;\n"
+                                                "    border: 1px solid gray;\n"
+                                                "    border-radius: 5px;\n"
+                                                "    border-color: rgb(0, 120, 215);}")
+        else:
+            self.VideoDetailWidget.setStyleSheet("#VideoDetailWidget{\n"
+                                                "    background-color: #ffffff;\n"
+                                                "    border: 1px solid gray;\n"
+                                                "    border-radius: 5px;}\n"
+                                                "#VideoDetailWidget:hover{\n"
+                                                "    background-color: lightgray;\n"
+                                                "    border: 1px solid gray;\n"
+                                                "    border-radius: 5px;}")
 
     def retranslateUi(self, VideoDetailWidget):
         _translate = QtCore.QCoreApplication.translate
