@@ -112,7 +112,7 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
         dy = event.y() - self.lastPos.y()
 
         if event.buttons() & QtCore.Qt.LeftButton:
-            self.rotationX -= dy * 0.2
+            self.rotationX += dy * 0.2
             self.rotationY += dx * 0.2
             self.update()
 
@@ -133,6 +133,9 @@ class QtModelViewPort(QtOpenGL.QGLWidget):
         self.model = Model(filename)
         #self.initializeGL()
         self.update()
+
+    def exportFile(self, fileloc: str):
+        self.model.exportFile(fileloc)
 
 '''app = QtWidgets.QApplication([])
 widget = QtModelViewPort()

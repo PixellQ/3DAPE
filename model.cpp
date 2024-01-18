@@ -54,7 +54,7 @@ struct Scene
     Bone* bones;
 };
 
-Scene* test_scene;
+Scene* custom_scene;
 
 void StoreDetails(FbxNode* parent) 
 {
@@ -151,7 +151,7 @@ DLLEXPORT Scene* GetSceneDetails()
 	sceneDetails->boneCount = bones.size();
 	sceneDetails->bones = tmp_bone;
 
-	test_scene = sceneDetails;
+	custom_scene = sceneDetails;
 	return sceneDetails;
 }
 
@@ -175,51 +175,120 @@ DLLEXPORT int OpenFile(char* filename)
 	return 0;
 }
 
+
+DLLEXPORT bool ExportFile(char* filename)
+{
+	FbxExporter* exporter = FbxExporter::Create(manager, "");
+
+	if (!exporter->Initialize(filename, -1, manager->GetIOSettings()))
+	{
+		std::cerr << "Failed to initialize the FBX exporter." << std::endl;
+		exporter->Destroy();
+		return false;
+	}
+
+	exporter->SetFileExportVersion(FBX_2014_00_COMPATIBLE);
+	exporter->Export(scene);
+
+	exporter->Destroy();
+	return true;
+}
+
+
+/*DLLEXPORT void AnimateRotation(int boneId, float rotationAmount)
+{
+	if (boneId >= 0 && boneId < bones.size())
+	{
+		FbxSkeleton* skeleton = bones[boneId];
+		FbxNode* node = skeleton->GetNode();
+
+		// Create an animation stack and layer if they don't exist
+		FbxAnimStack* animStack = FbxAnimStack::Create(scene, "AnimationStack");
+		FbxAnimLayer* animLayer = FbxAnimLayer::Create(scene, "AnimationLayer");
+		animStack->AddMember(animLayer);
+
+		// Access the rotation property
+		FbxProperty rotationProperty = node->LclRotation;
+
+		// Access the curves for each axis (X, Y, Z)
+		FbxAnimCurve* curveX = rotationProperty.GetCurve(animLayer, FBXSDK_CURVENODE_COMPONENT_X, true);
+		FbxAnimCurve* curveY = rotationProperty.GetCurve(animLayer, FBXSDK_CURVENODE_COMPONENT_Y, true);
+		FbxAnimCurve* curveZ = rotationProperty.GetCurve(animLayer, FBXSDK_CURVENODE_COMPONENT_Z, true);
+
+		// Set the rotation keyframes
+		FbxTime startTime = FbxTime(0);
+		FbxTime endTime = FbxTime(1);
+
+		curveX->KeyModifyBegin();
+		curveY->KeyModifyBegin();
+		curveZ->KeyModifyBegin();
+
+		curveX->KeyAdd(startTime, rotationAmount);
+		curveY->KeyAdd(startTime, rotationAmount);
+		curveZ->KeyAdd(startTime, rotationAmount);
+
+		curveX->KeyAdd(endTime, rotationAmount);
+		curveY->KeyAdd(endTime, rotationAmount);
+		curveZ->KeyAdd(endTime, rotationAmount);
+
+		curveX->KeyModifyEnd();
+		curveY->KeyModifyEnd();
+		curveZ->KeyModifyEnd();
+
+		// Update the animation stack
+		scene->AddTake(animStack);
+		scene->SetCurrentAnimationStack(animStack);
+		scene->SetCurrentAnimationLayer(animLayer);
+		scene->Evaluate();
+	}
+}
+
 DLLEXPORT void AnimateRotation(int boneId, float rotationAmount)
 {
-    if (boneId >= 0 && boneId < bones.size())
-    {
-        FbxSkeleton* skeleton = bones[boneId];
-        FbxNode* node = skeleton->GetNode();
+	if (boneId >= 0 && boneId < bones.size())
+	{
+		FbxSkeleton* skeleton = bones[boneId];
+		FbxNode* node = skeleton->GetNode();
 
-        // Create a rotation property and set the rotation amount
-        FbxPropertyT<FbxDouble3> rotationProperty = node->LclRotation.Get();
-        FbxDouble3 currentRotation = rotationProperty.Get();
-        FbxDouble3 newRotation(
-            currentRotation[0] + rotationAmount,
-            currentRotation[1] + rotationAmount,
-            currentRotation[2] + rotationAmount
-        );
-        rotationProperty.Set(newRotation);
+		// Create an animation stack and layer if they don't exist
+		FbxAnimStack* animStack = FbxAnimStack::Create(scene, "AnimationStack");
+		FbxAnimLayer* animLayer = FbxAnimLayer::Create(scene, "AnimationLayer");
+		animStack->AddMember(animLayer);
 
-        // Update the animation stack
-        FbxAnimStack* animStack = scene->GetCurrentAnimationStack();
-        FbxTime currentTime = FbxTime::GetCurrentTime();
-        FbxAnimEvaluator* evaluator = scene->GetAnimationEvaluator();
-        evaluator->SetNodeLocalTransform(node, currentTime, FbxNode::eSourcePivot);
+		// Set the rotation value directly on the node
+		FbxVector4 currentRotation = node->LclRotation.Get();
+		FbxVector4 newRotation(
+			currentRotation[0] + rotationAmount,
+			currentRotation[1] + rotationAmount,
+			currentRotation[2] + rotationAmount
+		);
+		node->LclRotation.Set(newRotation);
 
-        // Evaluate the animation and update the scene
-        evaluator->SetContext(animStack);
-        evaluator->SetNodeLocalTransform(node, currentTime, FbxNode::eDestinationPivot);
-        scene->Evaluate();
+		// Update the animation stack
+		FbxAnimEvaluator* evaluator = scene->GetAnimationEvaluator();
+		evaluator->SetContext(animStack);
+		evaluator->SetNodeLocalTransform(node, FbxTime::GetCurrentTime(), FbxNode::eDestinationPivot);
+		scene->Evaluate();
 
-        // Clear the animation stack context
-        evaluator->SetContext(nullptr);
-    }
-}
+		// Clear the animation stack context
+		evaluator->SetContext(nullptr);
+	}
+}*/
+
+
 
 DLLEXPORT void PrintMesh()
 {
-	std::cout << "meshes : " << test_scene->meshCount << std::endl;
+	std::cout << "meshes : " << custom_scene->meshCount << std::endl;
 
-	for (int i = 0; i < test_scene->meshCount; i++)
+	for (int i = 0; i < custom_scene->meshCount; i++)
 	{
-		std::cout << "polygons : " << test_scene->meshes[i].polygonCount << std::endl;
+		std::cout << "polygons : " << custom_scene->meshes[i].polygonCount << std::endl;
 
-		for (int j = 0; j < test_scene->meshes[i].polygonCount; j++)
+		for (int j = 0; j < custom_scene->meshes[i].polygonCount; j++)
 		{
-			std::cout << "polygonSize : " << test_scene->meshes[i].polygons[j].polygonSize;
-			std::cout << ", startIndex : " << test_scene->meshes[i].polygons[j].index << std::endl;
+			std::cout << "polygonSize : " << custom_scene->meshes[i].polygons[j].polygonSize;
+			std::cout << ", startIndex : " << custom_scene->meshes[i].polygons[j].index << std::endl;
 		}
 	}
 }
@@ -227,9 +296,9 @@ DLLEXPORT void PrintMesh()
 
 DLLEXPORT void PrintBone()
 {
-    for (int i = 0; i < test_scene->boneCount; i++)
+    for (int i = 0; i < custom_scene->boneCount; i++)
     {
-        std::cout << "Bone ID: " << test_scene->bones[i].boneId;
-        std::cout << ", Bone Name: " << test_scene->bones[i].boneName << std::endl;
+        std::cout << "Bone ID: " << custom_scene->bones[i].boneId;
+        std::cout << ", Bone Name: " << custom_scene->bones[i].boneName << std::endl;
     }
 }

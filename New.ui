@@ -1464,7 +1464,21 @@ QSplitter{
                  </item>
                 </layout>
                </widget>
-               <widget class="QWidget" name="FinalPage"/>
+               <widget class="QWidget" name="FinalPage">
+                <widget class="QPushButton" name="ExportModelBtn">
+                 <property name="geometry">
+                  <rect>
+                   <x>360</x>
+                   <y>230</y>
+                   <width>75</width>
+                   <height>23</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Export</string>
+                 </property>
+                </widget>
+               </widget>
               </widget>
              </item>
             </layout>

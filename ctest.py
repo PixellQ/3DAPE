@@ -25,16 +25,16 @@ class Model():
         if filename:
 
             rootPath = os.getcwd()
-            fbxLayer = CDLL(os.path.join(rootPath, "M0dl.dll"))
+            self.fbxLayer = CDLL(os.path.join(rootPath, "M0dl.dll"))
 
             encoded_file = filename.encode('utf-8')
-            openingCase = fbxLayer.OpenFile(encoded_file)
+            openingCase = self.fbxLayer.OpenFile(encoded_file)
 
             if openingCase == 0 : pass
             elif openingCase == 1 : print("No Skeleton Present !")
 
-            fbxLayer.GetSceneDetails.restype = POINTER(Scene)
-            self.scene = fbxLayer.GetSceneDetails()
+            self.fbxLayer.GetSceneDetails.restype = POINTER(Scene)
+            self.scene = self.fbxLayer.GetSceneDetails()
 
             #fbxLayer.PrintBone()
 
@@ -61,3 +61,7 @@ class Model():
                 self.meshes.append([polygons, vertices, indices, normals])
 
 
+    def exportFile(self, fileloc):
+        if fileloc:
+            encoded_location = fileloc.encode('utf-8')
+            self.fbxLayer.ExportFile(encoded_location)

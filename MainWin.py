@@ -176,7 +176,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.VideoDetailList = []
 
         self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
-        #self.ui.ExportModelBtn.clicked.connect(self.export_model)
+        self.ui.ExportModelBtn.clicked.connect(self.export_model)
 
         self.resizeConstraint = None
         self.resizeHandle = True
@@ -514,7 +514,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.ModelContainer,
             "Select a 3D File",
             "",
-            "Videos (*.fbx *.obj)"
+            "Models (*.fbx *.obj *.3ds)"
         )
         if filename:
 
@@ -528,39 +528,26 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ModelViewPort.setSizePolicy(sizePolicy)
             self.ModelViewPort.setObjectName("ModelViewPort")
             self.ui.gridLayout_25.addWidget(self.ModelViewPort, 0, 0, 1, 1)
+            self.ui.ExportModelBtn.setEnabled(True)
 
             self.ModelViewPort.changeFile(filename)
 
 # Export model function
-    '''def export_model(self):
-        import shutil
-        file_dialog = QtWidgets.QFileDialog()
-        file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
-        file_dialog.setNameFilter("fbx (*.fbx);;3ds (*.3ds)")
-        file_dialog.selectFile("Test.fbx")
+    def export_model(self):
+        if self.ModelViewPort:
+            import shutil
+            file_dialog = QtWidgets.QFileDialog()
+            file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
+            file_dialog.setNameFilter("fbx (*.fbx);3ds (*.3ds)")
 
-        if file_dialog.exec_() == QtWidgets.QFileDialog.Accepted:
-            self.file_path = file_dialog.selectedFiles()[0]
+            if file_dialog.exec_() == QtWidgets.QFileDialog.Accepted:
+                self.file_path = file_dialog.selectedFiles()[0]
 
-        if self.file_path:
-            temp_bar = QtWidgets.QProgressBar()
-            temp_bar.show()
-            temp_bar.setMaximum(100)
-            source_file_path = "Tests/Fraud/FirstTest_Adult_Male.fbx"
-            # source_filename = source_file_path.split("/")[-1]
-            # directory_path = os.path.dirname(self.file_path)
-            target_file_path = self.file_path  # directory_path + "/" + source_filename
-            shutil.copy2(source_file_path, target_file_path)
-            i = 1
-            while True:
-                temp_bar.setValue(i)
-                i = i + 1
-                if(int(temp_bar.value()) >= 100):
-                    temp_bar.close()
-                    break
-                cv2.waitKey(20)'''
-
+            if self.file_path:
+                self.ModelViewPort.exportFile(self.file_path)
             
+
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()

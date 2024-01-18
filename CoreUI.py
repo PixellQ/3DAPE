@@ -730,6 +730,9 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.ModelPage)
         self.FinalPage = QtWidgets.QWidget()
         self.FinalPage.setObjectName("FinalPage")
+        self.ExportModelBtn = QtWidgets.QPushButton(self.FinalPage)
+        self.ExportModelBtn.setGeometry(QtCore.QRect(360, 230, 75, 23))
+        self.ExportModelBtn.setObjectName("ExportModelBtn")
         self.stackedWidget.addWidget(self.FinalPage)
         self.gridLayout_7.addWidget(self.stackedWidget, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.Content)
@@ -753,6 +756,7 @@ class Ui_MainWindow(object):
         self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoFilesTab), _translate("MainWindow", "Videos"))
         self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoEditTab), _translate("MainWindow", "Edit"))
         self.ImportModelBtn.setText(_translate("MainWindow", "Import Model"))
+        self.ExportModelBtn.setText(_translate("MainWindow", "Export"))
 
 
 if __name__ == "__main__":
