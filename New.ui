@@ -1466,6 +1466,9 @@ QSplitter{
                </widget>
                <widget class="QWidget" name="FinalPage">
                 <widget class="QPushButton" name="ExportModelBtn">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="geometry">
                   <rect>
                    <x>360</x>

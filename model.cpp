@@ -176,25 +176,6 @@ DLLEXPORT int OpenFile(char* filename)
 }
 
 
-DLLEXPORT bool ExportFile(char* filename)
-{
-	FbxExporter* exporter = FbxExporter::Create(manager, "");
-
-	if (!exporter->Initialize(filename, -1, manager->GetIOSettings()))
-	{
-		std::cerr << "Failed to initialize the FBX exporter." << std::endl;
-		exporter->Destroy();
-		return false;
-	}
-
-	exporter->SetFileExportVersion(FBX_2014_00_COMPATIBLE);
-	exporter->Export(scene);
-
-	exporter->Destroy();
-	return true;
-}
-
-
 /*DLLEXPORT void AnimateRotation(int boneId, float rotationAmount)
 {
 	if (boneId >= 0 && boneId < bones.size())
@@ -242,39 +223,141 @@ DLLEXPORT bool ExportFile(char* filename)
 		scene->Evaluate();
 	}
 }
-
-DLLEXPORT void AnimateRotation(int boneId, float rotationAmount)
+*/
+DLLEXPORT void AnimateRotation(int boneId)//, float rotationAmount)
 {
 	if (boneId >= 0 && boneId < bones.size())
 	{
 		FbxSkeleton* skeleton = bones[boneId];
 		FbxNode* node = skeleton->GetNode();
 
-		// Create an animation stack and layer if they don't exist
-		FbxAnimStack* animStack = FbxAnimStack::Create(scene, "AnimationStack");
-		FbxAnimLayer* animLayer = FbxAnimLayer::Create(scene, "AnimationLayer");
-		animStack->AddMember(animLayer);
+		FbxString lAnimStackName;
+		FbxTime lTime;
+		int lKeyIndex = 0;
+		FbxNode* lRoot = skeleton->GetNode();
+		FbxNode* lLimbNode1 = node->GetChild(0);
 
-		// Set the rotation value directly on the node
-		FbxVector4 currentRotation = node->LclRotation.Get();
-		FbxVector4 newRotation(
-			currentRotation[0] + rotationAmount,
-			currentRotation[1] + rotationAmount,
-			currentRotation[2] + rotationAmount
-		);
-		node->LclRotation.Set(newRotation);
+		FbxString boneName = node->GetName();
+		printf("Animating bone: %s\n", boneName.Buffer());
+		FbxString childName = lLimbNode1->GetName();
+		printf("Animating bone: %s\n", childName.Buffer());
 
-		// Update the animation stack
-		FbxAnimEvaluator* evaluator = scene->GetAnimationEvaluator();
-		evaluator->SetContext(animStack);
-		evaluator->SetNodeLocalTransform(node, FbxTime::GetCurrentTime(), FbxNode::eDestinationPivot);
-		scene->Evaluate();
-
-		// Clear the animation stack context
-		evaluator->SetContext(nullptr);
+		// First animation stack.
+		lAnimStackName = "Bend on 2 sides";
+		FbxAnimStack* lAnimStack = FbxAnimStack::Create(scene, lAnimStackName);
+			// The animation nodes can only exist on AnimLayers therefore it is mandatory to
+			// add at least one AnimLayer to the AnimStack. And for the purpose of this example,
+			// one layer is all we need.
+			FbxAnimLayer* lAnimLayer = FbxAnimLayer::Create(scene, "Base Layer");
+			lAnimStack->AddMember(lAnimLayer);
+		// Create the AnimCurve on the Rotation.Y channel
+		FbxAnimCurve* lCurve = lRoot->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_Y, true);
+		if (lCurve)
+		{
+			lCurve->KeyModifyBegin();
+			lTime.SetSecondDouble(0.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 0.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(2.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 45.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(4.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, -45.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(5.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 0.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lCurve->KeyModifyEnd();
+		}
+		// Same thing for the next object
+		lCurve = lLimbNode1->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_Y, true);
+		if (lCurve)
+		{
+			lCurve->KeyModifyBegin();
+			lTime.SetSecondDouble(0.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 0.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(2.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, -90.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(4.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 90.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(6.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 0.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lCurve->KeyModifyEnd();
+		}
+		// Second animation stack.
+		lAnimStackName = "Bend and turn around";
+		lAnimStack = FbxAnimStack::Create(scene, lAnimStackName);
+			// The animation nodes can only exist on AnimLayers therefore it is mandatory to
+			// add at least one AnimLayer to the AnimStack. And for the purpose of this example,
+			// one layer is all we need.
+			lAnimLayer = FbxAnimLayer::Create(scene, "Base Layer");
+			lAnimStack->AddMember(lAnimLayer);
+		// Create the AnimCurve on the Rotation.X channel
+		lCurve = lRoot->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_X, true);
+		if (lCurve)
+		{
+			lCurve->KeyModifyBegin();
+			lTime.SetSecondDouble(0.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 0.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(2.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 720.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lCurve->KeyModifyEnd();
+		}
+		lCurve = lLimbNode1->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_X, true);
+		if (lCurve)
+		{
+			lCurve->KeyModifyBegin();
+			lTime.SetSecondDouble(0.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 0.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(1.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 90.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lTime.SetSecondDouble(2.0);
+			lKeyIndex = lCurve->KeyAdd(lTime);
+			lCurve->KeySetValue(lKeyIndex, 0.0);
+			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			lCurve->KeyModifyEnd();
+		}
 	}
-}*/
+}
 
+
+DLLEXPORT bool ExportFile(char* filename)
+{
+	FbxExporter* exporter = FbxExporter::Create(manager, "");
+
+	if (!exporter->Initialize(filename, -1, manager->GetIOSettings()))
+	{
+		std::cerr << "Failed to initialize the FBX exporter." << std::endl;
+		exporter->Destroy();
+		return false;
+	}
+
+	exporter->SetFileExportVersion(FBX_2014_00_COMPATIBLE);
+	exporter->Export(scene);
+
+	exporter->Destroy();
+	return true;
+}
 
 
 DLLEXPORT void PrintMesh()

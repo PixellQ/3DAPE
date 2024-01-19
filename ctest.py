@@ -45,6 +45,8 @@ class Model():
                 #print(self.scene.contents.bones[i].boneId)
                 print(string_at(self.scene.contents.bones[i].boneName).decode("utf-8"))
 
+            self.fbxLayer.AnimateRotation(3)
+
             for i in range(self.scene.contents.meshCount): 
                 polygons = []
                 vertices = []

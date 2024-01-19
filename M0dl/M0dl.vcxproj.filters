@@ -21,8 +21,5 @@
     <ClCompile Include="..\model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="2020.3.2\samples\ExportScene05\exportscene5.cxx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

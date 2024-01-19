@@ -731,6 +731,7 @@ class Ui_MainWindow(object):
         self.FinalPage = QtWidgets.QWidget()
         self.FinalPage.setObjectName("FinalPage")
         self.ExportModelBtn = QtWidgets.QPushButton(self.FinalPage)
+        self.ExportModelBtn.setEnabled(False)
         self.ExportModelBtn.setGeometry(QtCore.QRect(360, 230, 75, 23))
         self.ExportModelBtn.setObjectName("ExportModelBtn")
         self.stackedWidget.addWidget(self.FinalPage)

@@ -538,7 +538,7 @@ class MainWindow(QtWidgets.QMainWindow):
             import shutil
             file_dialog = QtWidgets.QFileDialog()
             file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
-            file_dialog.setNameFilter("fbx (*.fbx);3ds (*.3ds)")
+            file_dialog.setNameFilter("fbx (*.fbx);;3ds (*.3ds)")
 
             if file_dialog.exec_() == QtWidgets.QFileDialog.Accepted:
                 self.file_path = file_dialog.selectedFiles()[0]
