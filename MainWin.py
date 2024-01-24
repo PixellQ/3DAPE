@@ -30,8 +30,9 @@ class VideoThread(QtCore.QObject):
         self.cap = cv2.VideoCapture(CurrentVideo.filename) 
 
     def run(self):
+        ##  Print Statement
         #self.frame_rate = int(self.cap.get(cv2.CAP_PROP_FPS))
-        print(CurrentVideo.frame_rate)
+        print("fps : " + CurrentVideo.frame_rate)
         #self.ending_signal.emit(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
         global currentframe_pos
@@ -535,6 +536,9 @@ class MainWindow(QtWidgets.QMainWindow):
 # Export model function
     def export_model(self):
         if self.ModelViewPort:
+            global CurrentVideo
+            self.ModelViewPort.model.animateFromVideo("Shake", CurrentVideo.frame_rate, CurrentVideo.total_frames, CurrentVideo.frames)
+
             import shutil
             file_dialog = QtWidgets.QFileDialog()
             file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)

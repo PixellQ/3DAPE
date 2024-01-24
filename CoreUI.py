@@ -23,11 +23,13 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName("gridLayout")
         self.BackgroundFrame = QtWidgets.QFrame(self.centralwidget)
         self.BackgroundFrame.setStyleSheet("#BackgroundFrame{\n"
-"   border-top: 1px solid black; \n"
+"   /*border-top: 1px solid black; \n"
 "   border-bottom: 1px solid black; \n"
-"   border-right: 1px solid black; \n"
+"   border-right: 1px solid black;\n"
+"   border-left: 1px solid black;\n"
 "   border-radius: 5px;\n"
-"   border-color: rgb(0, 120, 215);\n"
+"   border-color: rgb(0, 120, 215);*/\n"
+"   margin: -1px;\n"
 "}")
         self.BackgroundFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.BackgroundFrame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -59,7 +61,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.TitleSection = QtWidgets.QWidget(self.MenuBar)
         self.TitleSection.setStyleSheet("QWidget{\n"
-"    border-top-left-radius: 5px;\n"
+"    /*border-top-left-radius: 5px;*/\n"
 "}")
         self.TitleSection.setObjectName("TitleSection")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.TitleSection)
@@ -190,7 +192,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.ContentSection)
         self.BottomSection = QtWidgets.QWidget(self.MenuBar)
         self.BottomSection.setStyleSheet("#BottomSection{\n"
-"    border-bottom-left-radius: 5px;\n"
+"    /*border-bottom-left-radius: 5px;*/\n"
 "}")
         self.BottomSection.setObjectName("BottomSection")
         self.gridLayout_17 = QtWidgets.QGridLayout(self.BottomSection)
@@ -249,7 +251,7 @@ class Ui_MainWindow(object):
 "}*/")
         self.TitleNameContainer.setObjectName("TitleNameContainer")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.TitleNameContainer)
-        self.horizontalLayout_4.setContentsMargins(5, 0, 5, 0)
+        self.horizontalLayout_4.setContentsMargins(10, 0, 5, 0)
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.DAPE_3 = QtWidgets.QLabel(self.TitleNameContainer)
@@ -294,7 +296,7 @@ class Ui_MainWindow(object):
 "   background-color: rgb(0, 120, 215);\n"
 "}\n"
 "#CloseButton{\n"
-"   border-top-right-radius: 5px;\n"
+"   /*border-top-right-radius: 5px;*/\n"
 "} \n"
 "#CloseButton:hover{\n"
 "   background-color: rgb(170, 0, 0);\n"
@@ -573,7 +575,7 @@ class Ui_MainWindow(object):
         self.VideoScrollArea.setWidgetResizable(True)
         self.VideoScrollArea.setObjectName("VideoScrollArea")
         self.VideoScrollContent = QtWidgets.QWidget()
-        self.VideoScrollContent.setGeometry(QtCore.QRect(0, 0, 254, 500))
+        self.VideoScrollContent.setGeometry(QtCore.QRect(0, 0, 255, 502))
         self.VideoScrollContent.setStyleSheet("#VideoScrollContent\n"
 "{\n"
 "    background-color: #ffffff;\n"

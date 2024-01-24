@@ -62,8 +62,6 @@ class Video:
         if self.filename:
             self.track_poses()
 
-    def add_frames(self, frame):
-        self.frames.append(frame)
 
     def draw_tracked_points(self, img, frame_pos):
         coords = self.frames[frame_pos]

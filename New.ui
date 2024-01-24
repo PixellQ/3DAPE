@@ -34,11 +34,13 @@
      <widget class="QFrame" name="BackgroundFrame">
       <property name="styleSheet">
        <string notr="true">#BackgroundFrame{
-   border-top: 1px solid black; 
+   /*border-top: 1px solid black; 
    border-bottom: 1px solid black; 
-   border-right: 1px solid black; 
+   border-right: 1px solid black;
+   border-left: 1px solid black;
    border-radius: 5px;
-   border-color: rgb(0, 120, 215);
+   border-color: rgb(0, 120, 215);*/
+   margin: -1px;
 }</string>
       </property>
       <property name="frameShape">
@@ -102,7 +104,7 @@ QWidget{
            <widget class="QWidget" name="TitleSection" native="true">
             <property name="styleSheet">
              <string notr="true">QWidget{
-	border-top-left-radius: 5px;
+	/*border-top-left-radius: 5px;*/
 }</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_5">
@@ -432,7 +434,7 @@ QPushButton::hover{
            <widget class="QWidget" name="BottomSection" native="true">
             <property name="styleSheet">
              <string notr="true">#BottomSection{
-	border-bottom-left-radius: 5px;
+	/*border-bottom-left-radius: 5px;*/
 }</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_17">
@@ -556,7 +558,7 @@ QPushButton::hover{
                  <number>0</number>
                 </property>
                 <property name="leftMargin">
-                 <number>5</number>
+                 <number>10</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
@@ -634,7 +636,7 @@ QPushButton:hover{
    background-color: rgb(0, 120, 215);
 }
 #CloseButton{
-   border-top-right-radius: 5px;
+   /*border-top-right-radius: 5px;*/
 } 
 #CloseButton:hover{
    background-color: rgb(170, 0, 0);
@@ -1161,8 +1163,8 @@ QSlider::handle{
                                    <rect>
                                     <x>0</x>
                                     <y>0</y>
-                                    <width>254</width>
-                                    <height>500</height>
+                                    <width>255</width>
+                                    <height>502</height>
                                    </rect>
                                   </property>
                                   <property name="styleSheet">
