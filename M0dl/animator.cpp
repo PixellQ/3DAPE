@@ -1,14 +1,26 @@
 #include "animator.h"
 #include <stdio.h>
 
-Animator::Animator(char* animationName, FbxScene* sceneToBeAnimated, float fps, int totalFrames, struct Landmark* frames)
+Animator::Animator(const char* animationName, FbxScene* sceneToBeAnimated, float fps, int totalFrames, struct Landmark* frames)
 {
 	stackName = animationName;
 	scene = sceneToBeAnimated;
-	std::cout<<totalFrames;
+	std::cout << "Total Frames : " << totalFrames;
 
-	totalTime = totalFrames / fps;
-	intervalTime = 1 / fps;
+	for (int j = 33; j <= 65; ++j) {
+		std::vector<Landmark*> trackedPoint;
+
+		for (int i = 33; i <= (33 * totalFrames) - 1; i += j) 
+		{
+			trackedPoint.push_back(&frames[i]);
+		}
+		trackedPoint.insert(trackedPoint.begin(), &frames[j]);
+
+		trackPoints.push_back(trackedPoint);
+	}
+
+	totalTime = static_cast<float>(totalFrames) / fps;
+	intervalTime = 1.0f / fps;
 }
 
 void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
@@ -46,13 +58,13 @@ void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 		if (lCurve)
 		{
 			lCurve->KeyModifyBegin();
-			for (float currenTime = intervalTime; currenTime <= totalTime; currenTime = currenTime + intervalTime)
+			for (float currenTime = 0.0f; currenTime <= totalTime - intervalTime; currenTime = currenTime + intervalTime)
 			{
 				lTime.SetSecondDouble(currenTime);
 				lKeyIndex = lCurve->KeyAdd(lTime);
 				lCurve->KeySetValue(lKeyIndex, rotationvalue);
 				lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
-				if (rotationvalue <= 45.0)
+				if (rotationvalue <= 65.0)
 				{
 					rotationvalue = rotationvalue + 0.2f;
 				}
@@ -82,4 +94,33 @@ void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 			lCurve->KeyModifyEnd();
 		}
 	}
+}
+
+Landmark* Animator::GetMPOrigin(FbxSkeleton* hipBone)
+{
+	FbxSkeleton* skeleton = hipBone;
+	FbxNode* node = skeleton->GetNode();
+	FbxString boneName = node->GetName();
+
+	FbxAMatrix globalTransform = node->EvaluateGlobalTransform();
+
+	FbxVector4 translation = globalTransform.GetT();
+	FbxVector4 rotation = globalTransform.GetR();
+
+	Landmark* Origin;
+	Origin->x = translation[0];
+	Origin->y = translation[1];
+	Origin->z = translation[2];
+
+	return Origin;
+}
+
+Landmark* Animator::AlignCordwithOrigin(Landmark* coords, Landmark* Origin)
+{
+	Landmark* newLandmark;
+	newLandmark->x = coords->x + Origin->x;
+	newLandmark->y = coords->y + Origin->y;
+	newLandmark->z = coords->z + Origin->z;
+
+	return newLandmark;
 }

@@ -39,14 +39,13 @@ class Model():
             self.fbxLayer.GetSceneDetails.restype = POINTER(Scene)
             self.scene = self.fbxLayer.GetSceneDetails()
 
-            #fbxLayer.PrintBone()
+            self.fbxLayer.PrintBone()
 
             self.meshes = []
-            
 
-            for i in range(self.scene.contents.boneCount):
+            #for i in range(self.scene.contents.boneCount):
                 #print(self.scene.contents.bones[i].boneId)
-                print(string_at(self.scene.contents.bones[i].boneName).decode("utf-8"))
+             #   print(string_at(self.scene.contents.bones[i].boneName).decode("utf-8"))
 
             #self.fbxLayer.AnimateBones(3, "Shake".encode('utf-8'))
 

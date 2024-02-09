@@ -32,7 +32,7 @@ class VideoThread(QtCore.QObject):
     def run(self):
         ##  Print Statement
         #self.frame_rate = int(self.cap.get(cv2.CAP_PROP_FPS))
-        print("fps : " + CurrentVideo.frame_rate)
+        print("fps : " + str(CurrentVideo.frame_rate))
         #self.ending_signal.emit(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
         global currentframe_pos

@@ -22,9 +22,9 @@ class Animator
 {
 public:
 
-	Animator(char* animationName, FbxScene* sceneToBeAnimated, float fps, int totalFrames, struct Landmark* frames);
+	Animator(const char* animationName, FbxScene* sceneToBeAnimated, float fps, int totalFrames, struct Landmark* frames);
 
-	char* stackName;
+	const char* stackName;
 
 	void AnimateBones(std::vector<FbxSkeleton*> bonesPresent);
 
@@ -34,10 +34,15 @@ private:
 	float totalTime;
 	float intervalTime;
 	
+	// mediapipe
+	std::vector<std::vector<Landmark*>> trackPoints;
+
 	// fbx
 	FbxScene* scene;
 	std::vector<FbxSkeleton*> bones;
 
 	// Algo
+	Landmark* GetMPOrigin(FbxSkeleton* hipBone);
+	Landmark* AlignCordwithOrigin(Landmark* coords, Landmark* Origin);
 	//void GetRotation(int boneId);
 };

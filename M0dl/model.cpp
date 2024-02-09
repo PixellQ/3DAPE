@@ -126,11 +126,11 @@ DLLEXPORT void AnimateBones(char* stackName, int fps, int totalFrames, Landmark*
 {
 	Animator DefaultAnimator(stackName, scene, fps, totalFrames, frames);
 
-	for (int i = 0; i < totalFrames + 1; ++i) 
-	{
-		std::cout << std::endl << "Coord " << i << ": ";
-		std::cout << "x : " << frames[i].x << ", y : " << frames[i].y << ", z : " << frames[i].z;
-	}
+	//for (int i = 0; i <= 33 * totalFrames; ++i) 
+	//{
+		//std::cout << std::endl << "Coord " << i << ": ";
+		//std::cout << "x : " << frames[i].x << ", y : " << frames[i].y << ", z : " << frames[i].z;
+	//}
 
 	DefaultAnimator.AnimateBones(bones);
 }
@@ -176,7 +176,17 @@ DLLEXPORT void PrintBone()
 {
     for (int i = 0; i < custom_scene->boneCount; i++)
     {
-        std::cout << "Bone ID: " << custom_scene->bones[i].boneId;
-        std::cout << ", Bone Name: " << custom_scene->bones[i].boneName << std::endl;
+		FbxSkeleton* skeleton = bones[i];
+		FbxNode* node = skeleton->GetNode();
+		FbxString boneName = node->GetName();
+
+		FbxAMatrix globalTransform = node->EvaluateGlobalTransform();
+
+		FbxVector4 translation = globalTransform.GetT();
+		FbxVector4 rotation = globalTransform.GetR();
+
+		std::cout << "Global Coordinates for Bone " << boneName.Buffer() << " (Bone ID: " << i << "):" << std::endl;
+		std::cout << "Translation: (X: " << translation[0] << ", Y: " << translation[1] << ", Z: " << translation[2] << ")" << std::endl;
+		std::cout << "Rotation: (X: " << rotation[0] << ", Y: " << rotation[1] << ", Z: " << rotation[2] << ")" << std::endl;
     }
 }
