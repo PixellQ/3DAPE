@@ -18,4 +18,4 @@ animation, gaming, and virtual reality industries, and it can be further enhance
 additional features and functionalities.</p>
 <br>
 <h3>Pose Estimation:</h3>
-<img src="UI/Reference/Screenshot (63).png" alt="Icon" height="400"><br>
+<img src="UI/Test/VideoTest.png" alt="Icon" height="400"><br>
