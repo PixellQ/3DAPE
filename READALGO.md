@@ -82,7 +82,7 @@ The rotation angle can be found using the dot product and the magnitudes of vect
 ```python
     cos⁡(θ)=dot(D,B)∥D∥⋅∥B∥cos(θ)=∥D∥⋅∥B∥dot(D,B)​
     sin⁡(θ)=1−cos⁡2(θ)sin(θ)=1−cos2(θ)
-```​
+```
 
 Create the rotation matrix:
 Use the axis-angle representation to create the rotation matrix. The rotation matrix RR is given by:
