@@ -106,3 +106,6 @@ sin⁡(θ)=1−cos⁡2(θ)sin(θ)=1−cos2(θ)
 Finally, construct the rotation matrix RR using the axis-angle representation.
 
 Keep in mind that the rotation matrix might be a 3x3 matrix, and you can use it to rotate vector B to match vector A while keeping vector D fixed.
+
+Refer this :
+https://www.geometrictools.com/Documentation/EulerAngles.pdf
