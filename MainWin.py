@@ -4,7 +4,7 @@ import platform
 from PyQt5 import QtCore, QtGui, QtWidgets
 from CoreUI import *
 import QtModelView
-from QtCustom import QtImportDialog, QtVideoDetailWidget
+from QtCustom import QtImportDialog, QtVideoDetailWidget, QtPageButton
 from pathlib import Path
 import cv2
 import numpy as np
@@ -38,7 +38,7 @@ class VideoThread(QtCore.QObject):
         global currentframe_pos
         global played
         global preview_pose
-        delay_time = int(1000 / CurrentVideo.frame_rate)
+        delay_time = int(600/ CurrentVideo.frame_rate)
         while True:
             if playing:
                 ret, frame = self.cap.read()
@@ -54,7 +54,8 @@ class VideoThread(QtCore.QObject):
                         CurrentVideo.draw_tracked_points(Image, int(currentframe_pos) -1)
 
                     self.frame_signal.emit(Image)
-                    cv2.waitKey(delay_time)
+                    QtCore.QThread.msleep(delay_time)
+                    #cv2.waitKey(delay_time)
 
             else:  
                 if not played:    
@@ -144,11 +145,14 @@ class MainWindow(QtWidgets.QMainWindow):
 # Binding the button events
 
         self.ui.MinimizeButton.clicked.connect(self.showMinimized)
-        self.ui.MaximizeButton.clicked.connect(self.maximize_window)
-        self.ui.CloseButton.clicked.connect(self.close)
+        self.ui.MaximizeButton.clicked.connect(self.maximizeWindow)
+        self.ui.CloseButton.clicked.connect(self.closeWindow)
 
         self.ui.PathTitle.mousePressEvent = self.onTitleClicked
 
+        self.ui.VideoPageBtn = QtPageButton(self.ui.VideoPageFrame)
+        self.ui.VideoPageBtn.setIcon("UI/Icons/Video.png")
+        
         self.ui.VideoPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(0))
         self.ui.ModelPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(1))
         self.ui.FinalPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(2))
@@ -187,6 +191,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.isMaximized = False
 
+# Binding Animations
+
+        #self.ui.VideoPageBtn.installEventFilter(self)
 
     # Functions which the buttons are binded with
 
@@ -201,12 +208,43 @@ class MainWindow(QtWidgets.QMainWindow):
         self.show()
 
 
+    def eventFilter(self, obj, event):
+        if obj == self.ui.VideoPageBtn:
+            current_size = QtCore.QSize(28, 28)
+            target_size = QtCore.QSize(22, 22)
+            if event.type() == QtCore.Qt.QEvent.Enter:
+                self.start_animation(current_size, target_size)
+            elif event.type() == QtCore.Qt.QEvent.Leave:
+                self.start_animation(target_size, current_size)
+        return super().eventFilter(obj, event)
+
+
+    def start_animation(self, current_size, target_size):
+        animation = QtCore.QPropertyAnimation(self.ui.VideoPageBtn, b'iconSize')
+        animation.setStartValue(current_size)
+        animation.setEndValue(target_size)
+        animation.setDuration(700000)
+        animation.setEasingCurve(QtCore.QEasingCurve.InOutCubic)
+        animation.start()
+
+        opacity_effect = QtWidgets.QGraphicsOpacityEffect(self.ui.VideoPageBtn)
+        self.ui.VideoPageBtn.setGraphicsEffect(opacity_effect)
+
+        animation = QtCore.QPropertyAnimation(opacity_effect, b'opacity')
+        animation.setStartValue(opacity_effect.opacity())
+        animation.setEndValue(30.0)
+        animation.setDuration(20000)
+        animation.setEasingCurve(QtCore.QEasingCurve.OutQuad)  # Adjust easing curve if needed
+        animation.start()
+
+
     def mousePressEvent(self,event):
         self.clickPosition = event.globalPos()
         self.ui.TitleNameContainer.setStyleSheet("")
+        self.ui.TitleButton.setFocus()
 
 
-    def maximize_window(self):
+    def maximizeWindow(self):
         global WINDOW_SIZE
         win_status = WINDOW_SIZE
 
@@ -220,6 +258,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.showNormal()
             self.isMaximized = False
             self.ui.MaximizeButton.setIcon(self.maximizeicon)
+
+
+    def closeWindow(self):
+        self.PauseVideo()
+        self.close()
     
 
     def onTitleClicked(self, event):
@@ -227,7 +270,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.TitleNameContainer.setStyleSheet("#TitleNameContainer{\n"
             "    border: 1px solid gray;\n"
             "    border-radius: 2px;\n"
-            "    margin: 2px;\n}")
+            "    margin: 0px 2px;\n"
+            "    margin-top: -2px;\n}")
         else:
             self.ui.TitleNameContainer.setStyleSheet("")
 

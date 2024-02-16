@@ -234,3 +234,37 @@ class QtVideoDetailWidget(object):
 "Type   : .mp4\n"
 "Frames: 123 frames\n"
 "codec  : mvaro"))
+
+
+
+class QtPageButton(QtWidgets.QPushButton):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.gridLayout_14 = QtWidgets.QGridLayout(parent)
+        self.gridLayout_14.setContentsMargins(0, 10, 0, 10)
+        self.gridLayout_14.setSpacing(0)
+        self.gridLayout_14.setObjectName("gridLayout_14")
+        self.PageBtn = QtWidgets.QPushButton(parent)
+        self.PageBtn.setStyleSheet("")
+        self.PageBtn.setIconSize(QtCore.QSize(22, 22))
+        self.PageBtn.setObjectName("PageBtn")
+        self.gridLayout_14.addWidget(self.PageBtn, 0, 0, 1, 1)
+
+    def setIcon(self, IconAddress):
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(IconAddress), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.PageBtn.setIcon(icon1)
+
+    def startAnimation(self, current_size, target_size):
+        animation = QtCore.QPropertyAnimation(self.btn, b'iconSize')
+        animation.setStartValue(current_size)
+        animation.setEndValue(target_size)
+        animation.setDuration(500)
+        animation.setEasingCurve(QtCore.QEasingCurve.InOutCubic)
+        animation.start()
+
+    def enterEvent(self, event):
+        self.startAnimation(QtCore.QSize(22, 22), QtCore.QSize(28, 28))
+
+    def leaveEvent(self, event):
+        self.startAnimation(QtCore.QSize(28, 28), QtCore.QSize(22, 22))

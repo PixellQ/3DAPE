@@ -526,7 +526,7 @@ QPushButton::hover{
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>0</number>
+              <number>7</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -547,11 +547,8 @@ QPushButton::hover{
                </property>
                <property name="styleSheet">
                 <string notr="true">#TitleNameContainer
-{}
-/*	border: 1px solid gray;
-	border-radius: 2px;
-	margin: 1px;
-}*/</string>
+{
+}</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <property name="spacing">
@@ -564,7 +561,7 @@ QPushButton::hover{
                  <number>0</number>
                 </property>
                 <property name="rightMargin">
-                 <number>5</number>
+                 <number>10</number>
                 </property>
                 <property name="bottomMargin">
                  <number>0</number>
@@ -1163,8 +1160,8 @@ QSlider::handle{
                                    <rect>
                                     <x>0</x>
                                     <y>0</y>
-                                    <width>255</width>
-                                    <height>502</height>
+                                    <width>253</width>
+                                    <height>500</height>
                                    </rect>
                                   </property>
                                   <property name="styleSheet">

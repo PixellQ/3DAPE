@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'New.ui'
+# Form implementation generated from reading ui file 'Core.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -238,20 +238,18 @@ class Ui_MainWindow(object):
 "}")
         self.TitleBar.setObjectName("TitleBar")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.TitleBar)
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setContentsMargins(7, 0, 0, 0)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.TitleNameContainer = QtWidgets.QWidget(self.TitleBar)
         self.TitleNameContainer.setMinimumSize(QtCore.QSize(350, 0))
+        self.TitleNameContainer.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.TitleNameContainer.setStyleSheet("#TitleNameContainer\n"
-"{}\n"
-"/*    border: 1px solid gray;\n"
-"    border-radius: 2px;\n"
-"    margin: 1px;\n"
-"}*/")
+"{\n"
+"}")
         self.TitleNameContainer.setObjectName("TitleNameContainer")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.TitleNameContainer)
-        self.horizontalLayout_4.setContentsMargins(10, 0, 5, 0)
+        self.horizontalLayout_4.setContentsMargins(10, 0, 10, 0)
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.DAPE_3 = QtWidgets.QLabel(self.TitleNameContainer)
@@ -575,7 +573,7 @@ class Ui_MainWindow(object):
         self.VideoScrollArea.setWidgetResizable(True)
         self.VideoScrollArea.setObjectName("VideoScrollArea")
         self.VideoScrollContent = QtWidgets.QWidget()
-        self.VideoScrollContent.setGeometry(QtCore.QRect(0, 0, 255, 502))
+        self.VideoScrollContent.setGeometry(QtCore.QRect(0, 0, 253, 500))
         self.VideoScrollContent.setStyleSheet("#VideoScrollContent\n"
 "{\n"
 "    background-color: #ffffff;\n"

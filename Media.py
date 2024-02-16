@@ -30,16 +30,18 @@ class PoseTrackingThread(QtCore.QThread):
             with mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
                 Img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 results = pose.process(Img)
+                temp_results = 0
+                t_coords = []
 
-                if results.pose_landmarks:
-                    t_coords = []
-
-                    temp_results = results.pose_landmarks
-                    for landmark in results.pose_landmarks.landmark:
+                if results.pose_world_landmarks:
+                    temp_results = results.pose_world_landmarks
+                    for landmark in results.pose_world_landmarks.landmark:
                         t_coords.append({"x": landmark.x, "y": landmark.y, "z": landmark.z})
-                elif temp_results:
+
+                elif temp_results != 0:
                     for landmark in temp_results.landmark:
                         t_coords.append({"x": landmark.x, "y": landmark.y, "z": landmark.z})
+
                 else:
                     pass# Codes when the first frames are not tracked by meadiapipe
 
@@ -77,7 +79,7 @@ class Video:
 # Tracking poses on Import
     def track_poses(self):
         cap = cv2.VideoCapture(self.filename)
-        self.frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
+        self.frame_rate = float(cap.get(cv2.CAP_PROP_FPS))
         self.total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         cap.release()
 

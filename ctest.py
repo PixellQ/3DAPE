@@ -67,7 +67,7 @@ class Model():
 
     def animateFromVideo(self, animName, fps, total_frames, frames):
         AnimateBones = self.fbxLayer.AnimateBones
-        AnimateBones.argtypes = [c_char_p, c_int, c_int, POINTER(Landmark)]
+        AnimateBones.argtypes = [c_char_p, c_float, c_int, POINTER(Landmark)]
 
         stack_name_bytes = animName.encode('utf-8')
 

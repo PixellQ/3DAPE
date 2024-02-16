@@ -11,12 +11,20 @@ struct Landmark
 	float x;
 	float y;
 	float z;
+
+	// Functions
+	Landmark operator-(const Landmark& operand) const;
+	Landmark operator/(double scalar) const;
+	double length() const;
 };
 
 
-/*Vertex* frame;
-Vertex* frames;
-*/
+struct Quaternion
+{
+	double w, x, y, z;
+};
+
+
 
 class Animator
 {
@@ -41,8 +49,14 @@ private:
 	FbxScene* scene;
 	std::vector<FbxSkeleton*> bones;
 
-	// Algo
+	// Rotation
 	Landmark* GetMPOrigin(FbxSkeleton* hipBone);
 	Landmark* AlignCordwithOrigin(Landmark* coords, Landmark* Origin);
 	//void GetRotation(int boneId);
+
+	Landmark CrossProduct(const Landmark& a, const Landmark& b);
+	Landmark Normalize(const Landmark& v);
+	void MatrixtoEuler(const Landmark& axis_x, const Landmark& axis_y, const Landmark& axis_z,
+		double& roll, double& pitch, double& yaw);
+	Landmark LookAt(const Landmark& base, const Landmark& child);
 };
