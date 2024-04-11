@@ -133,14 +133,6 @@ class Ui_MainWindow(object):
         self.gridLayout_14.setContentsMargins(0, 10, 0, 10)
         self.gridLayout_14.setSpacing(0)
         self.gridLayout_14.setObjectName("gridLayout_14")
-        self.VideoPageBtn = QtWidgets.QPushButton(self.VideoPageFrame)
-        self.VideoPageBtn.setStyleSheet("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("UI/Icons/Video.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.VideoPageBtn.setIcon(icon1)
-        self.VideoPageBtn.setIconSize(QtCore.QSize(22, 22))
-        self.VideoPageBtn.setObjectName("VideoPageBtn")
-        self.gridLayout_14.addWidget(self.VideoPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.VideoPageFrame)
         self.ModelPageFrame = QtWidgets.QFrame(self.ContentSection)
         self.ModelPageFrame.setStyleSheet("")
@@ -151,13 +143,6 @@ class Ui_MainWindow(object):
         self.gridLayout_15.setContentsMargins(0, 10, 0, 10)
         self.gridLayout_15.setSpacing(0)
         self.gridLayout_15.setObjectName("gridLayout_15")
-        self.ModelPageBtn = QtWidgets.QPushButton(self.ModelPageFrame)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("UI/Icons/Model.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.ModelPageBtn.setIcon(icon2)
-        self.ModelPageBtn.setIconSize(QtCore.QSize(22, 22))
-        self.ModelPageBtn.setObjectName("ModelPageBtn")
-        self.gridLayout_15.addWidget(self.ModelPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.ModelPageFrame)
         self.FinalPageFrame = QtWidgets.QFrame(self.ContentSection)
         self.FinalPageFrame.setStyleSheet("")
@@ -168,14 +153,6 @@ class Ui_MainWindow(object):
         self.gridLayout_16.setContentsMargins(0, 10, 0, 10)
         self.gridLayout_16.setSpacing(0)
         self.gridLayout_16.setObjectName("gridLayout_16")
-        self.FinalPageBtn = QtWidgets.QPushButton(self.FinalPageFrame)
-        self.FinalPageBtn.setStyleSheet("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("UI/Icons/Final.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.FinalPageBtn.setIcon(icon3)
-        self.FinalPageBtn.setIconSize(QtCore.QSize(22, 22))
-        self.FinalPageBtn.setObjectName("FinalPageBtn")
-        self.gridLayout_16.addWidget(self.FinalPageBtn, 0, 0, 1, 1)
         self.verticalLayout_4.addWidget(self.FinalPageFrame)
         self.BottomSpaceFrame = QtWidgets.QFrame(self.ContentSection)
         self.BottomSpaceFrame.setStyleSheet("")
@@ -208,9 +185,9 @@ class Ui_MainWindow(object):
 "    margin-top: 8px;\n"
 "    margin-bottom: 8px;\n"
 "}")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("UI/Icons/settingH.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.SettingsBtn.setIcon(icon4)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("UI/Icons/settingH.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.SettingsBtn.setIcon(icon1)
         self.SettingsBtn.setIconSize(QtCore.QSize(24, 24))
         self.SettingsBtn.setObjectName("SettingsBtn")
         self.gridLayout_17.addWidget(self.SettingsBtn, 0, 0, 1, 1)
@@ -243,7 +220,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.TitleNameContainer = QtWidgets.QWidget(self.TitleBar)
         self.TitleNameContainer.setMinimumSize(QtCore.QSize(350, 0))
-        self.TitleNameContainer.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.TitleNameContainer.setStyleSheet("#TitleNameContainer\n"
 "{\n"
 "}")
@@ -311,9 +287,9 @@ class Ui_MainWindow(object):
         self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.MinimizeButton = QtWidgets.QPushButton(self.MinContainer)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("UI/Icons/minusB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MinimizeButton.setIcon(icon5)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("UI/Icons/minusB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MinimizeButton.setIcon(icon2)
         self.MinimizeButton.setIconSize(QtCore.QSize(41, 27))
         self.MinimizeButton.setObjectName("MinimizeButton")
         self.gridLayout_2.addWidget(self.MinimizeButton, 0, 0, 1, 1)
@@ -325,9 +301,9 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setSpacing(0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.MaximizeButton = QtWidgets.QPushButton(self.MaxContainer)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("UI/Icons/maximizeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MaximizeButton.setIcon(icon6)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("UI/Icons/maximizeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MaximizeButton.setIcon(icon3)
         self.MaximizeButton.setIconSize(QtCore.QSize(41, 28))
         self.MaximizeButton.setObjectName("MaximizeButton")
         self.gridLayout_3.addWidget(self.MaximizeButton, 0, 0, 1, 1)
@@ -339,9 +315,9 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setSpacing(0)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.CloseButton = QtWidgets.QPushButton(self.CloseContainer)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("UI/Icons/closeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.CloseButton.setIcon(icon7)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("UI/Icons/closeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.CloseButton.setIcon(icon4)
         self.CloseButton.setIconSize(QtCore.QSize(41, 28))
         self.CloseButton.setObjectName("CloseButton")
         self.gridLayout_4.addWidget(self.CloseButton, 0, 0, 1, 1)
@@ -373,7 +349,6 @@ class Ui_MainWindow(object):
         self.gridLayout_8.setSpacing(0)
         self.gridLayout_8.setObjectName("gridLayout_8")
         self.VidPageBackground = QtWidgets.QWidget(self.VideoPage)
-        self.VidPageBackground.setStyleSheet("")
         self.VidPageBackground.setObjectName("VidPageBackground")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.VidPageBackground)
         self.gridLayout_10.setContentsMargins(0, 0, 0, 0)
@@ -455,9 +430,9 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.PreviousFrame.sizePolicy().hasHeightForWidth())
         self.PreviousFrame.setSizePolicy(sizePolicy)
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("UI/Icons/previousBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.PreviousFrame.setIcon(icon8)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("UI/Icons/previousBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.PreviousFrame.setIcon(icon5)
         self.PreviousFrame.setObjectName("PreviousFrame")
         self.horizontalLayout_5.addWidget(self.PreviousFrame)
         self.PlaynPause = QtWidgets.QPushButton(self.ToolsContainer)
@@ -474,9 +449,9 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.NextFrame.sizePolicy().hasHeightForWidth())
         self.NextFrame.setSizePolicy(sizePolicy)
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("UI/Icons/nextBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.NextFrame.setIcon(icon9)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("UI/Icons/nextBu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.NextFrame.setIcon(icon6)
         self.NextFrame.setObjectName("NextFrame")
         self.horizontalLayout_5.addWidget(self.NextFrame)
         self.horizontalSlider = QtWidgets.QSlider(self.ToolsContainer)
@@ -542,7 +517,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.VideoTools)
         self.gridLayout_11.addWidget(self.VideoFrame, 0, 0, 1, 1)
         self.VidToolBox = QtWidgets.QFrame(self.VideoSplitter)
-        self.VidToolBox.setStyleSheet("")
         self.VidToolBox.setObjectName("VidToolBox")
         self.gridLayout_24 = QtWidgets.QGridLayout(self.VidToolBox)
         self.gridLayout_24.setContentsMargins(5, 0, 0, 0)
@@ -632,20 +606,6 @@ class Ui_MainWindow(object):
         self.gridLayout_8.addWidget(self.VidPageBackground, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.VideoPage)
         self.ModelPage = QtWidgets.QWidget()
-        self.ModelPage.setStyleSheet("QWidget{\n"
-"    background-color: none;\n"
-"    border-radius: none;\n"
-"}\n"
-"\n"
-"QFrame{\n"
-"    background-color: none;\n"
-"    border-radius: none;\n"
-"}\n"
-"\n"
-"QSplitter{\n"
-"    background-color: none;\n"
-"    border-radius: none;\n"
-"}")
         self.ModelPage.setObjectName("ModelPage")
         self.gridLayout_21 = QtWidgets.QGridLayout(self.ModelPage)
         self.gridLayout_21.setContentsMargins(0, 0, 0, 0)
@@ -658,17 +618,17 @@ class Ui_MainWindow(object):
         self.gridLayout_20.setSpacing(0)
         self.gridLayout_20.setObjectName("gridLayout_20")
         self.ModelSplitter = QtWidgets.QSplitter(self.ModelPageBackground)
-        self.ModelSplitter.setStyleSheet("*{\n"
-"    background-color: none;\n"
-"}\n"
-"\n"
-"QSplitter{\n"
-"    margin: -5px;\n"
-"}")
         self.ModelSplitter.setOrientation(QtCore.Qt.Horizontal)
         self.ModelSplitter.setHandleWidth(0)
         self.ModelSplitter.setObjectName("ModelSplitter")
         self.ModelBox = QtWidgets.QFrame(self.ModelSplitter)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ModelBox.sizePolicy().hasHeightForWidth())
+        self.ModelBox.setSizePolicy(sizePolicy)
+        self.ModelBox.setMinimumSize(QtCore.QSize(640, 0))
+        self.ModelBox.setSizeIncrement(QtCore.QSize(1, 0))
         self.ModelBox.setStyleSheet("")
         self.ModelBox.setObjectName("ModelBox")
         self.gridLayout_22 = QtWidgets.QGridLayout(self.ModelBox)
@@ -679,6 +639,8 @@ class Ui_MainWindow(object):
 "    border-radius: 5px;\n"
 "    background-color: #ffffff;\n"
 "}")
+        self.ModelFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.ModelFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.ModelFrame.setObjectName("ModelFrame")
         self.gridLayout_26 = QtWidgets.QGridLayout(self.ModelFrame)
         self.gridLayout_26.setContentsMargins(0, 0, 0, 0)
@@ -711,7 +673,6 @@ class Ui_MainWindow(object):
         self.gridLayout_26.addWidget(self.ModelContainer, 0, 0, 1, 1)
         self.gridLayout_22.addWidget(self.ModelFrame, 0, 0, 1, 1)
         self.ModToolBox = QtWidgets.QFrame(self.ModelSplitter)
-        self.ModToolBox.setStyleSheet("")
         self.ModToolBox.setObjectName("ModToolBox")
         self.gridLayout_23 = QtWidgets.QGridLayout(self.ModToolBox)
         self.gridLayout_23.setContentsMargins(5, 0, 0, 0)
@@ -720,10 +681,82 @@ class Ui_MainWindow(object):
         self.ModelOptions = QtWidgets.QWidget(self.ModToolBox)
         self.ModelOptions.setStyleSheet("#ModelOptions{\n"
 "    background-color: rgb(255, 255, 255);\n"
-"    border-radius: 0px;\n"
+"    border-left: 1px solid gray;\n"
+"    border-color: rgb(217, 217, 217);\n"
 "    border-bottom-right-radius: 5px;\n"
 "}")
         self.ModelOptions.setObjectName("ModelOptions")
+        self.gridLayout_29 = QtWidgets.QGridLayout(self.ModelOptions)
+        self.gridLayout_29.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_29.setSpacing(0)
+        self.gridLayout_29.setObjectName("gridLayout_29")
+        self.ModelOptionTab = QtWidgets.QTabWidget(self.ModelOptions)
+        self.ModelOptionTab.setDocumentMode(True)
+        self.ModelOptionTab.setMovable(True)
+        self.ModelOptionTab.setObjectName("ModelOptionTab")
+        self.ModelFilesTab = QtWidgets.QWidget()
+        self.ModelFilesTab.setObjectName("ModelFilesTab")
+        self.gridLayout_28 = QtWidgets.QGridLayout(self.ModelFilesTab)
+        self.gridLayout_28.setObjectName("gridLayout_28")
+        self.ModelScrollArea = QtWidgets.QScrollArea(self.ModelFilesTab)
+        self.ModelScrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.ModelScrollArea.setWidgetResizable(True)
+        self.ModelScrollArea.setObjectName("ModelScrollArea")
+        self.ModelScrollContent = QtWidgets.QWidget()
+        self.ModelScrollContent.setGeometry(QtCore.QRect(0, 0, 109, 490))
+        self.ModelScrollContent.setStyleSheet("#ModelScrollContent\n"
+"{\n"
+"    background-color: #ffffff;\n"
+"}")
+        self.ModelScrollContent.setObjectName("ModelScrollContent")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.ModelScrollContent)
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_7.setSpacing(0)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.ModelDetailContainer = QtWidgets.QFrame(self.ModelScrollContent)
+        self.ModelDetailContainer.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.ModelDetailContainer.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.ModelDetailContainer.setObjectName("ModelDetailContainer")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.ModelDetailContainer)
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.verticalLayout_7.addWidget(self.ModelDetailContainer, 0, QtCore.Qt.AlignTop)
+        self.ModelScrollArea.setWidget(self.ModelScrollContent)
+        self.gridLayout_28.addWidget(self.ModelScrollArea, 0, 0, 1, 1)
+        self.ModelImportSection = QtWidgets.QWidget(self.ModelFilesTab)
+        self.ModelImportSection.setObjectName("ModelImportSection")
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.ModelImportSection)
+        self.horizontalLayout_7.setContentsMargins(15, 0, 15, 0)
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.ModelImportBtn = QtWidgets.QPushButton(self.ModelImportSection)
+        self.ModelImportBtn.setStyleSheet("#ModelImportBtn{\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 10px;\n"
+"    border-color: rgb(0, 120, 215);\n"
+"    background-color: rgb(0, 120, 215);\n"
+"    color: rgb(255, 255, 255);\n"
+"    padding: 5px;\n"
+"    padding-left: 15px;\n"
+"    padding-right: 15px;\n"
+"}\n"
+"\n"
+"#ModelImportBtn::hover{\n"
+"    background-color:rgb(0, 108, 190);\n"
+"    border-color:  rgb(0, 120, 215);\n"
+"}\n"
+"\n"
+"#ModelImportBtn::selected{\n"
+"    color: rgb(0, 0, 0);\n"
+"    background-color: rgb(255, 255, 255);\n"
+"}")
+        self.ModelImportBtn.setObjectName("ModelImportBtn")
+        self.horizontalLayout_7.addWidget(self.ModelImportBtn)
+        self.gridLayout_28.addWidget(self.ModelImportSection, 1, 0, 1, 1)
+        self.ModelOptionTab.addTab(self.ModelFilesTab, "")
+        self.ModelEditTab = QtWidgets.QWidget()
+        self.ModelEditTab.setObjectName("ModelEditTab")
+        self.ModelOptionTab.addTab(self.ModelEditTab, "")
+        self.gridLayout_29.addWidget(self.ModelOptionTab, 0, 0, 1, 1)
         self.gridLayout_23.addWidget(self.ModelOptions, 0, 0, 1, 1)
         self.gridLayout_20.addWidget(self.ModelSplitter, 0, 0, 1, 1)
         self.gridLayout_21.addWidget(self.ModelPageBackground, 0, 0, 1, 1)
@@ -744,6 +777,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         self.VideoOptionTab.setCurrentIndex(0)
+        self.ModelOptionTab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -757,6 +791,9 @@ class Ui_MainWindow(object):
         self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoFilesTab), _translate("MainWindow", "Videos"))
         self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoEditTab), _translate("MainWindow", "Edit"))
         self.ImportModelBtn.setText(_translate("MainWindow", "Import Model"))
+        self.ModelImportBtn.setText(_translate("MainWindow", "Animate"))
+        self.ModelOptionTab.setTabText(self.ModelOptionTab.indexOf(self.ModelFilesTab), _translate("MainWindow", "Model"))
+        self.ModelOptionTab.setTabText(self.ModelOptionTab.indexOf(self.ModelEditTab), _translate("MainWindow", "Animate"))
         self.ExportModelBtn.setText(_translate("MainWindow", "Export"))
 
 

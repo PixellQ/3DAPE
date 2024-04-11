@@ -1,27 +1,26 @@
 #include "animator.h"
 #include <stdio.h>
 
+
 Animator::Animator(const char* animationName, FbxScene* sceneToBeAnimated, float fps, int totalFrames, struct Landmark* frames)
 {
 	stackName = animationName;
 	scene = sceneToBeAnimated;
-	std::cout << "Total Frames : " << totalFrames;
+	noOfFrames = totalFrames;
+	std::cout << "Total Frames : " << totalFrames << std::endl;
 
-	for (int j = 33; j < 66; ++j) {
+	for (int i = 0; i < 33; ++i) {
 		std::vector<Landmark*> trackedPoint;
-		for (int i = 33; i <= (33 * totalFrames) - 1; i += j) 
+		for (int j = 0; j <= totalFrames; j++)
 		{
-			trackedPoint.push_back(&frames[i]);
+			trackedPoint.push_back(&frames[i + (j * 33)]);
 		}
-		trackedPoint.insert(trackedPoint.begin(), &frames[j]);
+		trackedPoint.insert(trackedPoint.begin(), &frames[i]);
 
 		trackPoints.push_back(trackedPoint);
 	}
-	std::cout << "Number of elements in trackPoints: " << trackPoints.size() << std::endl;
 
-	double roll, pitch, yaw;
-
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i <= totalFrames; i++)
 	{
 		Landmark rot = LookAt(*trackPoints[12][i], *trackPoints[24][i]);
 
@@ -31,14 +30,16 @@ Animator::Animator(const char* animationName, FbxScene* sceneToBeAnimated, float
 		std::cout << " Yaw: " << rot.z;
 	}
 
-	totalTime = static_cast<float>(totalFrames) / fps;
-	intervalTime = 1.0f / fps;
+	totalTime = totalFrames / 30.0f;
+	intervalTime = 1.0f / 30.0f;
+
 }
 
 void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 {
+	//double roll, pitch, yaw;
 	bones = bonesPresent;
-	int boneId = 3;
+	int boneId = 50;
 	if (boneId >= 0 && boneId < bones.size())
 	{
 		FbxSkeleton* skeleton = bones[boneId];
@@ -47,26 +48,39 @@ void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 		FbxString lAnimStackName = stackName;
 		FbxTime lTime;
 		int lKeyIndex = 0;
-		float rotationvalue = 0.0f;
 		FbxNode* lRoot = skeleton->GetNode();
 		FbxNode* lLimbNode1 = node->GetChild(0);
 
-		FbxString boneName = node->GetName();
-		//printf("Animating bone: %s\n", boneName.Buffer());
-		FbxString childName = lLimbNode1->GetName();
-		//printf("Animating bone: %s\n", childName.Buffer());
-
-		// First animation stack.
 		FbxAnimStack* lAnimStack = FbxAnimStack::Create(scene, lAnimStackName);
-
-		// The animation nodes can only exist on AnimLayers therefore it is mandatory to
-		// add at least one AnimLayer to the AnimStack. And for the purpose of this example,
-		// one layer is all we need.
 		FbxAnimLayer* lAnimLayer = FbxAnimLayer::Create(scene, "Base Layer");
 		lAnimStack->AddMember(lAnimLayer);
 
-		// Create the AnimCurve on the Rotation.Y channel
-		FbxAnimCurve* lCurve = lRoot->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_Y, true);
+		int i = 0;
+		float rotationvalue = 0.0f;
+		FbxAnimCurve* lCurve = lRoot->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_X, true);
+		/*if (lCurve)
+		{
+			
+			lCurve->KeyModifyBegin();
+			for (float currenTime = 0.0f; currenTime <= totalTime - intervalTime; currenTime += intervalTime)
+			{
+				lTime.SetSecondDouble(currenTime);
+				lKeyIndex = lCurve->KeyAdd(lTime);
+				lCurve->KeySetValue(lKeyIndex, rotationvalue);
+				lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+
+				Landmark origin;
+				origin.x = 0;
+				origin.y = 0;
+				origin.z = 0;
+				rotationvalue = rotationvalue + LookAt(*trackPoints[12][i], *trackPoints[14][i]).x;
+				i += 1;
+			}
+			lCurve->KeyModifyEnd();
+		}*/
+		i = 0;
+		rotationvalue = 0.0f;
+		lCurve = lRoot->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_Y, true);
 		if (lCurve)
 		{
 			lCurve->KeyModifyBegin();
@@ -76,33 +90,28 @@ void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 				lKeyIndex = lCurve->KeyAdd(lTime);
 				lCurve->KeySetValue(lKeyIndex, rotationvalue);
 				lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
-				if (rotationvalue <= 65.0)
-				{
-					rotationvalue = rotationvalue + 0.2f;
-				}
+
+				rotationvalue = rotationvalue + LookAt(*trackPoints[12][i], *trackPoints[14][i]).z;
+				i += 1;
 			}
+			lCurve->KeyModifyEnd();
 		}
-		// Same thing for the next object
-		lCurve = lLimbNode1->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_Y, true);
+		i = 0;
+		rotationvalue = 0.0f;
+		lCurve = lRoot->LclRotation.GetCurve(lAnimLayer, FBXSDK_CURVENODE_COMPONENT_Z, true);
 		if (lCurve)
 		{
 			lCurve->KeyModifyBegin();
-			lTime.SetSecondDouble(0.0);
-			lKeyIndex = lCurve->KeyAdd(lTime);
-			lCurve->KeySetValue(lKeyIndex, 0.0);
-			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
-			lTime.SetSecondDouble(2.0);
-			lKeyIndex = lCurve->KeyAdd(lTime);
-			lCurve->KeySetValue(lKeyIndex, -90.0);
-			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
-			lTime.SetSecondDouble(4.0);
-			lKeyIndex = lCurve->KeyAdd(lTime);
-			lCurve->KeySetValue(lKeyIndex, 90.0);
-			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
-			lTime.SetSecondDouble(6.0);
-			lKeyIndex = lCurve->KeyAdd(lTime);
-			lCurve->KeySetValue(lKeyIndex, 0.0);
-			lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+			for (float currenTime = 0.0f; currenTime <= totalTime - intervalTime; currenTime = currenTime + intervalTime)
+			{
+				lTime.SetSecondDouble(currenTime);
+				lKeyIndex = lCurve->KeyAdd(lTime);
+				lCurve->KeySetValue(lKeyIndex, rotationvalue);
+				lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+
+				rotationvalue = rotationvalue + LookAt(*trackPoints[12][i], *trackPoints[14][i]).y;
+				i += 1;
+			}
 			lCurve->KeyModifyEnd();
 		}
 	}
@@ -174,9 +183,9 @@ void Animator::MatrixtoEuler(const Landmark& axis_x, const Landmark& axis_y, con
 	}
 }
 
-Landmark Animator::LookAt(const Landmark& base, const Landmark& child)
+Landmark Animator::LookAt(const Landmark& root, const Landmark& target)
 {
-	Landmark axis_z = Normalize(base - child);
+	Landmark axis_z = Normalize(root - target);
 	if (axis_z.length() == 0) {
 
 		axis_z.x = 0;

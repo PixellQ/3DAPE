@@ -273,23 +273,6 @@ QPushButton::hover{
                 <property name="spacing">
                  <number>0</number>
                 </property>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="VideoPageBtn">
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>UI/Icons/Video.png</normaloff>UI/Icons/Video.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -320,20 +303,6 @@ QPushButton::hover{
                 <property name="spacing">
                  <number>0</number>
                 </property>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="ModelPageBtn">
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>UI/Icons/Model.png</normaloff>UI/Icons/Model.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -364,23 +333,6 @@ QPushButton::hover{
                 <property name="spacing">
                  <number>0</number>
                 </property>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="FinalPageBtn">
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>UI/Icons/Final.png</normaloff>UI/Icons/Final.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -823,9 +775,6 @@ QPushButton:hover{
                  </property>
                  <item row="0" column="0">
                   <widget class="QWidget" name="VidPageBackground" native="true">
-                   <property name="styleSheet">
-                    <string notr="true"/>
-                   </property>
                    <layout class="QGridLayout" name="gridLayout_10">
                     <property name="leftMargin">
                      <number>0</number>
@@ -1086,9 +1035,6 @@ QSlider::handle{
                        </layout>
                       </widget>
                       <widget class="QFrame" name="VidToolBox">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
                        <layout class="QGridLayout" name="gridLayout_24">
                         <property name="leftMargin">
                          <number>5</number>
@@ -1283,22 +1229,6 @@ QSlider::handle{
                 </layout>
                </widget>
                <widget class="QWidget" name="ModelPage">
-                <property name="styleSheet">
-                 <string notr="true">QWidget{
-	background-color: none;
-	border-radius: none;
-}
-
-QFrame{
-	background-color: none;
-	border-radius: none;
-}
-
-QSplitter{
-	background-color: none;
-	border-radius: none;
-}</string>
-                </property>
                 <layout class="QGridLayout" name="gridLayout_21">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1335,15 +1265,6 @@ QSplitter{
                     </property>
                     <item row="0" column="0">
                      <widget class="QSplitter" name="ModelSplitter">
-                      <property name="styleSheet">
-                       <string notr="true">*{
-	background-color: none;
-}
-
-QSplitter{
-	margin: -5px;
-}</string>
-                      </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -1351,6 +1272,24 @@ QSplitter{
                        <number>0</number>
                       </property>
                       <widget class="QFrame" name="ModelBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>640</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="sizeIncrement">
+                        <size>
+                         <width>1</width>
+                         <height>0</height>
+                        </size>
+                       </property>
                        <property name="styleSheet">
                         <string notr="true"/>
                        </property>
@@ -1365,6 +1304,12 @@ QSplitter{
 	border-radius: 5px;
 	background-color: #ffffff;
 }</string>
+                          </property>
+                          <property name="frameShape">
+                           <enum>QFrame::StyledPanel</enum>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Raised</enum>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_26">
                            <property name="leftMargin">
@@ -1424,9 +1369,6 @@ QSplitter{
                        </layout>
                       </widget>
                       <widget class="QFrame" name="ModToolBox">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
                        <layout class="QGridLayout" name="gridLayout_23">
                         <property name="leftMargin">
                          <number>5</number>
@@ -1448,10 +1390,167 @@ QSplitter{
                           <property name="styleSheet">
                            <string notr="true">#ModelOptions{
 	background-color: rgb(255, 255, 255);
-	border-radius: 0px;
+	border-left: 1px solid gray;
+	border-color: rgb(217, 217, 217);
 	border-bottom-right-radius: 5px;
 }</string>
                           </property>
+                          <layout class="QGridLayout" name="gridLayout_29">
+                           <property name="leftMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <item row="0" column="0">
+                            <widget class="QTabWidget" name="ModelOptionTab">
+                             <property name="currentIndex">
+                              <number>0</number>
+                             </property>
+                             <property name="documentMode">
+                              <bool>true</bool>
+                             </property>
+                             <property name="movable">
+                              <bool>true</bool>
+                             </property>
+                             <widget class="QWidget" name="ModelFilesTab">
+                              <attribute name="title">
+                               <string>Model</string>
+                              </attribute>
+                              <layout class="QGridLayout" name="gridLayout_28">
+                               <item row="0" column="0">
+                                <widget class="QScrollArea" name="ModelScrollArea">
+                                 <property name="frameShape">
+                                  <enum>QFrame::NoFrame</enum>
+                                 </property>
+                                 <property name="widgetResizable">
+                                  <bool>true</bool>
+                                 </property>
+                                 <widget class="QWidget" name="ModelScrollContent">
+                                  <property name="geometry">
+                                   <rect>
+                                    <x>0</x>
+                                    <y>0</y>
+                                    <width>109</width>
+                                    <height>490</height>
+                                   </rect>
+                                  </property>
+                                  <property name="styleSheet">
+                                   <string notr="true">#ModelScrollContent
+{
+	background-color: #ffffff;
+}</string>
+                                  </property>
+                                  <layout class="QVBoxLayout" name="verticalLayout_7">
+                                   <property name="spacing">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="leftMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="topMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="rightMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="bottomMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <item alignment="Qt::AlignTop">
+                                    <widget class="QFrame" name="ModelDetailContainer">
+                                     <property name="frameShape">
+                                      <enum>QFrame::StyledPanel</enum>
+                                     </property>
+                                     <property name="frameShadow">
+                                      <enum>QFrame::Raised</enum>
+                                     </property>
+                                     <layout class="QVBoxLayout" name="verticalLayout_8">
+                                      <property name="leftMargin">
+                                       <number>0</number>
+                                      </property>
+                                      <property name="topMargin">
+                                       <number>0</number>
+                                      </property>
+                                      <property name="rightMargin">
+                                       <number>0</number>
+                                      </property>
+                                      <property name="bottomMargin">
+                                       <number>0</number>
+                                      </property>
+                                     </layout>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QWidget" name="ModelImportSection" native="true">
+                                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                                  <property name="leftMargin">
+                                   <number>15</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>15</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <item>
+                                   <widget class="QPushButton" name="ModelImportBtn">
+                                    <property name="styleSheet">
+                                     <string notr="true">#ModelImportBtn{
+	border: 1px solid gray;
+	border-radius: 10px;
+	border-color: rgb(0, 120, 215);
+	background-color: rgb(0, 120, 215);
+	color: rgb(255, 255, 255);
+	padding: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+#ModelImportBtn::hover{
+    background-color:rgb(0, 108, 190);
+    border-color:  rgb(0, 120, 215);
+}
+
+#ModelImportBtn::selected{
+	color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+}</string>
+                                    </property>
+                                    <property name="text">
+                                     <string>Animate</string>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                             <widget class="QWidget" name="ModelEditTab">
+                              <attribute name="title">
+                               <string>Animate</string>
+                              </attribute>
+                             </widget>
+                            </widget>
+                           </item>
+                          </layout>
                          </widget>
                         </item>
                        </layout>

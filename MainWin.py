@@ -1,6 +1,5 @@
 import sys
 import os
-import platform
 from PyQt5 import QtCore, QtGui, QtWidgets
 from CoreUI import *
 import QtModelView
@@ -123,6 +122,27 @@ class MainWindow(QtWidgets.QMainWindow):
         ModOpShadow.setOffset(0, 0)
         self.ui.ModelOptions.setGraphicsEffect(ModOpShadow)
 
+# Page Buttons
+        self.VideoPageBtn = QtPageButton(self.ui.VideoPageFrame)
+        self.VideoPageBtn.index = 0
+        self.VideoPageBtn.setIconAddress("UI/Icons/Video.png")
+        self.VideoPageBtn.setObjectName("VideoPageBtn")
+        self.ui.gridLayout_14.addWidget(self.VideoPageBtn, 0, 0, 1, 1)
+
+        self.ModelPageBtn = QtPageButton(self.ui.ModelPageFrame)
+        self.ModelPageBtn.index = 1
+        self.ModelPageBtn.setIconAddress("UI/Icons/Model.png")
+        self.ModelPageBtn.setObjectName("ModelPageBtn")
+        self.ui.gridLayout_15.addWidget(self.ModelPageBtn, 0, 0, 1, 1)
+
+        self.FinalPageBtn = QtPageButton(self.ui.FinalPageFrame)
+        self.FinalPageBtn.index = 2
+        self.FinalPageBtn.setIconAddress("UI/Icons/Final.png")
+        self.FinalPageBtn.setObjectName("FinalPageBtn")
+        self.ui.gridLayout_16.addWidget(self.FinalPageBtn, 0, 0, 1, 1)
+
+        self.changeStackedWidgetIndex(0)
+
 # Video Player
         self.thread = QtCore.QThread()
         self.thread_started = False
@@ -150,12 +170,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.PathTitle.mousePressEvent = self.onTitleClicked
 
-        self.ui.VideoPageBtn = QtPageButton(self.ui.VideoPageFrame)
-        self.ui.VideoPageBtn.setIcon("UI/Icons/Video.png")
-        
-        self.ui.VideoPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(0))
-        self.ui.ModelPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(1))
-        self.ui.FinalPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(2))
+        self.VideoPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(0))
+        self.ModelPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(1))
+        self.FinalPageBtn.clicked.connect(lambda: self.changeStackedWidgetIndex(2))
 
         self.ui.ImportVidbtn.clicked.connect(self.ImportVideo)
         self.ui.VideoImportBtn.clicked.connect(self.ImportVideo)
@@ -181,6 +198,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.VideoDetailList = []
 
         self.ui.ImportModelBtn.clicked.connect(self.open_model_dir)
+        self.ui.ModelImportBtn.clicked.connect(self.animate_model)
         self.ui.ExportModelBtn.clicked.connect(self.export_model)
 
         self.resizeConstraint = None
@@ -191,9 +209,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.isMaximized = False
 
-# Binding Animations
-
-        #self.ui.VideoPageBtn.installEventFilter(self)
 
     # Functions which the buttons are binded with
 
@@ -206,36 +221,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.TitleBar.mouseMoveEvent = moveWindow
         self.show()
-
-
-    def eventFilter(self, obj, event):
-        if obj == self.ui.VideoPageBtn:
-            current_size = QtCore.QSize(28, 28)
-            target_size = QtCore.QSize(22, 22)
-            if event.type() == QtCore.Qt.QEvent.Enter:
-                self.start_animation(current_size, target_size)
-            elif event.type() == QtCore.Qt.QEvent.Leave:
-                self.start_animation(target_size, current_size)
-        return super().eventFilter(obj, event)
-
-
-    def start_animation(self, current_size, target_size):
-        animation = QtCore.QPropertyAnimation(self.ui.VideoPageBtn, b'iconSize')
-        animation.setStartValue(current_size)
-        animation.setEndValue(target_size)
-        animation.setDuration(700000)
-        animation.setEasingCurve(QtCore.QEasingCurve.InOutCubic)
-        animation.start()
-
-        opacity_effect = QtWidgets.QGraphicsOpacityEffect(self.ui.VideoPageBtn)
-        self.ui.VideoPageBtn.setGraphicsEffect(opacity_effect)
-
-        animation = QtCore.QPropertyAnimation(opacity_effect, b'opacity')
-        animation.setStartValue(opacity_effect.opacity())
-        animation.setEndValue(30.0)
-        animation.setDuration(20000)
-        animation.setEasingCurve(QtCore.QEasingCurve.OutQuad)  # Adjust easing curve if needed
-        animation.start()
 
 
     def mousePressEvent(self,event):
@@ -280,6 +265,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.stackedWidget.setCurrentIndex(index)
         self.ui.PathTitle.setText(self.stackWidgets[index])
 
+        self.VideoPageBtn.changeIndex(index)
+        self.ModelPageBtn.changeIndex(index)
+        self.FinalPageBtn.changeIndex(index)
+
 
     def trackMousePosition(self):
         mouse_pos = QtGui.QCursor.pos()
@@ -306,12 +295,12 @@ class MainWindow(QtWidgets.QMainWindow):
             elif ((mouse_pos.x() >= (bottom_right.x() - border_size)) and (mouse_pos.y() > (top_left.y() + self.ui.CloseButton.height()))):
                 self.setCursor(QtCore.Qt.SizeHorCursor)
                 self.resizeConstraint = 5 
-            elif ((mouse_pos.y() <= (top_left.y() + border_size)) and (mouse_pos.y() >= (top_left.y() - border_size)) and (mouse_pos.x() < (self.frameGeometry().topRight().x() - (self.ui.MinimizeButton.width() + self.ui.MaximizeButton.width() + self.ui.CloseButton.width())))):
-                self.setCursor(QtCore.Qt.SizeVerCursor)
-                self.resizeConstraint = 6
+            #elif ((mouse_pos.y() <= (top_left.y() + border_size)) and (mouse_pos.y() >= (top_left.y() - border_size)) and (mouse_pos.x() < (self.frameGeometry().topRight().x() - (self.ui.MinimizeButton.width() + self.ui.MaximizeButton.width() + self.ui.CloseButton.width())))):
+                #self.setCursor(QtCore.Qt.SizeVerCursor)
+                #self.resizeConstraint = 6
             elif ((mouse_pos.y() <= (bottom_right.y() + border_size)) and (mouse_pos.y() >= (bottom_right.y() - border_size))):
                 self.setCursor(QtCore.Qt.SizeVerCursor)
-                self.resizeConstraint = 7
+                self.resizeConstraint = 6
             else:
                 self.setCursor(QtCore.Qt.ArrowCursor)
                 self.resizeConstraint = None
@@ -327,10 +316,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.resizeHandle = False
 
             if self.resizeConstraint == 1:
-                size = self.frameGeometry().bottomRight() - event.globalPos()
-                width = size.x()
-                height = size.y()
-                self.resize(width, height)
+                left = self.frameGeometry().left() - event.globalPos().x()
+                top = self.frameGeometry().top() - event.globalPos().y()
+                geometry = self.frameGeometry() + QtCore.QMargins(left, top, 0, 0)
+                if geometry.width() >= self.minimumWidth() and geometry.height() >= self.minimumHeight():
+                    self.setGeometry(geometry)
 
             elif self.resizeConstraint == 2:
                 size = event.globalPos() - self.frameGeometry().topLeft()
@@ -339,18 +329,17 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.resize(width, height)
 
             elif self.resizeConstraint == 3:
-                size = event.globalPos() - self.frameGeometry().topRight()
-                width = self.frameGeometry().right() - event.globalPos().x()
-                height = event.globalPos().y() - self.frameGeometry().top()
-                #self.resize(width, height)
-                self.setGeometry(event.globalPos().x(), self.frameGeometry().topLeft().y(), width, height)
+                left = self.frameGeometry().left() - event.globalPos().x()
+                bottom = event.globalPos().y() - self.frameGeometry().bottom()
+                geometry = self.frameGeometry() + QtCore.QMargins(left, 0, 0, bottom)
+                if geometry.width() >= self.minimumWidth() and geometry.height() >= self.minimumHeight():
+                    self.setGeometry(geometry)
 
             elif self.resizeConstraint == 4:
-                size = event.globalPos() - self.frameGeometry().topRight()
-                width = event.globalPos().x() - self.frameGeometry().width()
-                height = self.frameGeometry().height()
-                #self.resize(width, height)
-                self.setGeometry(event.globalPos().x(), self.frameGeometry().topLeft().y(), width, height)
+                left = self.frameGeometry().left() - event.globalPos().x()
+                geometry = self.frameGeometry() + QtCore.QMargins(left, 0, 0, 0)
+                if geometry.width() >= self.minimumWidth():
+                    self.setGeometry(geometry)
 
             elif self.resizeConstraint == 5:
                 width = event.globalPos().x() - self.frameGeometry().left()
@@ -358,11 +347,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.resize(width, height)
 
             elif self.resizeConstraint == 6:
-                width = event.globalPos().x() - self.frameGeometry().left()
-                height = self.frameGeometry().height()
-                self.resize(width, height)
-
-            elif self.resizeConstraint == 7:
                 width = self.frameGeometry().width()
                 height = event.globalPos().y() - self.frameGeometry().top()
                 self.resize(width, height)
@@ -578,12 +562,17 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ModelViewPort.changeFile(filename)
 
 # Export model function
-    def export_model(self):
+    def animate_model(self):
         if self.ModelViewPort:
             global CurrentVideo
             self.ModelViewPort.model.animateFromVideo("Shake", CurrentVideo.frame_rate, CurrentVideo.total_frames, CurrentVideo.frames)
 
-            import shutil
+
+    def export_model(self):
+        if self.ModelViewPort:
+            global CurrentVideo
+            self.ModelViewPort.model.animateFromVideo("Shake", int(CurrentVideo.frame_rate), CurrentVideo.total_frames, CurrentVideo.frames)
+
             file_dialog = QtWidgets.QFileDialog()
             file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
             file_dialog.setNameFilter("fbx (*.fbx);;3ds (*.3ds)")

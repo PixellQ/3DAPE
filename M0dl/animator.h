@@ -39,8 +39,9 @@ public:
 private:
 
 	// Time
-	float totalTime;
-	float intervalTime;
+	float totalTime = 0.0f;
+	float intervalTime = 0.0f;
+	int noOfFrames;
 	
 	// mediapipe
 	std::vector<std::vector<Landmark*>> trackPoints;
@@ -58,5 +59,5 @@ private:
 	Landmark Normalize(const Landmark& v);
 	void MatrixtoEuler(const Landmark& axis_x, const Landmark& axis_y, const Landmark& axis_z,
 		double& roll, double& pitch, double& yaw);
-	Landmark LookAt(const Landmark& base, const Landmark& child);
+	Landmark LookAt(const Landmark& root, const Landmark& target);
 };

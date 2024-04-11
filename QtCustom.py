@@ -11,6 +11,42 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
+class QtTitleButton(QtWidgets.QPushButton):
+    def __init__(self, *args, **kwargs):
+        QtWidgets.QPushButton.__init__(self, *args, **kwargs)
+        self.bgColor = QtGui.QColor(255, 255, 255)
+
+        self.iconEffect = QtWidgets.QGraphicsOpacityEffect(self)
+        self.iconEffect.setOpacity(0.0)
+        self.setGraphicsEffect(self.iconEffect)
+        self.iconAnim = QtCore.QPropertyAnimation(self.iconEffect, b'opacity')
+        self.iconAnim.setDuration(150)
+        self.iconAnim.setEasingCurve(QtCore.QEasingCurve.InOutCubic)
+
+    def setIconAddress(self, IconAddress):
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(IconAddress), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.setIcon(icon1)
+        self.setIconSize(QtCore.QSize(QtCore.QSize(22, 22)))
+
+    def enterEvent(self, event):
+        self.iconAnim.setDirection(self.iconAnim.Forward)
+        if self.iconAnim.state() == self.iconAnim.State.Stopped:
+            self.iconAnim.setStartValue(0.0)
+            self.iconAnim.setEndValue(1.0)
+            self.iconAnim.start()
+
+        QtWidgets.QPushButton.enterEvent(self, event)
+
+    def leaveEvent(self, event):
+        self.iconAnim.setDirection(self.iconAnim.Backward)
+        if self.iconAnim.state() == self.iconAnim.State.Stopped:
+            self.iconAnim.start()
+
+        QtWidgets.QPushButton.leaveEvent(self, event)
+
+
+
 class QtImportDialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -238,33 +274,73 @@ class QtVideoDetailWidget(object):
 
 
 class QtPageButton(QtWidgets.QPushButton):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.gridLayout_14 = QtWidgets.QGridLayout(parent)
-        self.gridLayout_14.setContentsMargins(0, 10, 0, 10)
-        self.gridLayout_14.setSpacing(0)
-        self.gridLayout_14.setObjectName("gridLayout_14")
-        self.PageBtn = QtWidgets.QPushButton(parent)
-        self.PageBtn.setStyleSheet("")
-        self.PageBtn.setIconSize(QtCore.QSize(22, 22))
-        self.PageBtn.setObjectName("PageBtn")
-        self.gridLayout_14.addWidget(self.PageBtn, 0, 0, 1, 1)
+    def __init__(self, *args, **kwargs):
+        QtWidgets.QPushButton.__init__(self, *args, **kwargs)
+        self.index = 0
+        self.selected = False
 
-    def setIcon(self, IconAddress):
+        self.setStyleSheet("QPushButton{\n"                       
+                        "   background-color: none;\n"
+                        "   border-radius: none;\n"
+                        "   padding: 0px;\n}")
+        
+        self.iconAnim = QtCore.QPropertyAnimation(self, b'iconSize')
+        self.iconAnim.setDuration(150)
+        self.iconAnim.setEasingCurve(QtCore.QEasingCurve.InOutCubic)
+
+        self.alphaEffect = QtWidgets.QGraphicsOpacityEffect(self)
+        self.alphaEffect.setOpacity(1.0)
+        self.setGraphicsEffect(self.alphaEffect)
+        self.alphaAnim = QtCore.QPropertyAnimation(self.alphaEffect, b'opacity')
+        self.iconAnim.setDuration(150)
+        self.iconAnim.setEasingCurve(QtCore.QEasingCurve.InOutCubic)
+
+    def setIconAddress(self, IconAddress):
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(IconAddress), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.PageBtn.setIcon(icon1)
-
-    def startAnimation(self, current_size, target_size):
-        animation = QtCore.QPropertyAnimation(self.btn, b'iconSize')
-        animation.setStartValue(current_size)
-        animation.setEndValue(target_size)
-        animation.setDuration(500)
-        animation.setEasingCurve(QtCore.QEasingCurve.InOutCubic)
-        animation.start()
+        self.setIcon(icon1)
+        self.setIconSize(QtCore.QSize(QtCore.QSize(22, 22)))
 
     def enterEvent(self, event):
-        self.startAnimation(QtCore.QSize(22, 22), QtCore.QSize(28, 28))
+        if not self.selected:
+            self.iconAnim.setDirection(self.iconAnim.Forward)
+            if self.iconAnim.state() == self.iconAnim.State.Stopped:
+                rect = self.iconSize()
+                self.iconAnim.setStartValue(rect)
+                rect += QtCore.QSize(4, 4)
+                self.iconAnim.setEndValue(rect)
+                self.iconAnim.start()
+
+        QtWidgets.QPushButton.enterEvent(self, event)
 
     def leaveEvent(self, event):
-        self.startAnimation(QtCore.QSize(28, 28), QtCore.QSize(22, 22))
+        if not self.selected:
+            self.iconAnim.setDirection(self.iconAnim.Backward)
+            if self.iconAnim.state() == self.iconAnim.State.Stopped:
+                self.iconAnim.start()
+
+        QtWidgets.QPushButton.leaveEvent(self, event)
+
+    def changeIndex(self, index):
+        if index == self.index:
+            if not self.selected:
+                self.alphaAnim.setDirection(self.alphaAnim.Forward)
+                if self.alphaAnim.state() == self.alphaAnim.State.Stopped:
+                    self.alphaAnim.setStartValue(1.0)
+                    self.alphaAnim.setEndValue(0.5)
+                    self.alphaAnim.start()
+
+                    self.selected = True
+
+                    if self.iconAnim.startValue():
+                        self.iconAnim.setDirection(self.iconAnim.Backward)
+                        if self.iconAnim.state() == self.iconAnim.State.Stopped:
+                            self.iconAnim.start()
+
+        elif index != self.index:
+            if self.alphaEffect.opacity() < 1.0:
+                self.alphaAnim.setDirection(self.alphaAnim.Backward)
+                if self.alphaAnim.state() == self.alphaAnim.State.Stopped:
+                    self.alphaAnim.start()
+
+                    self.selected = False
