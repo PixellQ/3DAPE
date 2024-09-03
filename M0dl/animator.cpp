@@ -167,17 +167,13 @@ Landmark Animator::Normalize(const Landmark& v)
 
 void Animator::MatrixtoEuler(const Landmark& axis_x, const Landmark& axis_y, const Landmark& axis_z, double& roll, double& pitch, double& yaw)
 {
-	// Calculate pitch
 	pitch = std::asin(-axis_z.x);
 
-	// Check for singularity at the poles
 	if (std::cos(pitch) != 0) {
-		// Calculate roll and yaw only if not at the poles
 		roll = std::atan2(axis_z.y, axis_z.z);
 		yaw = std::atan2(axis_y.x, axis_x.x);
 	}
 	else {
-		// At the poles, set roll to zero and calculate yaw
 		roll = 0.0;
 		yaw = std::atan2(-axis_x.y, axis_y.y);
 	}
@@ -208,10 +204,12 @@ Landmark Animator::LookAt(const Landmark& root, const Landmark& target)
 
 	Landmark axis_y = CrossProduct(axis_z, axis_x);
 
-	// Assuming a 3x3 rotation matrix as in the original code
-	double rot_matrix[3][3] = { {axis_x.x, axis_y.x, axis_z.x},
-							   {axis_x.y, axis_y.y, axis_z.y},
-							   {axis_x.z, axis_y.z, axis_z.z} };
+	double rot_matrix[3][3] = 
+	{ 
+		{axis_x.x, axis_y.x, axis_z.x},
+		{axis_x.y, axis_y.y, axis_z.y},
+		{axis_x.z, axis_y.z, axis_z.z} 
+	};
 
 	double roll, pitch, yaw;
 

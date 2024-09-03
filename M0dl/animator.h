@@ -12,7 +12,6 @@ struct Landmark
 	float y;
 	float z;
 
-	// Functions
 	Landmark operator-(const Landmark& operand) const;
 	Landmark operator/(double scalar) const;
 	double length() const;
