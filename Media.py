@@ -30,12 +30,13 @@ class PoseTrackingThread(QtCore.QThread):
             with mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
                 Img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 results = pose.process(Img)
+                temp_world_results = 0
                 temp_results = 0
                 t_coords = []
 
-                if results.pose_world_landmarks:
-                    temp_results = results.pose_world_landmarks
-                    for landmark in results.pose_world_landmarks.landmark:
+                if results.pose_world_landmarks and results.pose_landmarks:
+                    temp_results = results.pose_landmarks
+                    for landmark in results.pose_landmarks.landmark:
                         t_coords.append({"x": landmark.x, "y": landmark.y, "z": landmark.z})
 
                 elif temp_results != 0:
@@ -73,7 +74,7 @@ class Video:
             y = coord["y"]
 
             x_px, y_px = int(x * img.shape[1]), int(y * img.shape[0])
-            cv2.circle(img, (x_px, y_px), 3, (0, 255, 0), -1)
+            cv2.circle(img, (x_px, y_px), 3, (70, 160, 227), -1)
 
 
 # Tracking poses on Import

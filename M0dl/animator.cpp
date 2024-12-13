@@ -62,9 +62,9 @@ void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 		{
 			
 			lCurve->KeyModifyBegin();
-			for (float currenTime = 0.0f; currenTime <= totalTime - intervalTime; currenTime += intervalTime)
+			for (float currentTime = 0.0f; currentTime <= totalTime - intervalTime; currentTime += intervalTime)
 			{
-				lTime.SetSecondDouble(currenTime);
+				lTime.SetSecondDouble(currentTime);
 				lKeyIndex = lCurve->KeyAdd(lTime);
 				lCurve->KeySetValue(lKeyIndex, rotationvalue);
 				lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
@@ -84,9 +84,9 @@ void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 		if (lCurve)
 		{
 			lCurve->KeyModifyBegin();
-			for (float currenTime = 0.0f; currenTime <= totalTime - intervalTime; currenTime = currenTime + intervalTime)
+			for (float currentTime = 0.0f; currentTime <= totalTime - intervalTime; currentTime = currentTime + intervalTime)
 			{
-				lTime.SetSecondDouble(currenTime);
+				lTime.SetSecondDouble(currentTime);
 				lKeyIndex = lCurve->KeyAdd(lTime);
 				lCurve->KeySetValue(lKeyIndex, rotationvalue);
 				lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
@@ -102,9 +102,9 @@ void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 		if (lCurve)
 		{
 			lCurve->KeyModifyBegin();
-			for (float currenTime = 0.0f; currenTime <= totalTime - intervalTime; currenTime = currenTime + intervalTime)
+			for (float currentTime = 0.0f; currentTime <= totalTime - intervalTime; currentTime = currentTime + intervalTime)
 			{
-				lTime.SetSecondDouble(currenTime);
+				lTime.SetSecondDouble(currentTime);
 				lKeyIndex = lCurve->KeyAdd(lTime);
 				lCurve->KeySetValue(lKeyIndex, rotationvalue);
 				lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);

@@ -694,6 +694,55 @@ class Ui_MainWindow(object):
         self.ModelOptionTab.setDocumentMode(True)
         self.ModelOptionTab.setMovable(True)
         self.ModelOptionTab.setObjectName("ModelOptionTab")
+        self.ModelEditTab = QtWidgets.QWidget()
+        self.ModelEditTab.setObjectName("ModelEditTab")
+        self.gridLayout_30 = QtWidgets.QGridLayout(self.ModelEditTab)
+        self.gridLayout_30.setObjectName("gridLayout_30")
+        self.ModelAnimateSection = QtWidgets.QWidget(self.ModelEditTab)
+        self.ModelAnimateSection.setObjectName("ModelAnimateSection")
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.ModelAnimateSection)
+        self.horizontalLayout_8.setContentsMargins(15, 0, 15, 0)
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+        self.ModelAnimateBtn = QtWidgets.QPushButton(self.ModelAnimateSection)
+        self.ModelAnimateBtn.setStyleSheet("#ModelAnimateBtn{\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 10px;\n"
+"    border-color: rgb(0, 120, 215);\n"
+"    background-color: rgb(0, 120, 215);\n"
+"    color: rgb(255, 255, 255);\n"
+"    padding: 5px;\n"
+"    padding-left: 15px;\n"
+"    padding-right: 15px;\n"
+"}\n"
+"\n"
+"#ModelAnimateBtn::hover{\n"
+"    background-color:rgb(0, 108, 190);\n"
+"    border-color:  rgb(0, 120, 215);\n"
+"}\n"
+"\n"
+"#ModelAnimateBtn::selected{\n"
+"    color: rgb(0, 0, 0);\n"
+"    background-color: rgb(255, 255, 255);\n"
+"}")
+        self.ModelAnimateBtn.setObjectName("ModelAnimateBtn")
+        self.horizontalLayout_8.addWidget(self.ModelAnimateBtn)
+        self.gridLayout_30.addWidget(self.ModelAnimateSection, 1, 0, 1, 1)
+        self.BoneSelectionArea = QtWidgets.QScrollArea(self.ModelEditTab)
+        self.BoneSelectionArea.setWidgetResizable(True)
+        self.BoneSelectionArea.setObjectName("BoneSelectionArea")
+        self.BoneSelectionContents = QtWidgets.QWidget()
+        self.BoneSelectionContents.setGeometry(QtCore.QRect(0, 0, 251, 498))
+        self.BoneSelectionContents.setObjectName("BoneSelectionContents")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.BoneSelectionContents)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.BoneDetailContainer = QtWidgets.QFrame(self.BoneSelectionContents)
+        self.BoneDetailContainer.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.BoneDetailContainer.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.BoneDetailContainer.setObjectName("BoneDetailContainer")
+        self.verticalLayout_9.addWidget(self.BoneDetailContainer)
+        self.BoneSelectionArea.setWidget(self.BoneSelectionContents)
+        self.gridLayout_30.addWidget(self.BoneSelectionArea, 0, 0, 1, 1)
+        self.ModelOptionTab.addTab(self.ModelEditTab, "")
         self.ModelFilesTab = QtWidgets.QWidget()
         self.ModelFilesTab.setObjectName("ModelFilesTab")
         self.gridLayout_28 = QtWidgets.QGridLayout(self.ModelFilesTab)
@@ -703,7 +752,7 @@ class Ui_MainWindow(object):
         self.ModelScrollArea.setWidgetResizable(True)
         self.ModelScrollArea.setObjectName("ModelScrollArea")
         self.ModelScrollContent = QtWidgets.QWidget()
-        self.ModelScrollContent.setGeometry(QtCore.QRect(0, 0, 109, 490))
+        self.ModelScrollContent.setGeometry(QtCore.QRect(0, 0, 253, 500))
         self.ModelScrollContent.setStyleSheet("#ModelScrollContent\n"
 "{\n"
 "    background-color: #ffffff;\n"
@@ -753,9 +802,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.addWidget(self.ModelImportBtn)
         self.gridLayout_28.addWidget(self.ModelImportSection, 1, 0, 1, 1)
         self.ModelOptionTab.addTab(self.ModelFilesTab, "")
-        self.ModelEditTab = QtWidgets.QWidget()
-        self.ModelEditTab.setObjectName("ModelEditTab")
-        self.ModelOptionTab.addTab(self.ModelEditTab, "")
         self.gridLayout_29.addWidget(self.ModelOptionTab, 0, 0, 1, 1)
         self.gridLayout_23.addWidget(self.ModelOptions, 0, 0, 1, 1)
         self.gridLayout_20.addWidget(self.ModelSplitter, 0, 0, 1, 1)
@@ -775,8 +821,8 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
-        self.VideoOptionTab.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
+        self.VideoOptionTab.setCurrentIndex(1)
         self.ModelOptionTab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -791,9 +837,10 @@ class Ui_MainWindow(object):
         self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoFilesTab), _translate("MainWindow", "Videos"))
         self.VideoOptionTab.setTabText(self.VideoOptionTab.indexOf(self.VideoEditTab), _translate("MainWindow", "Edit"))
         self.ImportModelBtn.setText(_translate("MainWindow", "Import Model"))
+        self.ModelAnimateBtn.setText(_translate("MainWindow", "Animate"))
+        self.ModelOptionTab.setTabText(self.ModelOptionTab.indexOf(self.ModelEditTab), _translate("MainWindow", "Animate"))
         self.ModelImportBtn.setText(_translate("MainWindow", "Animate"))
         self.ModelOptionTab.setTabText(self.ModelOptionTab.indexOf(self.ModelFilesTab), _translate("MainWindow", "Model"))
-        self.ModelOptionTab.setTabText(self.ModelOptionTab.indexOf(self.ModelEditTab), _translate("MainWindow", "Animate"))
         self.ExportModelBtn.setText(_translate("MainWindow", "Export"))
 
 
