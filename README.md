@@ -1,21 +1,18 @@
 <h1 align="center">
   <img src="UI/Icons/Readme4.png" alt="Icon">
 </h1><br>
-<p align="center">The 3DAPE Software is a useful tool for tracking human poses from multiple video
-files and exporting them in an FBX file format. The software aims to help animators, game developers,
-and virtual reality creators to save time and effort in creating realistic human movements and
-animations.</p>
-<p align="center">The project objectives were successfully met by developing a software application that uses pre-
-trained pose estimation models and video synchronization techniques to extract and track human poses
-accurately across multiple video files. The software also provides a user-friendly interface for importing
-and exporting video files and setting up the tracking parameters.</p>
-<p align="center">The software was designed and developed using libraries such as OpenCV, MediaPipe, PyQt5,
-OpenGL, and FBX SDK, which ensure its technical feasibility and reliability. The software was also
-found to be economically feasible, operationally feasible, legally feasible, and schedule feasible based
-on the feasibility study.
-Overall, the Human Pose Tracking Software has the potential to provide significant benefits to the
-animation, gaming, and virtual reality industries, and it can be further enhanced in the future with
-additional features and functionalities.</p>
+
+<p align="center">3DAPE is a powerful and efficient tool designed for tracking human poses from multiple video files and exporting them in the FBX file format. It is aimed at animators, game developers, and virtual reality creators, providing an automated solution to create realistic human movements and animations, thus saving time and effort in the development process.</p>
+
+<h3>Usage</h3>
+<p>• Import Video Files: Launch the software and use the import feature to load video files for pose tracking.</p>
+<p>• Adjust Tracking Parameters: Fine-tune tracking settings such as pose accuracy, synchronization options, and frame rate to get the best results for your specific project.</p>
+<p>• Track Poses: The software uses advanced pose estimation models to detect and track human poses in each frame of the video.</p>
+<p>• Export to FBX: Once the tracking process is complete, export the poses and animations in FBX format for further use in animation, game development, or VR applications.</p>
+
 <br>
 <h3>Pose Estimation:</h3>
 <img src="UI/Test/VideoTest.png" alt="Icon" height="400"><br>
+
+<h3>Model Renderer:</h3>
+<img src="UI/Test/ModelTest.png" alt="Icon" height="400"><br>
