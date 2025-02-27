@@ -1,6 +1,9 @@
 #include "animator.h"
 #include <stdio.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 Animator::Animator(const char* animationName, FbxScene* sceneToBeAnimated, float fps, int totalFrames, struct Landmark* frames)
 {
@@ -84,15 +87,40 @@ void Animator::AnimateBones(std::vector<FbxSkeleton*> bonesPresent)
 		if (lCurve)
 		{
 			lCurve->KeyModifyBegin();
-			for (float currentTime = 0.0f; currentTime <= totalTime - intervalTime; currentTime = currentTime + intervalTime)
+			for (float currentTime = 0.0f; currentTime <= totalTime - intervalTime; currentTime += intervalTime)
 			{
 				lTime.SetSecondDouble(currentTime);
 				lKeyIndex = lCurve->KeyAdd(lTime);
-				lCurve->KeySetValue(lKeyIndex, rotationvalue);
-				lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+				//lCurve->KeySetValue(lKeyIndex, rotationvalue);
+				//lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
 
-				rotationvalue = rotationvalue + LookAt(*trackPoints[12][i], *trackPoints[14][i]).z;
-				i += 1;
+				////
+				Landmark leftHip = *trackPoints[24][i];
+				Landmark leftKnee = *trackPoints[26][i];
+				Landmark leftAnkle = *trackPoints[28][i];
+
+				Landmark thighDirection = (leftKnee - leftHip).normalize();
+				Landmark shinDirection = (leftAnkle - leftKnee).normalize();
+
+				glm::vec3 thighDir = glm::vec3(thighDirection.x, thighDirection.y, thighDirection.z);
+				glm::vec3 shinDir = glm::vec3(shinDirection.x, shinDirection.y, shinDirection.z);
+
+				// Calculate rotation
+				glm::vec3 rotationAxis = glm::cross(thighDir, shinDir);
+				float angle = glm::acos(glm::clamp(glm::dot(thighDir, shinDir), -1.0f, 1.0f));
+
+				if (glm::length(rotationAxis) > 0.0001f) {
+					glm::quat rotationQuat = glm::angleAxis(angle, glm::normalize(rotationAxis));
+					glm::vec3 eulerAngles = glm::degrees(glm::eulerAngles(rotationQuat)); // Convert to degrees
+
+					FbxDouble3 fbxRotation(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+					lCurve->KeySetValue(lKeyIndex, eulerAngles.y); // Set Y component for this curve
+					lCurve->KeySetInterpolation(lKeyIndex, FbxAnimCurveDef::eInterpolationCubic);
+				}
+				////
+
+				//rotationvalue = rotationvalue + LookAt(*trackPoints[12][i], *trackPoints[14][i]).z;
+				i ++;
 			}
 			lCurve->KeyModifyEnd();
 		}
@@ -222,29 +250,4 @@ Landmark Animator::LookAt(const Landmark& root, const Landmark& target)
 	result.z = yaw;
 
 	return result;
-}
-
-Landmark Landmark::operator-(const Landmark& operand) const
-{
-	Landmark result;
-	result.x = x - operand.x;
-	result.y = y - operand.y;
-	result.z = z - operand.z;
-
-	return result;
-}
-
-Landmark Landmark::operator/(double scalar) const
-{
-	Landmark result;
-	result.x = x / scalar;
-	result.y = y / scalar;
-	result.z = z / scalar;
-
-	return result;
-}
-
-double Landmark::length() const
-{
-	return std::sqrt(x * x + y * y + z * z);
 }

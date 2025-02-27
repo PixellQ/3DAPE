@@ -1488,9 +1488,9 @@ QSlider::handle{
                                     <height>498</height>
                                    </rect>
                                   </property>
-                                  <layout class="QVBoxLayout" name="verticalLayout_9">
+                                  <layout class="QHBoxLayout" name="horizontalLayout_9">
                                    <item>
-                                    <widget class="QFrame" name="BoneDetailContainer">
+                                    <widget class="QFrame" name="BoneMPList">
                                      <property name="frameShape">
                                       <enum>QFrame::StyledPanel</enum>
                                      </property>
@@ -1499,6 +1499,16 @@ QSlider::handle{
                                      </property>
                                      <layout class="QVBoxLayout" name="verticalLayout_10"/>
                                     </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="Line" name="BoneMidLine">
+                                     <property name="orientation">
+                                      <enum>Qt::Vertical</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QFrame" name="BoneModelList"/>
                                    </item>
                                   </layout>
                                  </widget>
@@ -1524,8 +1534,8 @@ QSlider::handle{
                                    <rect>
                                     <x>0</x>
                                     <y>0</y>
-                                    <width>100</width>
-                                    <height>30</height>
+                                    <width>253</width>
+                                    <height>500</height>
                                    </rect>
                                   </property>
                                   <property name="styleSheet">

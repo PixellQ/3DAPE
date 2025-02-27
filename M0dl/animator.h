@@ -8,15 +8,34 @@
 
 struct Landmark
 {
-	float x;
-	float y;
-	float z;
+	float x, y, z;
 
-	Landmark operator-(const Landmark& operand) const;
-	Landmark operator/(double scalar) const;
-	double length() const;
+	// Vector subtraction
+	Landmark operator-(const Landmark& operand) const {
+		return { x - operand.x, y - operand.y, z - operand.z };
+	}
+
+	// Scalar division
+	Landmark operator/(double scalar) const {
+		return { static_cast<float>(x / scalar),
+				static_cast<float>(y / scalar),
+				static_cast<float>(z / scalar) };
+	}
+
+	// Length (magnitude) of the vector
+	double length() const {
+		return std::sqrt(x * x + y * y + z * z);
+	}
+
+	// Normalize the vector
+	Landmark normalize() const {
+		double len = length();
+		if (len > 0) {
+			return *this / len;
+		}
+		return { 0.0f, 0.0f, 0.0f }; // Return a zero vector if the length is zero
+	}
 };
-
 
 struct Quaternion
 {
@@ -53,6 +72,8 @@ private:
 	Landmark* GetMPOrigin(FbxSkeleton* hipBone);
 	Landmark* AlignCordwithOrigin(Landmark* coords, Landmark* Origin);
 	//void GetRotation(int boneId);
+
+	void AnimateLeftKnee(FbxScene* fbxScene, int leftHip, int leftKnee, int leftAnkle);
 
 	Landmark CrossProduct(const Landmark& a, const Landmark& b);
 	Landmark Normalize(const Landmark& v);
