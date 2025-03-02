@@ -162,6 +162,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.maximizeicon = QtGui.QIcon()
         self.maximizeicon.addPixmap(QtGui.QPixmap("UI/Icons/maximizeB.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 
+        self.map_model()
+
 # Binding the button events
 
         self.ui.MinimizeButton.clicked.connect(self.showMinimized)
@@ -435,7 +437,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def OnItemClicked(self, current_row):
-
         global CurrentVideo
         CurrentVideo = self.VideoList[int(current_row)]
         for index, detail in enumerate(self.VideoDetailList):
@@ -561,13 +562,54 @@ class MainWindow(QtWidgets.QMainWindow):
 
             self.ModelViewPort.changeFile(filename)
 
-# Export model function
+# Mapping model function
+    def map_model(self):
+
+        MPLandmarks = [
+        "nose", "left_eye_inner", "left_eye", "left_eye_outer",
+        "right_eye_inner", "right_eye", "right_eye_outer",
+        "left_ear", "right_ear", "mouth_left", "mouth_right",
+        "left_shoulder", "right_shoulder", "left_elbow", "right_elbow",
+        "left_wrist", "right_wrist", "left_pinky", "right_pinky",
+        "left_index", "right_index", "left_thumb", "right_thumb",
+        "left_hip", "right_hip", "left_knee", "right_knee",
+        "left_ankle", "right_ankle", "left_heel", "right_heel",
+        "left_foot_index", "right_foot_index"
+        ]
+
+        if self.ui.BoneMPList and self.ui.BoneModelList:
+            mp_layout = self.ui.BoneMPList.layout()
+            mdl_layout = self.ui.BoneModelList.layout()
+            
+            if mp_layout is None:
+                mp_layout = QtWidgets.QVBoxLayout(self.ui.BoneMPList)
+                self.ui.BoneMPList.setLayout(mp_layout)
+
+            if mdl_layout is None:
+                mdl_layout = QtWidgets.QVBoxLayout(self.ui.BoneModelList)
+                self.ui.BoneModelList.setLayout(mdl_layout)
+
+            for landmark in MPLandmarks:
+                label = QtWidgets.QLabel(landmark, self.ui.BoneMPList)
+                mp_layout.addWidget(label)
+
+
+                LineEdit = QtWidgets.QLineEdit(self.ui.BoneModelList)
+
+                Completer = QtWidgets.QCompleter(MPLandmarks, self.ui.BoneModelList)
+                Completer.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+
+                LineEdit.setCompleter(Completer)
+
+                mdl_layout.addWidget(LineEdit)
+
+# Animate model function
     def animate_model(self):
         if self.ModelViewPort:
             global CurrentVideo
             self.ModelViewPort.model.animateFromVideo("Shake", CurrentVideo.frame_rate, CurrentVideo.total_frames, CurrentVideo.frames)
 
-
+# Export model function
     def export_model(self):
         if self.ModelViewPort:
             global CurrentVideo
